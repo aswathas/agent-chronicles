@@ -1175,6 +1175,11 @@ footer .socials {
 /* ── villains ── */
 .villain {
   position: fixed;
+  /* without explicit offsets a fixed element keeps its static position —
+     appending to body put every villain ~4800px down the document, where the
+     transform just added to that instead of moving it */
+  top: 0;
+  left: 0;
   z-index: 940;
   width: 62px;
   height: 62px;

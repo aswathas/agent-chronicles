@@ -269,41 +269,54 @@ function initVillains(shooter) {
     el.innerHTML =
       `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">${VILLAGE_SVG[spec.id]}</svg>` +
       `<div class="hp"><b style="width:100%"></b></div>`;
-    const y = innerHeight * (0.2 + Math.random() * 0.6);
+    // position:fixed means coordinates are viewport-relative. Spawning at
+    // document height would drop the villain thousands of px below the fold.
+    const y = innerHeight * (0.18 + Math.random() * 0.55);
     el.style.transform = `translate(${innerWidth + 90}px, ${y}px)`;
     document.body.appendChild(el);
     actors.push({
-      el, spec, hp: spec.hp, x: innerWidth + 90, y,
-      vx: -(0.55 + Math.random() * 0.5),
-      vy: (Math.random() - 0.5) * 0.28,
-      phase: Math.random() * 6,
+      el, spec, hp: spec.hp, x: innerWidth + 90, y, y0: y,
+      // 1.8–3.4 px/frame crosses a 1400px viewport in roughly 7s. The old
+      // 0.55–1.05 took 22–42s, so villains drifted past unnoticed.
+      vx: -(1.8 + Math.random() * 1.6),
+      bobRate: 0.012 + Math.random() * 0.012,
+      bobAmp: 22 + Math.random() * 26,
+      phase: Math.random() * Math.PI * 2,
     });
   }
 
   function scheduleNext() {
     clearTimeout(timer);
+    // short and jittered so it reads as continuous, not as a metronome
     timer = setTimeout(() => {
-      if (started && actors.length === 0) spawn();
-    }, 9000 + Math.random() * 7000);
+      if (!started) return;
+      // never let more than two on screen at once
+      if (actors.length < 2) spawn();
+      scheduleNext();
+    }, 5200 + Math.random() * 3800);
   }
 
   function begin() {
     if (started) return;
     started = true;
-    setTimeout(spawn, 1200);
+    spawn();          // one straight away
+    scheduleNext();   // then keep them coming
   }
 
   (function tick() {
     for (let i = actors.length - 1; i >= 0; i--) {
       const a = actors[i];
-      a.phase += 0.02;
+      a.phase += a.bobRate;
       a.x += a.vx;
-      a.y += a.vy + Math.sin(a.phase) * 0.22;
+      // bob around a fixed base rather than accumulating y each frame —
+      // `y += vy` compounded without bound and drifted villains off-screen
+      const bob = Math.sin(a.phase) * a.bobAmp;
+      const tilt = Math.sin(a.phase * 0.7) * 9;
+      const y = a.y0 + bob;
       a.el.style.transform =
-        `translate(${a.x}px, ${a.y}px) rotate(${Math.sin(a.phase) * 8}deg)`;
-      if (a.x < -120) {
+        `translate(${a.x}px, ${y.toFixed(1)}px) rotate(${tilt.toFixed(1)}deg)`;
+      if (a.x < -140) {
         a.el.remove(); actors.splice(i, 1);
-        if (started && actors.length === 0) scheduleNext();
       }
     }
     requestAnimationFrame(tick);
@@ -327,7 +340,9 @@ function initVillains(shooter) {
     a.el.classList.add("bruise");
     a.el.querySelector(".hp b").style.width = `${(a.hp / a.spec.hp) * 100}%`;
     a.vx -= 2.4;                        // the hit should knock it back
-    a.vy += (Math.random() - 0.5) * 2;
+    // nudge its lane, but clamp: stacked hits must not fling it off-screen
+    a.y0 = Math.max(80, Math.min(innerHeight - 90, a.y0 + (Math.random() - 0.5) * 40));
+    if (a.vx < -4.5) a.vx = -4.5;       // cap the knockback too
     if (a.hp <= 0) {
       score++;
       if (scoreEl) scoreEl.textContent = String(score).padStart(2, "0");
@@ -338,7 +353,6 @@ function initVillains(shooter) {
         a.el.remove();
         const i = actors.indexOf(a);
         if (i >= 0) actors.splice(i, 1);
-        if (started && actors.length === 0) scheduleNext();
       }, 620);
     }
   }
