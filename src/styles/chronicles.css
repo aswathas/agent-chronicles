@@ -940,6 +940,17 @@ footer .socials {
   stroke-width: 1.2;
 }
 
+/* the landed web pattern — radial threads + spiral rings */
+.webp path {
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 1.15;
+}
+
+.webp.pinned path {
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 1.35;
+}
+
 .impact {
   fill: none;
   stroke: #fff;

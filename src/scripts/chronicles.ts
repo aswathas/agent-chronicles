@@ -80,35 +80,78 @@ function initShooter() {
     return `M${x1} ${y1} Q${mx} ${my + drop} ${x2} ${y2}`;
   }
 
+  /**
+   * A real web pattern, not parallel lines: radial threads from the impact
+   * point crossed by concentric rings. `partial` draws only the outer 40%
+   * of the rings, the way a web actually lands before it's finished.
+   */
+  function webPattern(cx, cy, r, { partial = false, cls = "" } = {}) {
+    const g = document.createElementNS(NS, "g");
+    g.setAttribute("class", cls);
+
+    const rays = 11;
+    for (let i = 0; i < rays; i++) {
+      const a = (Math.PI * 2) / rays * i + 0.28;
+      const len = r * (0.82 + Math.random() * 0.36);
+      const p = document.createElementNS(NS, "path");
+      // each thread bows slightly, the way silk under tension curves
+      const bx = cx + Math.cos(a) * len * 0.55 + Math.cos(a + 0.5) * r * 0.14;
+      const by = cy + Math.sin(a) * len * 0.55 + Math.sin(a + 0.5) * r * 0.14;
+      p.setAttribute(
+        "d",
+        `M${cx} ${cy} Q${bx.toFixed(1)} ${by.toFixed(1)} ${(cx + Math.cos(a) * len).toFixed(1)} ${(cy + Math.sin(a) * len).toFixed(1)}`
+      );
+      g.appendChild(p);
+    }
+
+    // spiral in rather than perfect circles — webs are never true circles
+    const steps = partial ? 3 : 6;
+    for (let s = 1; s <= steps; s++) {
+      const rr = (r * s) / steps;
+      const path = document.createElementNS(NS, "path");
+      let d = "";
+      const segs = 9;
+      for (let i = 0; i <= segs; i++) {
+        const a = (Math.PI * 2) / segs * i;
+        const wob = 1 + Math.sin(a * 3 + s) * 0.07;
+        const x = cx + Math.cos(a) * rr * wob;
+        const y = cy + Math.sin(a) * rr * wob;
+        d += `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`;
+      }
+      path.setAttribute("d", `${d}Z`);
+      g.appendChild(path);
+    }
+    return g;
+  }
+
   function buildShot(tx, ty, pinned = false) {
     const g = document.createElementNS(NS, "g");
     const paths = [];
-    const spread = pinned ? 34 : 26;
 
-    for (let i = 0; i < 5; i++) {
-      const off = (i - 2) * (spread / 4);
+    // the travelling threads: a small spray that widens as it flies
+    for (let i = 0; i < 3; i++) {
+      const off = (i - 1) * 7;
       const p = document.createElementNS(NS, "path");
       p.setAttribute("class", `shot${pinned ? " stick" : ""}`);
-      p.setAttribute("d", sagPath(OX(), OY(), tx + off, ty + off * 0.5, 1));
+      p.setAttribute("d", sagPath(OX(), OY(), tx + off, ty + off, 1));
       g.appendChild(p); paths.push(p);
     }
-    // cross-threads: woven silk, not a spider shape
-    for (let i = 0; i < 4; i++) {
-      const c = document.createElementNS(NS, "path");
-      c.setAttribute("class", `shot${pinned ? " stick" : ""}`);
-      const t1 = 0.3 + i * 0.15, t2 = t1 + 0.14;
-      const x1 = OX() + (tx - OX()) * t1, y1 = OY() + (ty - OY()) * t1;
-      const x2 = OX() + (tx - OX()) * t2, y2 = OY() + (ty - OY()) * t2;
-      c.setAttribute("d", sagPath(x1, y1, x2, y2, 0.8));
-      g.appendChild(c); paths.push(c);
-    }
+
+    // the pattern that lands at the target
+    const pattern = webPattern(tx, ty, pinned ? 40 : 30, {
+      partial: !pinned,
+      cls: `shot${pinned ? " stick" : ""} webp${pinned ? " pinned" : ""}`,
+    });
+    g.appendChild(pattern);
+
     const blob = document.createElementNS(NS, "circle");
     blob.setAttribute("class", "blob");
     blob.setAttribute("cx", tx); blob.setAttribute("cy", ty);
-    blob.setAttribute("r", pinned ? 13 : 8);
+    blob.setAttribute("r", pinned ? 11 : 7);
     g.appendChild(blob);
 
-    return { g, paths, tx, ty, pinned };
+    // pattern paths stay put — only the travelling strands animate
+    return { g, paths, tx, ty, pinned, pattern };
   }
 
   function impactAt(x, y) {
@@ -145,6 +188,17 @@ function initShooter() {
         paths.forEach((p) =>
           p.setAttribute("d", sagPath(ox, oy, tx, ty, pinned ? 0.96 : 1))
         );
+        // the web blooms outward from the impact point
+        const rings = shot.pattern?.querySelectorAll("path");
+        if (rings) {
+          rings.forEach((p, i) => {
+            const len = p.getTotalLength?.() || 200;
+            p.style.strokeDasharray = `${len}`;
+            p.style.strokeDashoffset = `${len}`;
+            p.style.transition = `stroke-dashoffset .34s cubic-bezier(.16,1,.3,1) ${i * 0.018}s`;
+            requestAnimationFrame(() => { p.style.strokeDashoffset = "0"; });
+          });
+        }
         done?.();
       }
     };
@@ -168,12 +222,13 @@ function initShooter() {
   function release(el) {
     const g = stuck.get(el);
     if (!g) return;
-    g.remove(); stuck.delete(el);
+    g.remove();               // removes the outer group and everything inside it
+    stuck.delete(el);
     el.classList.remove("webbed", "pinned", "shake");
   }
 
   function clearAll() {
-    stuck.forEach((s) => s.g.remove());
+    stuck.forEach((g) => g.remove());
     stuck.clear();
     document.querySelectorAll(".webbed")
       .forEach((c) => c.classList.remove("webbed", "pinned", "shake"));
@@ -293,10 +348,14 @@ function initVillains(shooter) {
 
 /* ── 6. spider sense ── */
 function initSense() {
-  const EDGE = 78;
+  // a generous band so it reliably triggers, but with hysteresis so it
+  // doesn't flicker on and off as you hover right at the threshold
+  const NEAR = 110;
+  const FAR = 150;
   const N = { L: "senseL", R: "senseR", T: "senseT", B: "senseB" };
   const W = { L: "washL", R: "washR", T: "washT", B: "washB" };
   let armed = null;
+
   function set(side) {
     if (armed === side) return;
     for (const k in N) document.getElementById(N[k])?.classList.remove("on");
@@ -307,14 +366,19 @@ function initSense() {
       document.getElementById(W[side])?.classList.add("on");
     }
   }
-  addEventListener("mousemove", (e) => {
-    const { clientX: x, clientY: y } = e;
-    if (x < EDGE) set("L");
-    else if (x > innerWidth - EDGE) set("R");
-    else if (y < EDGE) set("T");
-    else if (y > innerHeight - EDGE) set("B");
-    else set(null);
-  });
+
+  function near(x, y) {
+    const t = armed ? FAR : NEAR;
+    if (x < t) return "L";
+    if (x > innerWidth - t) return "R";
+    if (y < t) return "T";
+    if (y > innerHeight - t) return "B";
+    return null;
+  }
+
+  addEventListener("mousemove", (e) => set(near(e.clientX, e.clientY)), { passive: true });
+  // a window resize can leave you inside the band with no mouse movement
+  addEventListener("resize", () => set(null), { passive: true });
 }
 
 /* ── 7. cursor + click routing ── */

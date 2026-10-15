@@ -6,7 +6,7 @@ import "../styles/chronicles.css";
 const { profile, stats, chips, sections, mcp, ticker } = data;
 const tickerItems = [...ticker, ...ticker];
 
-const sigil = (label: string) => `
+const sigil = () => `
 <svg viewBox="0 0 60 60" aria-hidden="true">
   <circle class="pulse" cx="30" cy="30" r="24"/>
   <circle class="ring" cx="30" cy="30" r="26"/>
@@ -28,10 +28,10 @@ const sigil = (label: string) => `
   <div class="curtain" id="curtain"></div>
 
   <!-- spider sense -->
-  <div class="sense sense-l" id="senseL">{sigil("L")}<div class="lbl">Spider&nbsp;Sense</div></div>
-  <div class="sense sense-r" id="senseR">{sigil("R")}<div class="lbl">Spider&nbsp;Sense</div></div>
-  <div class="sense sense-t" id="senseT"><div class="lbl">Spider&nbsp;Sense</div>{sigil("T")}</div>
-  <div class="sense sense-b" id="senseB"><div class="lbl">Spider&nbsp;Sense</div>{sigil("B")}</div>
+  <div class="sense sense-l" id="senseL"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
+  <div class="sense sense-r" id="senseR"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
+  <div class="sense sense-t" id="senseT"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
+  <div class="sense sense-b" id="senseB"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
   <div class="wash wash-l" id="washL"></div>
   <div class="wash wash-r" id="washR"></div>
   <div class="wash wash-t" id="washT"></div>
