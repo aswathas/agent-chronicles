@@ -188,7 +188,7 @@ section {
 
 .p code {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
+  font-size: 11px;
   margin-top: 14px;
   padding: 8px 10px;
   background: var(--paper2);
