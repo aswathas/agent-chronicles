@@ -2,135 +2,253 @@
   "profile": {
     "handle": "aswathas",
     "name": "Aswath S",
-    "tagline": "building agentic systems that ship",
-    "subline": "CLI tools · agent skills · MCP servers · courses",
+    "eyebrow": "Agent Systems · Skills · CLI · MCP · Web3",
+    "work": "I build the <b>tools, skills & agents</b> that make AI actually work.",
     "github": "https://github.com/aswathas",
-    "skillsRepo": "https://github.com/aswathas/agent-skills"
+    "skillsRepo": "https://github.com/aswathas/agent-skills",
+    "agent101": "https://aswathas.github.io/agent101/",
+    "socials": [
+      { "label": "GitHub", "url": "https://github.com/aswathas" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/aswathas" },
+      { "label": "Instagram", "url": "https://instagram.com/aswathas" },
+      { "label": "X", "url": "https://x.com/aswathas" }
+    ]
   },
   "stats": [
-    { "label": "SKILLS", "value": "9", "detail": "published" },
-    { "label": "CLI", "value": "4", "detail": "tools" },
-    { "label": "COURSES", "value": "2", "detail": "teaching AI" }
+    { "value": "09", "label": "Skills" },
+    { "value": "04", "label": "CLI" },
+    { "value": "03", "label": "Web3" },
+    { "value": "01", "label": "Course" }
   ],
-  "categories": [
+  "chips": [
+    { "label": "deep-teach", "href": "#skills" },
+    { "label": "project-chronicle", "href": "#skills" },
+    { "label": "ai-brain", "href": "#cli" },
+    { "label": "executive-assistant", "href": "#agents" },
+    { "label": "chaintrace", "href": "#web3" },
+    { "label": "axiom", "href": "#research" }
+  ],
+  "sections": [
     {
       "id": "skills",
-      "label": "Skills",
-      "blurb": "Instruction sets that make a coding agent genuinely better at something specific.",
+      "title": "Skills",
+      "blurb": "instruction sets",
+      "count": "03 of 09 — scroll →",
+      "layout": "rail",
       "items": [
         {
           "name": "deep-teach",
-          "lang": "Skill",
-          "desc": "8-lens concept decoder. Any topic through first principles, Feynman, chunking, analogy, inversion, systems view, MECE and memory lock — then writes the exam answer.",
+          "tag": "skill",
+          "meta": "8 lenses · any topic",
+          "desc": "Eight thinking frameworks applied in sequence — first principles, Feynman, chunking, inversion, MECE, memory lock — ending in an exam answer written from memory.",
           "url": "https://github.com/aswathas/agent-skills/tree/main/deep-teach",
-          "install": "npx skills add aswathas/agent-skills@deep-teach -g"
+          "install": "npx skills add aswathas/agent-skills@deep-teach -g",
+          "wide": true
         },
         {
           "name": "project-chronicle",
-          "lang": "Skill",
-          "desc": "Documents a project's whole history as it happens — problem, options, decision, MVP scope, failed attempts, verification. The dead ends get kept.",
+          "tag": "skill",
+          "meta": "project history",
+          "desc": "Records a project's whole history as it happens. Problem, options, decisions, MVP scope — and every attempt that failed, kept on purpose.",
           "url": "https://github.com/aswathas/agent-skills/tree/main/project-chronicle",
-          "install": "npx skills add aswathas/agent-skills@project-chronicle -g"
+          "install": "npx skills add aswathas/agent-skills@project-chronicle -g",
+          "wide": true
         },
         {
-          "name": "second-brain skills",
-          "lang": "7 skills",
-          "desc": "The skill layer of the second brain — auto-skill-builder, ingest-source, log-decision, lint-wiki, onboarding, give-advice, log-interaction.",
+          "name": "Second brain",
+          "tag": "7 skills",
+          "meta": "auto-skill-builder · log-decision",
+          "desc": "The skill layer beneath a knowledge wiki that rewrites itself.",
           "url": "https://github.com/aswathas/second-brain/tree/main/skills"
         }
       ]
     },
     {
       "id": "cli",
-      "label": "CLI & Tools",
-      "blurb": "Things you run from a terminal. Every one works with any MCP-compatible agent.",
+      "title": "CLI & Tools",
+      "blurb": "run from a terminal",
+      "count": "04 published — scroll →",
+      "layout": "rail",
       "items": [
         {
-          "name": "ai-brain",
-          "lang": "TypeScript",
-          "desc": "Personal wiki CLI with AI-powered context and personas. Connects to Claude, ChatGPT, Gemini and 20+ other providers.",
-          "url": "https://github.com/aswathas/ai-brain"
+          "name": "AI Brain",
+          "tag": "cli · typescript",
+          "meta": "20+ LLM providers",
+          "desc": "A personal wiki CLI with AI-powered context and personas. Desktop app on top.",
+          "url": "https://github.com/aswathas/ai-brain",
+          "tint": "blue"
         },
         {
           "name": "postiee",
-          "lang": "Astro",
-          "desc": "LinkedIn CLI for people who use terminals. Posts through the official API.",
+          "tag": "cli · astro",
+          "meta": "linkedin api",
+          "desc": "Post to LinkedIn from the terminal, for people who live there anyway.",
           "url": "https://github.com/aswathas/postiee"
         },
         {
           "name": "olx-india-cli",
-          "lang": "TypeScript",
-          "desc": "Search, score and track second-hand cars on OLX India with AI-powered recommendations.",
+          "tag": "cli · typescript",
+          "meta": "mcp compatible",
+          "desc": "Search, score and track second-hand cars with model-scored recommendations.",
           "url": "https://github.com/aswathas/olx-india-cli"
         },
         {
           "name": "second-brain",
-          "lang": "JavaScript",
-          "desc": "AI-powered knowledge wiki that evolves with you. Framework for Claude Code, Hermes and other CLI agents.",
-          "url": "https://github.com/aswathas/second-brain"
-        }
-      ]
-    },
-    {
-      "id": "products",
-      "label": "Products",
-      "blurb": "The same systems with a face.",
-      "items": [
-        {
-          "name": "ai-brain-desktop",
-          "lang": "TypeScript",
-          "desc": "Electron desktop app wrapping the second brain in a chat UI.",
-          "url": "https://github.com/aswathas/ai-brain-desktop"
+          "tag": "cli · javascript",
+          "meta": "claude · hermes",
+          "desc": "A knowledge wiki that evolves with you, built to run inside any CLI agent.",
+          "url": "https://github.com/aswathas/second-brain",
+          "tint": "red"
         }
       ]
     },
     {
       "id": "agents",
-      "label": "Agents",
-      "blurb": "Autonomous systems that act, not just answer.",
+      "title": "Agents",
+      "blurb": "autonomous systems",
+      "count": "01 published",
+      "layout": "spread",
       "items": [
         {
-          "name": "executive-assistant",
-          "lang": "Agent",
-          "desc": "Personal assistant agent for scheduling and follow-through.",
-          "url": "https://github.com/aswathas/executive-assistant"
+          "name": "Executive Assistant",
+          "tag": "agent",
+          "meta": "scheduling · follow-through",
+          "desc": "A personal assistant agent that holds the calendar and the loose ends. Built for the work between the meetings, not the meetings themselves.",
+          "url": "https://github.com/aswathas/executive-assistant",
+          "code": "github.com/aswathas/executive-assistant"
+        },
+        {
+          "name": "Healthcare AI Agent",
+          "tag": "in progress",
+          "meta": "clinical reasoning",
+          "desc": "Clinical decision support across patient records — an earlier branch being rebuilt on the current stack before it returns to this page.",
+          "url": "https://github.com/aswathas/Healthcare-AI-Agent",
+          "tint": "red"
         }
       ]
     },
     {
-      "id": "mcp",
-      "label": "MCP Servers",
-      "blurb": "Model Context Protocol servers — tools that plug any model into an external service.",
-      "items": [],
-      "empty": "Nothing published yet. MCP servers are the next build — check back."
+      "id": "web3",
+      "title": "Security & Web3",
+      "blurb": "forensics suite",
+      "count": "03 published",
+      "layout": "grid3",
+      "items": [
+        {
+          "name": "ChainTrace",
+          "tag": "web3 · python",
+          "meta": "multi-chain forensics",
+          "desc": "Self-hostable forensic tracing: follow stolen funds hop by hop and profile any wallet. Neo4j graph, self-hosted, open source.",
+          "url": "https://github.com/aswathas/chaintrace",
+          "code": "github.com/aswathas/chaintrace"
+        },
+        {
+          "name": "ChainSentinel",
+          "tag": "security · solidity",
+          "meta": "evm exploit analysis",
+          "desc": "EVM blockchain forensics from Hail Mary. Investigate on-chain exploits end to end.",
+          "url": "https://github.com/aswathas/Project-Hail-Mary",
+          "code": "github.com/aswathas/Project-Hail-Mary",
+          "tint": "red"
+        },
+        {
+          "name": "Attack Logs",
+          "tag": "research · python",
+          "meta": "36 documented exploits",
+          "desc": "An EVM attack simulation dataset — 36 documented smart-contract exploits with forensic-grade NDJSON logs.",
+          "url": "https://github.com/aswathas/AttackLogs",
+          "code": "github.com/aswathas/AttackLogs"
+        }
+      ]
     },
     {
-      "id": "plugins",
-      "label": "Plugins",
-      "blurb": "Bundled Claude Code plugins — skills, agents, commands and hooks that install together.",
-      "items": [],
-      "empty": "Nothing published yet."
+      "id": "research",
+      "title": "Research",
+      "blurb": "papers & archives",
+      "count": "04 published",
+      "layout": "list",
+      "items": [
+        {
+          "name": "Axiom",
+          "desc": "Evidence-grounded clinical intelligence layer for EMRs — calibrated refusal when the record cannot support an answer. Hackathon District 04.",
+          "url": "https://github.com/aswathas/axiom"
+        },
+        {
+          "name": "Web3 Forensics Research",
+          "desc": "A self-guided research archive: the tool landscape, an enterprise architecture blueprint, and editable diagrams.",
+          "url": "https://github.com/aswathas/web3-forensics-research"
+        },
+        {
+          "name": "EVM Log Extractor",
+          "desc": "Forensic-grade extraction tooling for pulling structured evidence out of raw on-chain event logs.",
+          "url": "https://github.com/aswathas/evm-log-extractor"
+        },
+        {
+          "name": "Forensic Tool W3",
+          "desc": "A TypeScript toolkit for web3 forensic investigation workflows.",
+          "url": "https://github.com/aswathas/ForensicToolW3"
+        }
+      ]
+    },
+    {
+      "id": "projects",
+      "title": "In the Works",
+      "blurb": "building now",
+      "count": "Field notes",
+      "layout": "columns",
+      "items": [
+        {
+          "name": "Pulmo Track",
+          "meta": "respiratory monitoring",
+          "desc": "Longitudinal tracking for lung-health patients, built around continuity of care rather than a single consultation."
+        },
+        {
+          "name": "Crowd Sense",
+          "meta": "real-time density",
+          "desc": "Agentic crowd-flow analysis for venues, built to react in seconds rather than report after the fact."
+        },
+        {
+          "name": "Executive Desk",
+          "meta": "agent tooling",
+          "desc": "Follow-up automation for the assistant agent — the loop where a reminder becomes a completed task."
+        }
+      ]
     },
     {
       "id": "courses",
-      "label": "Courses",
-      "blurb": "Teaching the material, not just using it.",
+      "title": "Courses",
+      "blurb": "teaching it back",
+      "count": "01 published",
+      "layout": "rail",
       "items": [
         {
-          "name": "AI Engineering from Scratch",
-          "lang": "523 lessons",
-          "desc": "A 20-phase curriculum building AI systems from first principles. Every framework rebuilt from nothing — no assumed knowledge.",
-          "url": "https://github.com/aswathas",
-          "status": "building"
-        },
-        {
           "name": "Agent101",
-          "lang": "Course",
-          "desc": "The agent-building course. From what an agent is to shipping one that works against a real model.",
+          "tag": "course · live",
+          "meta": "from zero to shipping",
+          "desc": "What an agent actually is, through to shipping one that holds up against a real model. Built for people who have read the docs and still don't get it.",
           "url": "https://aswathas.github.io/agent101/",
-          "status": "live"
+          "code": "aswathas.github.io/agent101",
+          "wide": true
         }
       ]
     }
+  ],
+  "mcp": {
+    "title": "MCP Servers",
+    "blurb": "coming next",
+    "count": "00 published",
+    "cells": [
+      { "h": "Model Context Protocol", "p": "Tools that plug any model into an external service. The next build.", "dark": true },
+      { "h": "Nothing shipped yet", "p": "This block replaces itself when the first server goes live." },
+      { "h": "Watch this space", "p": "Or follow the GitHub to catch it first." }
+    ]
+  },
+  "ticker": [
+    "Vol. XXVI · No. 0116 · Agent Systems Desk",
+    "9 skills published",
+    "4 CLI tools shipping",
+    "Web3 forensics suite",
+    "MCP servers in production",
+    "The web never misses"
   ]
 }
