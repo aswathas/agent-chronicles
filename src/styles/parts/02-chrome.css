@@ -17,7 +17,7 @@
   white-space: nowrap;
   animation: slide 30s linear infinite;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
@@ -43,7 +43,7 @@
 
 .mast div {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--grey);
@@ -68,7 +68,7 @@
 
 .soc {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border: 1px solid var(--ink);
@@ -112,11 +112,12 @@
 }
 
 .strand {
+  --L: 820; /* JS overwrites per strand; fallback keeps the dash valid before it runs */
   fill: none;
   stroke: var(--ink);
   stroke-width: 1.1;
-  stroke-dasharray: varL);
-  stroke-dashoffset: varL);
+  stroke-dasharray: var(--L);
+  stroke-dashoffset: var(--L);
   animation: draw 2.6s var(--ease) forwards;
 }
 
@@ -130,7 +131,7 @@
   position: relative;
   z-index: 2;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--grey);
@@ -143,7 +144,8 @@
   position: relative;
   z-index: 2;
   font-family: "Archivo Black", sans-serif;
-  font-size: clamp(46px, 13.5vw, 190px);
+  font-size: clamp(var(--display-lg), 13.5vw, 30rem);
+  text-wrap: balance;
   line-height: 0.84;
   letter-spacing: -0.04em;
   text-transform: uppercase;
@@ -182,8 +184,9 @@
   position: relative;
   z-index: 2;
   margin-top: 30px;
-  font-size: clamp(19px, 2.6vw, 34px);
+  font-size: clamp(var(--text-lg), 2.6vw, var(--text-xl));
   font-style: italic;
+  text-wrap: pretty;
   color: #4a463e;
   max-width: 22ch;
   line-height: 1.35;
@@ -219,7 +222,7 @@
 
 .hero .meta b {
   font-family: "Archivo Black", sans-serif;
-  font-size: 26px;
+  font-size: var(--text-lg);
   font-variant-numeric: tabular-nums;
   line-height: 0.85;
   display: block;
@@ -227,7 +230,7 @@
 
 .hero .meta span {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.13em;
   text-transform: uppercase;
   color: var(--grey);
@@ -269,7 +272,7 @@
 
 .kick {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--red);
@@ -277,7 +280,8 @@
 }
 
 .big {
-  font-size: clamp(38px, 6.2vw, 76px);
+  font-size: clamp(var(--text-xl), 6.2vw, var(--display-lg));
+  text-wrap: balance;
   line-height: 0.94;
   letter-spacing: -0.02em;
   font-weight: 500;
@@ -291,8 +295,9 @@
 
 .lede {
   margin-top: 22px;
-  font-size: 17px;
-  line-height: 1.66;
+  font-size: var(--text-md);
+  line-height: 1.55;
+  text-wrap: pretty;
   color: #4a463e;
   max-width: 42ch;
 }
@@ -308,6 +313,7 @@
 .burst {
   width: 172px;
   height: 172px;
+  padding: 14px;
   border-radius: 50%;
   background: var(--red);
   color: #fff;
@@ -334,13 +340,13 @@
 
 .burst b {
   font-family: "Archivo Black", sans-serif;
-  font-size: 35px;
+  font-size: var(--text-lg);
   line-height: 0.85;
 }
 
 .burst span {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 8px;
+  font-size: var(--text-xs);
   letter-spacing: 0.13em;
   text-transform: uppercase;
   margin-top: 6px;
@@ -355,7 +361,7 @@
 
 .chip {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: var(--text-xs);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border: 1.5px solid var(--ink);
