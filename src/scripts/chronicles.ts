@@ -81,6 +81,7 @@ function initShooter() {
   function webPattern(cx, cy, r) {
     const g = document.createElementNS(NS, "g");
     g.setAttribute("class", "shot stick");
+    g.setAttribute("aria-hidden", "true");
 
     for (let i = 0; i < 10; i++) {
       const a = (Math.PI * 2) / 10 * i + 0.28;
@@ -201,6 +202,7 @@ function initWebNav(shooter) {
   sections.forEach((sec) => {
     const p = document.createElementNS(NS, "path");
     p.setAttribute("class", "tether");
+    p.setAttribute("aria-hidden", "true");
     layer.appendChild(p);
     tethers.set(sec, p);
   });

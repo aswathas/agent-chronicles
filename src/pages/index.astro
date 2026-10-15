@@ -22,29 +22,31 @@ const sigil = () => `
   title={`${profile.name} — agent systems, skills & tools`}
   description={profile.work.replace(/<[^>]+>/g, "")}
 >
+  <a class="skip" href="#main">Skip to content</a>
+
   <!-- texture + combat layers -->
-  <div class="benday"></div>
+  <div class="benday" aria-hidden="true"></div>
   <svg id="websvg" aria-hidden="true"></svg>
 
   <!-- spider sense -->
-  <div class="sense sense-l" id="senseL"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
-  <div class="sense sense-r" id="senseR"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
-  <div class="sense sense-t" id="senseT"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
-  <div class="sense sense-b" id="senseB"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
-  <div class="wash wash-l" id="washL"></div>
-  <div class="wash wash-r" id="washR"></div>
-  <div class="wash wash-t" id="washT"></div>
-  <div class="wash wash-b" id="washB"></div>
+  <div class="sense sense-l" id="senseL" aria-hidden="true"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
+  <div class="sense sense-r" id="senseR" aria-hidden="true"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
+  <div class="sense sense-t" id="senseT" aria-hidden="true"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
+  <div class="sense sense-b" id="senseB" aria-hidden="true"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
+  <div class="wash wash-l" id="washL" aria-hidden="true"></div>
+  <div class="wash wash-r" id="washR" aria-hidden="true"></div>
+  <div class="wash wash-t" id="washT" aria-hidden="true"></div>
+  <div class="wash wash-b" id="washB" aria-hidden="true"></div>
 
 
   <!-- ticker -->
-  <div class="ticker">
+  <div class="ticker" aria-hidden="true">
     <div class="tk">
       {tickerItems.map((t, i) => <span>{i === 0 ? `<b>●</b> ${t}` : t}</span>)}
     </div>
   </div>
 
-  <div class="s">
+  <div class="s" id="main" role="main" tabindex="-1">
     <!-- masthead -->
     <div class="mast">
       <div>

@@ -1,43 +1,324 @@
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — mobile-first base, then 700px and 1000px.
 
-@media (max-width: 1000px) {
+   Base rules below apply to every viewport and are sized for a
+   phone; the media queries only add back room as it appears.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── skip link — first focusable thing in the DOM ── */
+.skip {
+  position: absolute;
+  z-index: 1000;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-200%);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 16px;
+  border: 2px solid var(--red);
+}
+.skip:focus {
+  transform: none;
+}
+
+/* ── anchor targets clear the viewport edge ── */
+section[id],
+[id] {
+  scroll-margin-top: 24px;
+}
+
+/* ── long text: break anywhere rather than overflow ── */
+.p h3,
+.rlist b,
+.pj h3,
+.sech h2,
+.sech .bl,
+.p .meta,
+.pj .m,
+.p code {
+  overflow-wrap: break-word;
+}
+
+/* ── safe areas for the full-bleed chrome ── */
+.ticker {
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+.mast {
+  padding-top: calc(18px + env(safe-area-inset-top));
+  padding-bottom: calc(13px + env(safe-area-inset-bottom));
+}
+footer {
+  padding-bottom: calc(54px + env(safe-area-inset-bottom));
+}
+
+/* ── tap targets: kill the 300ms delay where touch actually exists ── */
+@media (pointer: coarse) {
+  .p,
+  .rlist > a,
+  .chip,
+  .soc {
+    touch-action: manipulation;
+  }
+}
+
+/* ── spider sense: 74/70px of fixed overlay is a fifth of a phone ── */
+.sense {
+  display: none;
+}
+.wash {
+  display: none;
+}
+
+/* ── section header: stack on phones, DOM order preserved ── */
+.sech {
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.sech h2 {
+  flex: 1 1 100%;
+  margin-bottom: 2px;
+}
+.sech .bl {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.sech .ct {
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
+/* ── narrow rails: cards fit the column instead of scrolling off it ── */
+.rail .p {
+  flex-basis: 100%;
+}
+.p {
+  padding: 18px;
+}
+
+/* ── smaller gutters on phones ── */
+.s {
+  padding: 0 20px;
+}
+section {
+  padding: 28px 0;
+}
+.cover {
+  grid-template-columns: 1fr;
+}
+.cover-l {
+  border-right: none;
+  border-bottom: 3px solid var(--ink);
+  padding-right: 0;
+}
+.cover-r {
+  padding: 28px 0;
+}
+.spread,
+.g3,
+.rlist,
+.next {
+  grid-template-columns: 1fr;
+}
+.cols {
+  columns: 1;
+}
+.next div {
+  border-right: none;
+  border-bottom: 2px solid var(--ink);
+}
+.next div:last-child {
+  border-bottom: none;
+}
+body {
+  cursor: auto;
+}
+
+/* ── masthead stacks rather than squeezing two mono columns ── */
+.mast {
+  flex-direction: column;
+  gap: 12px;
+}
+.mast div:last-child {
+  text-align: left;
+}
+.hero .meta {
+  gap: 20px 26px;
+}
+footer {
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ══════════════ ≥700px ══════════════ */
+@media (min-width: 700px) {
+  .s {
+    padding: 0 32px;
+  }
+
+  /* header fits on one line again */
+  .sech h2 {
+    flex: 0 1 auto;
+    margin-bottom: 0;
+  }
+  .sech .bl {
+    flex: 0 1 auto;
+  }
+
+  .rail .p {
+    flex-basis: 384px;
+  }
+  .p.wide {
+    flex-basis: 440px;
+  }
+
+  .mast {
+    flex-direction: row;
+  }
+  .mast div:last-child {
+    text-align: right;
+  }
+  footer {
+    flex-direction: row;
+  }
+
+  /* room for a pointer, so the overlay comes back — at half size */
+  .sense-l,
+  .sense-r {
+    width: 40px;
+  }
+  .sense-t,
+  .sense-b {
+    height: 44px;
+  }
+  .sense .sigil {
+    width: 26px;
+    height: 26px;
+  }
+  .sense .lbl {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    padding: 2px 5px;
+  }
+  .wash-l,
+  .wash-r {
+    width: 90px;
+  }
+  .wash-t,
+  .wash-b {
+    height: 90px;
+  }
+}
+
+@media (min-width: 700px) and (pointer: fine) {
+  .sense-l {
+    transform: translateX(-40px);
+  }
+  .sense-r {
+    transform: translateX(40px);
+  }
+  .sense-t {
+    transform: translateY(-44px);
+  }
+  .sense-b {
+    transform: translateY(44px);
+  }
+}
+
+/* ══════════════ ≥1000px ══════════════ */
+@media (min-width: 1000px) {
+  .s {
+    padding: 0 48px;
+  }
+  section {
+    padding: 38px 0;
+  }
+
   .cover {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 320px;
   }
   .cover-l {
-    border-right: none;
-    border-bottom: 3px solid var(--ink);
-    padding-right: 0;
+    border-right: 3px solid var(--ink);
+    border-bottom: none;
+    padding-right: 40px;
   }
   .cover-r {
-    padding: 28px 0;
+    padding: 44px 0 44px 40px;
   }
-  .spread,
-  .g3,
-  .rlist,
+
+  .spread {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .g3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .rlist {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .next {
-    grid-template-columns: 1fr;
-  }
-  .cols {
-    columns: 1;
-  }
-  .rlist > div {
-    border-right: none;
+    grid-template-columns: repeat(3, 1fr);
   }
   .next div {
-    border-right: none;
-    border-bottom: 2px solid var(--ink);
-  }
-  .next div:last-child {
     border-bottom: none;
   }
-  .s {
-    padding: 0 20px;
+  .cols {
+    columns: 3;
   }
-  body {
-    cursor: auto;
+
+  .rail .p {
+    flex-basis: 384px;
   }
-  .cur,
-  .curtain {
-    display: none;
+  .p {
+    padding: 22px;
+  }
+
+  .mast {
+    padding-top: 18px;
+    padding-bottom: 13px;
+  }
+
+  /* full-size overlays only where there is room for them */
+  .sense-l,
+  .sense-r {
+    width: 74px;
+  }
+  .sense-t,
+  .sense-b {
+    height: 70px;
+  }
+  .sense .sigil {
+    width: 46px;
+    height: 46px;
+  }
+  .sense .lbl {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    padding: 3px 7px;
+  }
+  .wash-l,
+  .wash-r {
+    width: 150px;
+  }
+  .wash-t,
+  .wash-b {
+    height: 130px;
+  }
+}
+
+@media (min-width: 1000px) and (pointer: fine) {
+  .sense-l {
+    transform: translateX(-70px);
+  }
+  .sense-r {
+    transform: translateX(70px);
+  }
+  .sense-t {
+    transform: translateY(-70px);
+  }
+  .sense-b {
+    transform: translateY(70px);
   }
 }
