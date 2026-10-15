@@ -1,0 +1,499 @@
+/* ── sections ── */
+section {
+  padding: 38px 0;
+}
+
+.sech {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.sech h2 {
+  font-family: "Archivo Black", sans-serif;
+  text-wrap: balance;
+  font-size: clamp(24px, 3.5vw, 44px);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+}
+
+.sech .bl {
+  font-size: 15px;
+  color: var(--grey);
+  font-style: italic;
+}
+
+.sech .ct {
+  margin-left: auto;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+.mline {
+  display: block;
+  overflow: hidden;
+}
+
+.mline span {
+  display: block;
+  transform: translateY(101%);
+  transition: transform 0.85s var(--ease);
+}
+
+.rev.in .mline span {
+  transform: translateY(0);
+}
+
+.rev.in .mline:nth-child(2) span {
+  transition-delay: 0.08s;
+}
+
+.webrule {
+  height: 30px;
+  margin: -4px 0 22px;
+  opacity: 0.3;
+}
+
+.webrule svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+}
+
+/* ── rail ── */
+.rail {
+  display: flex;
+  gap: 13px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 12px;
+}
+
+.rail::-webkit-scrollbar {
+  height: 4px;
+}
+
+.rail::-webkit-scrollbar-thumb {
+  background: var(--ink);
+}
+
+.p {
+  flex: 0 0 384px;
+  scroll-snap-align: start;
+  border: 2px solid var(--ink);
+  background: var(--card);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 4px 4px 0 var(--ink);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+
+.p::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0, rgba(214, 48, 30, 0.12), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.p:hover {
+  transform: translateY(-6px) skewY(-1.2deg);
+  box-shadow: 8px 12px 0 var(--ink);
+}
+
+.p:hover::before {
+  opacity: 1;
+}
+
+.p.wide {
+  flex-basis: 500px;
+}
+
+.p.blue {
+  background: var(--blue);
+  color: #fff;
+}
+
+.p.red {
+  background: var(--red);
+  color: #fff;
+}
+
+.p.blue p,
+.p.red p,
+.p.blue .meta,
+.p.red .meta {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.p.blue .tag,
+.p.red .tag {
+  color: #fff;
+}
+
+.p .tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--red);
+  align-self: flex-start;
+  border: 1.5px solid currentColor;
+  padding: 3px 7px;
+  border-radius: 99px;
+  position: relative;
+  z-index: 7;
+}
+
+.p h3 {
+  font-size: clamp(23px, 2.1vw, 30px);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 12px 0 5px;
+  position: relative;
+  z-index: 7;
+}
+
+.p .meta {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey);
+  position: relative;
+  z-index: 7;
+}
+
+.p p {
+  font-size: 15px;
+  line-height: 1.56;
+  color: #4a463e;
+  margin-top: 10px;
+  flex: 1;
+  position: relative;
+  z-index: 7;
+}
+
+.p code {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  margin-top: 14px;
+  padding: 8px 10px;
+  background: var(--paper2);
+  border: 1.5px solid var(--ink);
+  display: block;
+  overflow-wrap: anywhere;
+  position: relative;
+  z-index: 7;
+}
+
+.p.blue code,
+.p.red code {
+  background: rgba(0, 0, 0, 0.22);
+  border-color: rgba(255, 255, 255, 0.42);
+  color: #fff;
+}
+
+.spread {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+}
+
+.spread .p {
+  flex: 1;
+}
+
+.g3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+}
+
+.cols {
+  columns: 3;
+  column-gap: 24px;
+  column-rule: 1px solid var(--grey);
+}
+
+.pj {
+  break-inside: avoid;
+  border-top: 3px double var(--ink);
+  padding: 14px 0 16px;
+}
+
+.pj:first-child {
+  border-top: none;
+}
+
+.pj h3 {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 17px;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.pj .m {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--grey);
+  margin-bottom: 7px;
+}
+
+.pj p {
+  font-size: 14px;
+  line-height: 1.58;
+  color: #4a463e;
+}
+
+.rlist {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 2px solid var(--ink);
+}
+
+.rlist > div {
+  padding: 22px 20px;
+  border-right: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  display: block;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rlist > div:nth-child(2n) {
+  border-right: none;
+}
+
+.rlist > div:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.rlist b {
+  display: block;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.rlist span {
+  font-size: 14px;
+  color: var(--grey);
+  line-height: 1.55;
+}
+
+.rlist > div:hover span {
+  color: rgba(239, 231, 216, 0.72);
+}
+
+.next {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--ink);
+}
+
+.next div {
+  padding: 24px 22px 30px;
+  border-right: 2px solid var(--ink);
+}
+
+.next div:last-child {
+  border-right: none;
+}
+
+.next b {
+  display: block;
+  font-family: "Archivo Black", sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.next span {
+  font-size: 14px;
+  color: var(--grey);
+  line-height: 1.55;
+}
+
+.next div:first-child {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.next div:first-child span {
+  color: rgba(239, 231, 216, 0.68);
+}
+
+.next div:first-child b {
+  color: var(--red);
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 22px 0 54px;
+  border-top: 3px double var(--ink);
+  margin-top: 28px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--grey);
+}
+
+footer .socials {
+  margin: 0;
+}
+
+.rev {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+
+.rev.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ══════════════ WEB COMBAT SYSTEM ══════════════ */
+#websvg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 950;
+}
+
+/* webbed component */
+.webbed {
+  position: relative;
+}
+
+.webbed::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(58deg, transparent 0 15px, rgba(255, 255, 255, 0.32) 15px 16px),
+    repeating-linear-gradient(-58deg, transparent 0 15px, rgba(255, 255, 255, 0.32) 15px 16px),
+    repeating-linear-gradient(0deg, transparent 0 15px, rgba(255, 255, 255, 0.18) 15px 16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 5;
+}
+
+.webbed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--wx, 50%) var(--wy, 50%), rgba(255, 255, 255, 0.28), transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 5;
+}
+
+.webbed.on::before,
+.webbed.on::after {
+  opacity: 1;
+}
+
+.webbed.on {
+  transform: scale(0.965) rotate(-0.5deg) !important;
+}
+
+.pinned {
+  z-index: 6;
+}
+
+/* live strand in flight */
+.shot {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.7;
+  filter: drop-shadow(0 0 4px rgba(214, 48, 30, 0.95));
+}
+
+.shot.stick {
+  stroke-width: 1.9;
+}
+
+.blob {
+  fill: rgba(255, 255, 255, 0.22);
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 1.2;
+}
+
+/* the landed web pattern — radial threads + spiral rings */
+.webp path {
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-width: 1.15;
+}
+
+.webp.pinned path {
+  stroke: rgba(255, 255, 255, 1);
+  stroke-width: 1.35;
+}
+
+.impact {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.4;
+  animation: pop 0.5s var(--ease) forwards;
+}
+
+@keyframes pop {
+  from {
+    r: 4;
+    opacity: 1;
+  }
+  to {
+    r: 52;
+    opacity: 0;
+  }
+}
+
+.shake {
+  animation: shk 0.5s;
+}
+
+@keyframes shk {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-5px, 3px);
+  }
+  40% {
+    transform: translate(5px, -3px);
+  }
+  60% {
+    transform: translate(-4px, -2px);
+  }
+  80% {
+    transform: translate(3px, 2px);
+  }
+}

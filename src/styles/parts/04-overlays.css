@@ -1,0 +1,204 @@
+/* ── spider sense ── */
+.sense {
+  position: fixed;
+  z-index: 960;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.22s, transform 0.5s var(--ease);
+}
+
+.sense.on {
+  opacity: 1;
+}
+
+.sense-l {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 74px;
+  justify-content: center;
+  transform: translateX(-70px);
+}
+
+.sense-l.on {
+  transform: translateX(0);
+}
+
+.sense-r {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 74px;
+  justify-content: center;
+  transform: translateX(70px);
+}
+
+.sense-r.on {
+  transform: translateX(0);
+}
+
+.sense-t {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 70px;
+  justify-content: center;
+  flex-direction: row;
+  transform: translateY(-70px);
+}
+
+.sense-t.on {
+  transform: translateY(0);
+}
+
+.sense-b {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70px;
+  justify-content: center;
+  flex-direction: row;
+  transform: translateY(70px);
+}
+
+.sense-b.on {
+  transform: translateY(0);
+}
+
+.sigil {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+}
+
+.sigil svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sigil .ring {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2;
+  stroke-dasharray: 18 9;
+  transform-origin: 50% 50%;
+  animation: spin 2.6s linear infinite;
+}
+
+.sigil .pulse {
+  fill: rgba(214, 48, 30, 0.16);
+  animation: pl2 1.5s ease-in-out infinite;
+}
+
+.sigil .spid {
+  fill: var(--red);
+}
+
+.sigil .eye {
+  fill: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pl2 {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.14);
+    opacity: 0.9;
+  }
+}
+
+.sense .lbl {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: var(--paper);
+  border: 1px solid var(--red);
+  padding: 3px 7px;
+  white-space: nowrap;
+}
+
+.wash {
+  position: fixed;
+  z-index: 955;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+
+.wash-l {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  background: linear-gradient(90deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash-r {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  background: linear-gradient(270deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash-t {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 130px;
+  background: linear-gradient(180deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash-b {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 130px;
+  background: linear-gradient(0deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash.on {
+  opacity: 1;
+}
+
+/* ── navigation tethers ── */
+.tether {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.6;
+  opacity: 0;
+  transition: opacity 0.22s;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgba(214, 48, 30, 0.5));
+}
+
+.tether.on {
+  opacity: 0.85;
+}
+
+/* a travelling pulse along the attached strand, so it reads as live silk */
+.tether-pulse {
+  fill: var(--red);
+  opacity: 0;
+}
+
+.tether.on + .tether-pulse {
+  opacity: 0.9;
+}
