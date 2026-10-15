@@ -105,3 +105,22 @@ test('the 404 page redirects deep links to the root', () => {
     '404.html must redirect deep links back to the root',
   );
 });
+test('the perch is a real button, not a decorative div', () => {
+  // It is the only control on the page that moves the reader somewhere they
+  // did not scroll, so it must be reachable and announced. A div would be
+  // invisible to both keyboard and screen reader.
+  const html = readFileSync(`${dist}index.html`, 'utf8');
+  assert.match(html, /<button[^>]*class="perch"/, 'perch must be a <button>');
+  assert.match(html, /class="perch"[^>]*aria-label="[^"]+"/,
+    'perch needs an aria-label describing what it does');
+  assert.match(html, /<svg[^>]*viewBox="0 0 76 132"/,
+    'the perch figure must ship as inline SVG, not an external asset');
+});
+
+test('no card nests one anchor inside another', () => {
+  // Cards carry a Source and a Live destination. Nesting anchors is invalid
+  // HTML and breaks both links, so the card must stay a div with two siblings.
+  const html = readFileSync(`${dist}index.html`, 'utf8');
+  assert.equal(/<a[^>]*>(?:(?!<\/a>)[\s\S])*<a\s/.test(html), false,
+    'no <a> may contain another <a>');
+});
