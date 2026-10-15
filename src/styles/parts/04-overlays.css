@@ -317,3 +317,128 @@
     display: none;
   }
 }
+
+/* ── the perch ─────────────────────────────────────────────
+   A figure clinging to the right edge on her own strand. She is also
+   the right-edge spider-sense: approaching her lights her up rather than
+   showing a generic sigil, so the warning and the character are one thing. */
+.perch {
+  position: fixed;
+  right: 0;
+  top: 34vh;
+  z-index: 958;
+  width: 76px;
+  height: 132px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+  transform-origin: 50% 0;
+  animation: sway 6.5s ease-in-out infinite;
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-2.4deg);
+  }
+  50% {
+    transform: rotate(2.4deg);
+  }
+}
+
+.perch svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* the silk she hangs from */
+.perch .thread {
+  stroke: var(--ink);
+  stroke-width: 1;
+  fill: none;
+  opacity: 0.5;
+}
+
+.perch .body {
+  fill: var(--red);
+}
+
+.perch .mask {
+  fill: var(--ink);
+}
+
+.perch .lens {
+  fill: var(--paper);
+  transition: fill 0.25s, filter 0.25s;
+}
+
+.perch .limb {
+  stroke: var(--red);
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  fill: none;
+}
+
+/* sensed: she wakes up */
+.perch.on .lens {
+  fill: #fff;
+  filter: drop-shadow(0 0 4px var(--red));
+}
+
+.perch.on .body,
+.perch.on .limb {
+  filter: drop-shadow(0 0 6px rgba(214, 48, 30, 0.55));
+}
+
+/* hovered: ready */
+.perch:hover .lens,
+.perch:focus-visible .lens {
+  fill: #fff;
+}
+
+.perch:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* the strand she throws when you click her */
+.perch-shot {
+  position: fixed;
+  z-index: 957;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--ink));
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  animation: fire 0.5s var(--ease) forwards;
+}
+
+@keyframes fire {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+
+/* no character where there is no cursor, or no room for one */
+@media (pointer: coarse), (max-width: 700px) {
+  .perch {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .perch {
+    animation: none;
+  }
+}

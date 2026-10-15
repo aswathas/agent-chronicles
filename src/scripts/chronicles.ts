@@ -157,6 +157,7 @@ function initSense() {
   const N = { L: "senseL", R: "senseR", T: "senseT", B: "senseB" };
   const W = { L: "washL", R: "washR", T: "washT", B: "washB" };
   let armed = null;
+  const perch = document.getElementById("perch");
 
   function set(side) {
     if (armed === side) return;
@@ -178,7 +179,19 @@ function initSense() {
     return null;
   }
 
-  addEventListener("mousemove", (e) => set(near(e.clientX, e.clientY)), { passive: true });
+
+  addEventListener(
+    "mousemove",
+    (e) => {
+      const side = near(e.clientX, e.clientY);
+      // the right edge belongs to the perch: she is the warning there,
+      // so no sigil is shown and she lights up instead
+      const right = side === "R";
+      set(right ? null : side);
+      perch?.classList.toggle("on", right);
+    },
+    { passive: true }
+  );
   // a window resize can leave you inside the band with no mouse movement
   addEventListener("resize", () => set(null), { passive: true });
 }
@@ -321,6 +334,28 @@ function initReticle() {
   })();
 }
 
+/**
+ * Clicking the perch throws a strand at the top of the page and reels
+ * you back up it. Keyboard reachable, and it is the only thing on the
+ * page that moves you somewhere you did not scroll.
+ */
+function initPerch() {
+  const el = document.getElementById("perch");
+  if (!el) return;
+  el.addEventListener("click", () => {
+    const r = el.getBoundingClientRect();
+    const shot = document.createElement("div");
+    shot.className = "perch-shot";
+    shot.style.left = `${r.left + r.width / 2 - 1}px`;
+    shot.style.top = `${r.top}px`;
+    shot.style.height = `${Math.max(80, r.top - 8)}px`;
+    shot.setAttribute("aria-hidden", "true");
+    document.body.appendChild(shot);
+    setTimeout(() => shot.remove(), 540);
+    scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
 /* ── boot ── */
 drawHeroWeb();
 drawDividers();
@@ -332,5 +367,6 @@ if (!reduce && fine) {
     initSense();
     initWebNav(shooter);
     initReticle();
+    initPerch();
   }
 }
