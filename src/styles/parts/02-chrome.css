@@ -18,7 +18,8 @@
   background: var(--paper2);
   color: var(--grey);
   overflow: hidden;
-  height: 26px;
+  /* inset so the marquee text is not flush against the bar's own edges */
+  padding: 5px 16px;
   display: flex;
   align-items: center;
   position: relative;
