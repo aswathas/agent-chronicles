@@ -8,25 +8,71 @@
     "skillsRepo": "https://github.com/aswathas/agent-skills",
     "agent101": "https://aswathas.github.io/agent101/",
     "socials": [
-      { "label": "GitHub", "url": "https://github.com/aswathas" },
-      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/aswathas" },
-      { "label": "Instagram", "url": "https://instagram.com/aswathas" },
-      { "label": "X", "url": "https://x.com/aswathas" }
+      {
+        "label": "GitHub",
+        "url": "https://github.com/aswathas"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/aswathas"
+      },
+      {
+        "label": "Instagram",
+        "url": "https://instagram.com/aswathas"
+      },
+      {
+        "label": "X",
+        "url": "https://x.com/aswathas"
+      }
     ]
   },
   "stats": [
-    { "value": "09", "label": "Skills" },
-    { "value": "04", "label": "CLI" },
-    { "value": "03", "label": "Web3" },
-    { "value": "01", "label": "Course" }
+    {
+      "value": "09",
+      "label": "Skills"
+    },
+    {
+      "value": "04",
+      "label": "CLI"
+    },
+    {
+      "value": "03",
+      "label": "Shipped"
+    },
+    {
+      "value": "01",
+      "label": "Course"
+    }
   ],
   "chips": [
-    { "label": "deep-teach", "href": "#skills" },
-    { "label": "project-chronicle", "href": "#skills" },
-    { "label": "ai-brain", "href": "#cli" },
-    { "label": "executive-assistant", "href": "#agents" },
-    { "label": "chaintrace", "href": "#web3" },
-    { "label": "axiom", "href": "#research" }
+    {
+      "label": "deep-teach",
+      "href": "#skills"
+    },
+    {
+      "label": "project-chronicle",
+      "href": "#skills"
+    },
+    {
+      "label": "ai-brain",
+      "href": "#cli"
+    },
+    {
+      "label": "executive-assistant",
+      "href": "#agents"
+    },
+    {
+      "label": "chaintrace",
+      "href": "#web3"
+    },
+    {
+      "label": "axiom",
+      "href": "#research"
+    },
+    {
+      "label": "clipper",
+      "href": "#shipped"
+    }
   ],
   "sections": [
     {
@@ -99,6 +145,37 @@
           "desc": "A knowledge wiki that evolves with you, built to run inside any CLI agent.",
           "url": "https://github.com/aswathas/second-brain",
           "tint": "red"
+        }
+      ]
+    },
+    {
+      "id": "shipped",
+      "title": "Shipped",
+      "blurb": "things with a window",
+      "count": "03 released",
+      "layout": "grid3",
+      "items": [
+        {
+          "name": "Clipper",
+          "tag": "windows · tauri",
+          "meta": "v0.1.1 · local only",
+          "desc": "A clipboard watch-later for Windows. A hotkey captures any URL or screenshot, Claude Code classifies it into structured notes in your Obsidian vault, and a local dashboard indexes everything. No cloud, no account, no telemetry.",
+          "code": "github.com/aswathas/smart-clipboard",
+          "tint": "red"
+        },
+        {
+          "name": "AI Brain Desktop",
+          "tag": "electron · typescript",
+          "meta": "chat ui",
+          "desc": "The second brain with a face — an Electron desktop app wrapping the AI-powered wiki in a chat interface over the same multi-provider backend.",
+          "url": "https://github.com/aswathas/ai-brain-desktop"
+        },
+        {
+          "name": "OLX India Web",
+          "tag": "web app · typescript",
+          "meta": "model-scored",
+          "desc": "The browser side of olx-india-cli — search and track second-hand cars with AI-scored recommendations. Shares a backend with the terminal tool.",
+          "url": "https://github.com/aswathas/olx-india-cli"
         }
       ]
     },
@@ -238,9 +315,19 @@
     "blurb": "coming next",
     "count": "00 published",
     "cells": [
-      { "h": "Model Context Protocol", "p": "Tools that plug any model into an external service. The next build.", "dark": true },
-      { "h": "Nothing shipped yet", "p": "This block replaces itself when the first server goes live." },
-      { "h": "Watch this space", "p": "Or follow the GitHub to catch it first." }
+      {
+        "h": "Model Context Protocol",
+        "p": "Tools that plug any model into an external service. The next build.",
+        "dark": true
+      },
+      {
+        "h": "Nothing shipped yet",
+        "p": "This block replaces itself when the first server goes live."
+      },
+      {
+        "h": "Watch this space",
+        "p": "Or follow the GitHub to catch it first."
+      }
     ]
   },
   "ticker": [

@@ -650,7 +650,7 @@ section {
   padding: 3px 7px;
   border-radius: 99px;
   position: relative;
-  z-index: 2;
+  z-index: 7;
 }
 
 .p h3 {
@@ -660,7 +660,7 @@ section {
   letter-spacing: -0.015em;
   margin: 12px 0 5px;
   position: relative;
-  z-index: 2;
+  z-index: 7;
 }
 
 .p .meta {
@@ -670,7 +670,7 @@ section {
   text-transform: uppercase;
   color: var(--grey);
   position: relative;
-  z-index: 2;
+  z-index: 7;
 }
 
 .p p {
@@ -680,7 +680,7 @@ section {
   margin-top: 10px;
   flex: 1;
   position: relative;
-  z-index: 2;
+  z-index: 7;
 }
 
 .p code {
@@ -693,7 +693,7 @@ section {
   display: block;
   overflow-wrap: anywhere;
   position: relative;
-  z-index: 2;
+  z-index: 7;
 }
 
 .p.blue code,
@@ -889,9 +889,9 @@ footer .socials {
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(58deg, transparent 0 13px, rgba(255, 255, 255, 0.5) 13px 14px),
-    repeating-linear-gradient(-58deg, transparent 0 13px, rgba(255, 255, 255, 0.5) 13px 14px),
-    repeating-linear-gradient(0deg, transparent 0 13px, rgba(255, 255, 255, 0.32) 13px 14px);
+    repeating-linear-gradient(58deg, transparent 0 15px, rgba(255, 255, 255, 0.32) 15px 16px),
+    repeating-linear-gradient(-58deg, transparent 0 15px, rgba(255, 255, 255, 0.32) 15px 16px),
+    repeating-linear-gradient(0deg, transparent 0 15px, rgba(255, 255, 255, 0.18) 15px 16px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
