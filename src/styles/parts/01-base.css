@@ -10,6 +10,17 @@
   --blue: #1b45c8;
   --grey: #5f594e;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Type scale — major third, 1.25x from 16px. Every adjacent step is 1.25x,
+     so a reader can rank any two roles by eye without reading them. */
+  --text-xs: 0.8rem; /* 12.8  mono micro-labels, chips, metadata */
+  --text-sm: 1rem; /* 16   body + secondary prose */
+  --text-md: 1.25rem; /* 20   lede, emphasised prose */
+  --text-lg: 1.5625rem; /* 25   card title, hero stat numeral */
+  --text-xl: 1.953rem; /* 31.25 large content, section-header ceiling */
+  --display-sm: 2.441rem; /* 39   */
+  --display-md: 3.052rem; /* 48.8 */
+  --display-lg: 3.815rem; /* 61   cover statement */
 }
 
 * {
@@ -26,6 +37,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: "Cormorant Garamond", serif;
+  font-size: var(--text-sm); /* the scale's anchor — everything else is a multiple */
   font-weight: 300;
   overflow-x: hidden;
   /* native cursor: the web is decoration, not a pointer */
