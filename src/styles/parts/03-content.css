@@ -451,3 +451,72 @@ footer .socials {
     transform: translate(3px, 2px);
   }
 }
+
+/* ── card destinations ─────────────────────────────────────
+   The card is a div so it can offer two links without nesting
+   anchors. The title's link stretches over the card; the explicit
+   Source/Live pair sits above it so both stay reachable. */
+.p.linked {
+  position: relative;
+}
+
+.p.linked h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.p.linked h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.card-links {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  position: relative;
+  /* above the stretched title link, which covers the whole card */
+  z-index: 2;
+}
+
+.card-links a {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 4px 11px;
+  text-decoration: none;
+  transition: background 0.16s, color 0.16s;
+}
+
+.card-links a:hover {
+  background: var(--red);
+  color: var(--paper);
+}
+
+.p.blue .card-links a,
+.p.red .card-links a {
+  color: currentColor;
+}
+
+.p.blue .card-links a:hover,
+.p.red .card-links a:hover {
+  background: var(--paper);
+  color: var(--red);
+}
+
+/* the live marker reads as the primary destination */
+.card-links a[href*="github.com"] {
+  color: var(--grey);
+  border-color: var(--grey);
+}
+
+.card-links a[href*="github.com"]:hover {
+  background: var(--ink);
+  color: var(--paper);
+}

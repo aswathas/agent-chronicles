@@ -40,8 +40,8 @@
       "label": "Shipped"
     },
     {
-      "value": "01",
-      "label": "Course"
+      "value": "04",
+      "label": "Web3"
     }
   ],
   "chips": [
@@ -206,35 +206,69 @@
     },
     {
       "id": "web3",
-      "title": "Security & Web3",
-      "blurb": "forensics suite",
-      "count": "03 published",
-      "layout": "grid",
+      "title": "Web3",
+      "blurb": "on-chain, built and shipped",
+      "count": "04 published",
+      "layout": "grid3",
       "items": [
+        {
+          "name": "BlockAuth",
+          "tag": "auth · blockchain",
+          "meta": "otp · solidity",
+          "desc": "Blockchain-based authentication. One-time passwords anchor an identity to an on-chain record, so the credential cannot be replayed once it is used.",
+          "url": "https://github.com/aswathas/Safe_Passfortest"
+        },
+        {
+          "name": "ColdTrust",
+          "tag": "hyperledger · typescript",
+          "meta": "live",
+          "desc": "A Hyperledger Fabric smart contract for cold-chain supply records — every custody handoff written to a shared, tamper-evident ledger.",
+          "url": "https://github.com/aswathas/ColdTrust-Hyperledger-Fabric-Smart-Contract",
+          "live": "https://aswathas.github.io/ColdTrust-Hyperledger-Fabric-Smart-Contract/"
+        },
         {
           "name": "ChainTrace",
           "tag": "web3 · python",
           "meta": "multi-chain forensics",
           "desc": "Self-hostable forensic tracing: follow stolen funds hop by hop and profile any wallet. Neo4j graph, self-hosted, open source.",
-          "url": "https://github.com/aswathas/chaintrace",
-          "code": "github.com/aswathas/chaintrace"
+          "url": "https://github.com/aswathas/chaintrace"
         },
+        {
+          "name": "EVM Log Extractor",
+          "tag": "forensics · python",
+          "meta": "ndjson",
+          "desc": "Pulls structured evidence out of raw on-chain event logs, so an investigation starts from parsed data rather than raw RPC output.",
+          "url": "https://github.com/aswathas/evm-log-extractor"
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "title": "Security",
+      "blurb": "attack analysis & forensics",
+      "count": "03 published",
+      "layout": "grid3",
+      "items": [
         {
           "name": "ChainSentinel",
           "tag": "security · solidity",
           "meta": "evm exploit analysis",
-          "desc": "EVM blockchain forensics from Hail Mary. Investigate on-chain exploits end to end.",
-          "url": "https://github.com/aswathas/Project-Hail-Mary",
-          "code": "github.com/aswathas/Project-Hail-Mary",
-          "tint": "red"
+          "desc": "ChainSentinel from Project Hail Mary. Investigate on-chain exploits end to end, from the attack transaction to the drained funds.",
+          "url": "https://github.com/aswathas/Project-Hail-Mary"
+        },
+        {
+          "name": "ForensicTool W3",
+          "tag": "forensics · typescript",
+          "meta": "investigation toolkit",
+          "desc": "A TypeScript toolkit for web3 forensic investigation workflows — parsing, tracing and evidence assembly in one place.",
+          "url": "https://github.com/aswathas/ForensicToolW3"
         },
         {
           "name": "Attack Logs",
-          "tag": "research · python",
-          "meta": "36 documented exploits",
-          "desc": "An EVM attack simulation dataset — 36 documented smart-contract exploits with forensic-grade NDJSON logs.",
-          "url": "https://github.com/aswathas/AttackLogs",
-          "code": "github.com/aswathas/AttackLogs"
+          "tag": "dataset · solidity",
+          "meta": "36 exploits",
+          "desc": "An EVM attack simulation dataset — 36 documented smart-contract exploits with forensic-grade NDJSON logs, usable as ground truth for detection work.",
+          "url": "https://github.com/aswathas/AttackLogs"
         }
       ]
     },
@@ -242,7 +276,7 @@
       "id": "research",
       "title": "Research",
       "blurb": "papers & archives",
-      "count": "04 published",
+      "count": "02 published",
       "layout": "grid",
       "items": [
         {
@@ -254,16 +288,6 @@
           "name": "Web3 Forensics Research",
           "desc": "A self-guided research archive: the tool landscape, an enterprise architecture blueprint, and editable diagrams.",
           "url": "https://github.com/aswathas/web3-forensics-research"
-        },
-        {
-          "name": "EVM Log Extractor",
-          "desc": "Forensic-grade extraction tooling for pulling structured evidence out of raw on-chain event logs.",
-          "url": "https://github.com/aswathas/evm-log-extractor"
-        },
-        {
-          "name": "Forensic Tool W3",
-          "desc": "A TypeScript toolkit for web3 forensic investigation workflows.",
-          "url": "https://github.com/aswathas/ForensicToolW3"
         }
       ]
     },
