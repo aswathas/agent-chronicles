@@ -260,6 +260,67 @@ function initWebNav(shooter) {
   });
 }
 
+/**
+ * The reticle. It trails the pointer on an exponential ease so it feels
+ * attached rather than glued, opens into a web node over anything
+ * actionable, and blooms where a click lands. It never replaces the
+ * native cursor — selection, middle-click and a11y all keep working.
+ */
+function initReticle() {
+  const el = document.getElementById("reticle");
+  if (!el) return;
+
+  let tx = innerWidth / 2, ty = innerHeight / 2;
+  let cx = tx, cy = ty;
+  let seen = false;
+
+  addEventListener("mousemove", (e) => {
+    tx = e.clientX;
+    ty = e.clientY;
+    if (!seen) {
+      // first move: no swoop in from the middle of the page
+      seen = true;
+      cx = tx;
+      cy = ty;
+      el.style.opacity = "1";
+    }
+    const actionable = !!(e.target as Element | null)?.closest?.(
+      "a, button, .chip, .soc, summary, [role='button']"
+    );
+    el.classList.toggle("on-link", actionable);
+  }, { passive: true });
+
+  addEventListener("mousedown", () => el.classList.add("down"), { passive: true });
+  addEventListener("mouseup", () => el.classList.remove("down"), { passive: true });
+
+  addEventListener("click", (e) => {
+    const b = document.createElement("div");
+    b.className = "bloom";
+    b.setAttribute("aria-hidden", "true");
+    b.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    b.innerHTML =
+      '<svg viewBox="0 0 90 90">' +
+      Array.from({ length: 8 }, (_, i) => {
+        const a = (Math.PI * 2) / 8 * i;
+        const x2 = 45 + Math.cos(a) * 40;
+        const y2 = 45 + Math.sin(a) * 40;
+        return `<line x1="45" y1="45" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
+      }).join("") +
+      '<circle cx="45" cy="45" r="16" fill="none"/>' +
+      '<circle cx="45" cy="45" r="28" fill="none"/>' +
+      "</svg>";
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 600);
+  });
+
+  (function follow() {
+    cx += (tx - cx) * 0.18;
+    cy += (ty - cy) * 0.18;
+    el.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px)`;
+    requestAnimationFrame(follow);
+  })();
+}
+
 /* ── boot ── */
 drawHeroWeb();
 drawDividers();
@@ -270,5 +331,6 @@ if (!reduce && fine) {
   if (shooter) {
     initSense();
     initWebNav(shooter);
+    initReticle();
   }
 }
