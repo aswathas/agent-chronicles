@@ -107,44 +107,41 @@ const sigil = () => `
           </div>
           <div class="webrule"><svg viewBox="0 0 1200 30" preserveAspectRatio="none"></svg></div>
 
-          {sec.layout === "columns" ? (
-            <div class="cols">
-              {sec.items.map((it) => (
-                <div class="pj">
-                  <h3>{it.name}</h3>
-                  <div class="m">{it.meta}</div>
-                  <p>{it.desc}</p>
-                </div>
-              ))}
-            </div>
-          ) : sec.layout === "list" ? (
-            <div class="rlist">
-              {sec.items.map((it) => (
-                <a href={it.url} target="_blank" rel="noopener">
-                  <b>{it.name}</b>
-                  <span>{it.desc}</span>
-                </a>
-              ))}
-            </div>
-          ) : (
-            <div class={sec.layout === "grid3" ? "g3" : sec.layout === "spread" ? "spread" : "rail"}>
-              {sec.items.map((it) => (
+          {/* one container, one card. Items without a url are not navigable, so they stay divs. */}
+          <div class:list={["grid", sec.id === "research" && "rlist"]}>
+            {sec.items.map((it) => (
+              it.url ? (
                 <a
-                  class:list={["p", it.wide && "wide", it.tint === "blue" && "blue", it.tint === "red" && "red"]}
+                  class:list={[
+                    "p",
+                    it.note && "note",
+                    it.tint === "blue" && "blue",
+                    it.tint === "red" && "red",
+                  ]}
                   href={it.url}
                   target="_blank"
                   rel="noopener"
                 >
-                  <span class="tag">{it.tag}</span>
+                  {it.tag && <span class="tag">{it.tag}</span>}
                   <h3>{it.name}</h3>
-                  <div class="meta">{it.meta}</div>
+                  {it.meta && <div class="meta">{it.meta}</div>}
                   <p>{it.desc}</p>
                   {it.install && <code>{it.install}</code>}
                   {!it.install && it.code && <code>{it.code}</code>}
                 </a>
-              ))}
-            </div>
-          )}
+              ) : (
+                <div
+                  class:list={["p", it.note && "note", it.tint === "blue" && "blue", it.tint === "red" && "red"]}
+                >
+                  {it.tag && <span class="tag">{it.tag}</span>}
+                  <h3>{it.name}</h3>
+                  {it.meta && <div class="meta">{it.meta}</div>}
+                  <p>{it.desc}</p>
+                  {it.code && <code>{it.code}</code>}
+                </div>
+              )
+            ))}
+          </div>
         </section>
       ))
     }
@@ -157,7 +154,7 @@ const sigil = () => `
         <span class="ct">{mcp.count}</span>
       </div>
       <div class="next">
-        {mcp.cells.map((c) => <div class:list={["cell", c.dark && "first"]}><b>{c.h}</b><span>{c.p}</span></div>)}
+        {mcp.cells.map((c) => <div class:list={["cell", c.dark && "dark"]}><b>{c.h}</b><span>{c.p}</span></div>)}
       </div>
     </section>
 
