@@ -385,117 +385,150 @@
       "id": "projects",
       "title": "Projects",
       "blurb": "standalone builds, each shipped on its own",
-      "count": "11 builds",
+      "count": "12 builds",
       "layout": "grid3",
       "collapsible": true,
       "items": [
         {
-          "name": "BlockAuth",
-          "tag": "auth · blockchain",
-          "meta": "otp · solidity",
-          "desc": "Blockchain-based authentication. One-time passwords anchor an identity to an on-chain record, so the credential cannot be replayed once it is used.",
-          "url": "https://github.com/aswathas/Safe_Passfortest",
+          "name": "Health Lovely",
+          "tag": "health · next.js",
+          "meta": "supabase + tailwind",
+          "desc": "A full-stack health platform on Next.js and Supabase — components, contexts, migrations and middleware wired together rather than a scaffold.",
+          "url": "https://github.com/aswathas/health-lovely",
           "tags": [
-            "project"
+            "project",
+            "health",
+            "web"
           ]
         },
         {
-          "name": "ColdTrust",
-          "tag": "hyperledger · typescript",
-          "meta": "live",
-          "desc": "A Hyperledger Fabric smart contract for cold-chain supply records — every custody handoff written to a shared, tamper-evident ledger.",
-          "url": "https://github.com/aswathas/ColdTrust-Hyperledger-Fabric-Smart-Contract",
-          "live": "https://aswathas.github.io/ColdTrust-Hyperledger-Fabric-Smart-Contract/",
+          "name": "Healthcare Tracker",
+          "tag": "health · next.js",
+          "meta": "longitudinal records",
+          "desc": "Tracks a patient over time instead of one consultation. Its own migrations, hook layer and docs directory for the data model.",
+          "url": "https://github.com/aswathas/healthcare-tracker",
           "tags": [
-            "project"
+            "project",
+            "health",
+            "web"
           ]
         },
         {
-          "name": "ChainTrace",
-          "tag": "web3 · python",
-          "meta": "multi-chain forensics",
-          "desc": "Self-hostable forensic tracing: follow stolen funds hop by hop and profile any wallet. Neo4j graph, self-hosted, open source.",
-          "url": "https://github.com/aswathas/chaintrace",
+          "name": "Prawn Diagnosis",
+          "tag": "next.js · typescript",
+          "meta": "diagnostic assistant",
+          "desc": "A Next.js diagnostic tool built as a real application with its own app router, components and styling pipeline.",
+          "url": "https://github.com/aswathas/Prawn-diagnosis",
           "tags": [
-            "project"
+            "project",
+            "health",
+            "web"
           ]
         },
         {
-          "name": "EVM Log Extractor",
-          "tag": "forensics · python",
-          "meta": "ndjson",
-          "desc": "Pulls structured evidence out of raw on-chain event logs, so an investigation starts from parsed data rather than raw RPC output.",
-          "url": "https://github.com/aswathas/evm-log-extractor",
+          "name": "Shrimp Git",
+          "tag": "git · typescript",
+          "meta": "version control tooling",
+          "desc": "A Git tool built around a Node backend and a documented command set, aimed at making history inspection less painful than the default tooling.",
+          "url": "https://github.com/aswathas/shrimp-git",
           "tags": [
-            "project"
+            "project",
+            "cli-less",
+            "devtools"
           ]
         },
         {
-          "name": "Border Payment",
-          "tag": "payments · web3",
-          "meta": "live on vercel",
-          "desc": "A cross-border payment rail that settles where correspondent banking stops being economical — moving value between jurisdictions without a chain of intermediaries each taking a cut.",
-          "url": "https://github.com/aswathas/borderpayment",
+          "name": "Investment",
+          "tag": "finance · javascript",
+          "meta": "frontend + backend",
+          "desc": "A portfolio and stock-basket application split into a dedicated frontend and backend, so the two halves can evolve independently.",
+          "url": "https://github.com/aswathas/Invesment",
           "tags": [
-            "project"
-          ],
-          "live": "https://borderpayment.vercel.app"
-        },
-        {
-          "name": "ChainSentinel",
-          "tag": "security · solidity",
-          "meta": "evm exploit analysis",
-          "desc": "ChainSentinel from Project Hail Mary. Investigate on-chain exploits end to end, from the attack transaction to the drained funds.",
-          "url": "https://github.com/aswathas/Project-Hail-Mary",
-          "tags": [
-            "project"
+            "project",
+            "finance",
+            "web"
           ]
         },
         {
-          "name": "ForensicTool W3",
-          "tag": "forensics · typescript",
-          "meta": "investigation toolkit",
-          "desc": "A TypeScript toolkit for web3 forensic investigation workflows — parsing, tracing and evidence assembly in one place.",
-          "url": "https://github.com/aswathas/ForensicToolW3",
+          "name": "Club Rank",
+          "tag": "go · full stack",
+          "meta": "sports analytics",
+          "desc": "A rankings platform with a Go backend and its own frontend, planned and documented before it was written — the plan documents are part of the repo.",
+          "url": "https://github.com/aswathas/club-rank",
           "tags": [
-            "project"
+            "project",
+            "sports",
+            "web"
           ]
         },
         {
-          "name": "Attack Logs",
-          "tag": "dataset · solidity",
-          "meta": "36 exploits",
-          "desc": "An EVM attack simulation dataset — 36 documented smart-contract exploits with forensic-grade NDJSON logs, usable as ground truth for detection work.",
-          "url": "https://github.com/aswathas/AttackLogs",
+          "name": "Clean Energy Project",
+          "tag": "typescript · web",
+          "meta": "open elective",
+          "desc": "A clean and green energy web project built for an open elective, covering renewable data and energy transitions.",
+          "url": "https://github.com/aswathas/Clean-Energy-Project",
           "tags": [
-            "project"
+            "project",
+            "climate",
+            "web"
           ]
         },
         {
-          "name": "Pulmo Track",
-          "note": true,
-          "meta": "respiratory monitoring",
-          "desc": "Longitudinal tracking for lung-health patients, built around continuity of care rather than a single consultation.",
+          "name": "Resume Builder",
+          "tag": "java · application",
+          "meta": "document tooling",
+          "desc": "A Java application for building and editing résumés, the one build in the collection that is deliberately not web-based.",
+          "url": "https://github.com/aswathas/ResumeBuilderAPP",
           "tags": [
-            "project"
+            "project",
+            "tooling"
           ]
         },
         {
-          "name": "Crowd Sense",
-          "note": true,
-          "meta": "real-time density",
-          "desc": "Agentic crowd-flow analysis for venues, built to react in seconds rather than report after the fact.",
+          "name": "Elasticsearch Tool",
+          "tag": "python · search",
+          "meta": "data tooling",
+          "desc": "A Python toolkit for building and querying Elasticsearch indexes, with its own indexing and search surface.",
+          "url": "https://github.com/aswathas/ElasticSearchTool",
           "tags": [
-            "project"
+            "project",
+            "data",
+            "tooling"
           ]
         },
         {
-          "name": "Executive Desk",
-          "note": true,
-          "meta": "agent tooling",
-          "desc": "Follow-up automation for the assistant agent — the loop where a reminder becomes a completed task.",
+          "name": "Web3 Log Simulation",
+          "tag": "javascript · web3",
+          "meta": "event replay",
+          "desc": "Simulates on-chain event logs so a forensic workflow can be rehearsed without touching a live network.",
+          "url": "https://github.com/aswathas/Project-Web3-Log-simulation",
           "tags": [
-            "project"
+            "project",
+            "web3"
+          ]
+        },
+        {
+          "name": "Admin Abuse Simulation",
+          "tag": "solidity · web3",
+          "meta": "attack modelling",
+          "desc": "A Solidity model of an administrative-abuse scenario, written as a study of what goes wrong when privileged actions are not constrained.",
+          "url": "https://github.com/aswathas/AdminAbuseSim_Storyline-1",
+          "tags": [
+            "project",
+            "web3",
+            "security"
+          ]
+        },
+        {
+          "name": "Stripe Stablecoin",
+          "tag": "payments · scaffold",
+          "meta": "fiat to token",
+          "desc": "A bridge from fiat rails to stablecoin settlement — the on-ramp experiment behind the Border Payment rail.",
+          "url": "https://github.com/aswathas/Stripe-Stablecoin-",
+          "tags": [
+            "project",
+            "web3",
+            "finance"
           ]
         }
       ]
