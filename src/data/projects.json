@@ -79,8 +79,8 @@
       "id": "skills",
       "title": "Skills",
       "blurb": "instruction sets",
-      "count": "03 of 09 — scroll →",
-      "layout": "rail",
+      "count": "03 of 09 published",
+      "layout": "grid",
       "items": [
         {
           "name": "deep-teach",
@@ -113,8 +113,8 @@
       "id": "cli",
       "title": "CLI & Tools",
       "blurb": "run from a terminal",
-      "count": "04 published — scroll →",
-      "layout": "rail",
+      "count": "04 published",
+      "layout": "grid",
       "items": [
         {
           "name": "AI Brain",
@@ -153,7 +153,7 @@
       "title": "Shipped",
       "blurb": "things with a window",
       "count": "03 released",
-      "layout": "grid3",
+      "layout": "grid",
       "items": [
         {
           "name": "Clipper",
@@ -184,7 +184,7 @@
       "title": "Agents",
       "blurb": "autonomous systems",
       "count": "01 published",
-      "layout": "spread",
+      "layout": "grid",
       "items": [
         {
           "name": "Executive Assistant",
@@ -209,7 +209,7 @@
       "title": "Security & Web3",
       "blurb": "forensics suite",
       "count": "03 published",
-      "layout": "grid3",
+      "layout": "grid",
       "items": [
         {
           "name": "ChainTrace",
@@ -243,7 +243,7 @@
       "title": "Research",
       "blurb": "papers & archives",
       "count": "04 published",
-      "layout": "list",
+      "layout": "grid",
       "items": [
         {
           "name": "Axiom",
@@ -272,20 +272,23 @@
       "title": "In the Works",
       "blurb": "building now",
       "count": "Field notes",
-      "layout": "columns",
+      "layout": "grid",
       "items": [
         {
           "name": "Pulmo Track",
+          "note": true,
           "meta": "respiratory monitoring",
           "desc": "Longitudinal tracking for lung-health patients, built around continuity of care rather than a single consultation."
         },
         {
           "name": "Crowd Sense",
+          "note": true,
           "meta": "real-time density",
           "desc": "Agentic crowd-flow analysis for venues, built to react in seconds rather than report after the fact."
         },
         {
           "name": "Executive Desk",
+          "note": true,
           "meta": "agent tooling",
           "desc": "Follow-up automation for the assistant agent — the loop where a reminder becomes a completed task."
         }
@@ -296,7 +299,7 @@
       "title": "Courses",
       "blurb": "teaching it back",
       "count": "01 published",
-      "layout": "rail",
+      "layout": "grid",
       "items": [
         {
           "name": "Agent101",
