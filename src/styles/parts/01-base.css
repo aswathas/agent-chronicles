@@ -31,6 +31,14 @@ body {
   /* native cursor: the web is decoration, not a pointer */
 }
 
+/* page container: without this the whole paper sits flush to the viewport edge
+   and the reader has no vertical guide to scan down */
+.s {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
 body.nocursor {
   cursor: auto;
 }
