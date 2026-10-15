@@ -25,7 +25,6 @@ const sigil = () => `
   <!-- texture + combat layers -->
   <div class="benday"></div>
   <svg id="websvg" aria-hidden="true"></svg>
-  <div class="curtain" id="curtain"></div>
 
   <!-- spider sense -->
   <div class="sense sense-l" id="senseL"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
@@ -37,7 +36,6 @@ const sigil = () => `
   <div class="wash wash-t" id="washT"></div>
   <div class="wash wash-b" id="washB"></div>
 
-  <div class="cur"><b></b><u></u></div>
 
   <!-- ticker -->
   <div class="ticker">
@@ -113,7 +111,7 @@ const sigil = () => `
             <div class="cols">
               {sec.items.map((it) => (
                 <div class="pj">
-                  <h4>{it.name}</h4>
+                  <h3>{it.name}</h3>
                   <div class="m">{it.meta}</div>
                   <p>{it.desc}</p>
                 </div>

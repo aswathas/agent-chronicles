@@ -66,175 +66,85 @@ function scrollReveal() {
 }
 
 /* ── 4. shooter — strands sag under gravity, snap taut on impact ── */
+/**
+ * Card webbing. Hover lays silk over a card; Alt+click pins it in place.
+ * Plain clicks are left completely alone so every card link still works —
+ * no preventDefault, so middle-click and ctrl-click behave normally.
+ */
 function initShooter() {
   const svg = document.getElementById("websvg");
   if (!svg) return null;
-
-  const OX = () => innerWidth / 2;
-  const OY = () => innerHeight + 40;
   const stuck = new Map();
+  const TARGETS = ".p,.rlist>div";
 
-  function sagPath(x1, y1, x2, y2, tension) {
-    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
-    const drop = (1 - tension) * Math.min(180, Math.hypot(x2 - x1, y2 - y1) * 0.28);
-    return `M${x1} ${y1} Q${mx} ${my + drop} ${x2} ${y2}`;
-  }
-
-  /**
-   * A real web pattern, not parallel lines: radial threads from the impact
-   * point crossed by concentric rings. `partial` draws only the outer 40%
-   * of the rings, the way a web actually lands before it's finished.
-   */
-  function webPattern(cx, cy, r, { partial = false, cls = "" } = {}) {
+  /** A web pattern laid flat at a point: bowed threads + wobbly rings. */
+  function webPattern(cx, cy, r) {
     const g = document.createElementNS(NS, "g");
-    g.setAttribute("class", cls);
+    g.setAttribute("class", "shot stick");
 
-    const rays = 11;
-    for (let i = 0; i < rays; i++) {
-      const a = (Math.PI * 2) / rays * i + 0.28;
-      const len = r * (0.82 + Math.random() * 0.36);
+    for (let i = 0; i < 10; i++) {
+      const a = (Math.PI * 2) / 10 * i + 0.28;
+      const len = r * (0.82 + ((i * 37) % 11) / 30);
+      const bx = cx + Math.cos(a) * len * 0.55 + Math.cos(a + 0.5) * r * 0.13;
+      const by = cy + Math.sin(a) * len * 0.55 + Math.sin(a + 0.5) * r * 0.13;
       const p = document.createElementNS(NS, "path");
-      // each thread bows slightly, the way silk under tension curves
-      const bx = cx + Math.cos(a) * len * 0.55 + Math.cos(a + 0.5) * r * 0.14;
-      const by = cy + Math.sin(a) * len * 0.55 + Math.sin(a + 0.5) * r * 0.14;
       p.setAttribute(
         "d",
-        `M${cx} ${cy} Q${bx.toFixed(1)} ${by.toFixed(1)} ${(cx + Math.cos(a) * len).toFixed(1)} ${(cy + Math.sin(a) * len).toFixed(1)}`
+        `M${cx.toFixed(1)} ${cy.toFixed(1)} Q${bx.toFixed(1)} ${by.toFixed(1)} ` +
+          `${(cx + Math.cos(a) * len).toFixed(1)} ${(cy + Math.sin(a) * len).toFixed(1)}`
       );
       g.appendChild(p);
     }
 
-    // spiral in rather than perfect circles — webs are never true circles
-    const steps = partial ? 3 : 6;
-    for (let s = 1; s <= steps; s++) {
-      const rr = (r * s) / steps;
+    for (let s = 1; s <= 5; s++) {
+      const rr = (r * s) / 5;
       const path = document.createElementNS(NS, "path");
       let d = "";
-      const segs = 9;
-      for (let i = 0; i <= segs; i++) {
-        const a = (Math.PI * 2) / segs * i;
+      for (let i = 0; i <= 9; i++) {
+        const a = (Math.PI * 2) / 9 * i;
         const wob = 1 + Math.sin(a * 3 + s) * 0.07;
-        const x = cx + Math.cos(a) * rr * wob;
-        const y = cy + Math.sin(a) * rr * wob;
-        d += `${i ? "L" : "M"}${x.toFixed(1)} ${y.toFixed(1)}`;
+        d += `${i ? "L" : "M"}${(cx + Math.cos(a) * rr * wob).toFixed(1)} ${(cy + Math.sin(a) * rr * wob).toFixed(1)}`;
       }
       path.setAttribute("d", `${d}Z`);
       g.appendChild(path);
     }
+
+    // draw outward rather than appearing all at once
+    g.querySelectorAll("path").forEach((p, i) => {
+      const len = p.getTotalLength?.() || 160;
+      p.style.strokeDasharray = `${len}`;
+      p.style.strokeDashoffset = `${len}`;
+      p.style.transition = `stroke-dashoffset .3s cubic-bezier(.16,1,.3,1) ${i * 0.014}s`;
+      requestAnimationFrame(() => { p.style.strokeDashoffset = "0"; });
+    });
+
     return g;
   }
 
-  function buildShot(tx, ty, pinned = false) {
-    const g = document.createElementNS(NS, "g");
-    const paths = [];
-
-    // the travelling threads: a small spray that widens as it flies
-    for (let i = 0; i < 3; i++) {
-      const off = (i - 1) * 7;
-      const p = document.createElementNS(NS, "path");
-      p.setAttribute("class", `shot${pinned ? " stick" : ""}`);
-      p.setAttribute("d", sagPath(OX(), OY(), tx + off, ty + off, 1));
-      g.appendChild(p); paths.push(p);
-    }
-
-    // the pattern that lands at the target
-    const pattern = webPattern(tx, ty, pinned ? 40 : 30, {
-      partial: !pinned,
-      cls: `shot${pinned ? " stick" : ""} webp${pinned ? " pinned" : ""}`,
-    });
-    g.appendChild(pattern);
-
-    const blob = document.createElementNS(NS, "circle");
-    blob.setAttribute("class", "blob");
-    blob.setAttribute("cx", tx); blob.setAttribute("cy", ty);
-    blob.setAttribute("r", pinned ? 11 : 7);
-    g.appendChild(blob);
-
-    // pattern paths stay put — only the travelling strands animate
-    return { g, paths, tx, ty, pinned, pattern };
-  }
-
-  function impactAt(x, y) {
-    const ring = document.createElementNS(NS, "circle");
-    ring.setAttribute("class", "impact");
-    ring.setAttribute("cx", x); ring.setAttribute("cy", y); ring.setAttribute("r", 4);
-    svg.appendChild(ring);
-    setTimeout(() => ring.remove(), 520);
-  }
-
-  /** Animate the head from origin to target; tension rises, then it snaps taut. */
-  function fire(shot, done) {
-    const { g, paths, tx, ty, pinned } = shot;
-    svg.appendChild(g);
-    const T = pinned ? 340 : 250;
-    const start = performance.now();
-    const spread = pinned ? 34 : 26;
-    // #websvg is position:fixed, so targets are viewport coordinates
-    const ox = OX(), oy = OY();
-
-    const frame = (now) => {
-      const t = Math.min(1, (now - start) / T);
-      const e = 1 - Math.pow(1 - t, 3);
-      const hx = ox + (tx - ox) * e;
-      const hy = oy + (ty - oy) * e;
-      const tension = Math.min(1, e * 1.15);
-      paths.forEach((p, i) => {
-        const off = (i - 2) * (spread / 4);
-        p.setAttribute("d", sagPath(ox, oy, hx + off, hy + off * 0.5, tension));
-      });
-      if (t < 1) requestAnimationFrame(frame);
-      else {
-        impactAt(tx, ty);
-        paths.forEach((p) =>
-          p.setAttribute("d", sagPath(ox, oy, tx, ty, pinned ? 0.96 : 1))
-        );
-        // the web blooms outward from the impact point
-        const rings = shot.pattern?.querySelectorAll("path");
-        if (rings) {
-          rings.forEach((p, i) => {
-            const len = p.getTotalLength?.() || 200;
-            p.style.strokeDasharray = `${len}`;
-            p.style.strokeDashoffset = `${len}`;
-            p.style.transition = `stroke-dashoffset .34s cubic-bezier(.16,1,.3,1) ${i * 0.018}s`;
-            requestAnimationFrame(() => { p.style.strokeDashoffset = "0"; });
-          });
-        }
-        done?.();
-      }
-    };
-    requestAnimationFrame(frame);
-  }
-
   function webTo(el, clientX, clientY) {
-    if (stuck.has(el)) return release(el);
     const r = el.getBoundingClientRect();
-    const tx = r.left + r.width * (0.28 + Math.random() * 0.44);
-    const ty = r.top + r.height * (0.22 + Math.random() * 0.56);
-    const shot = buildShot(tx, ty, true);
-    fire(shot);
-    el.style.setProperty("--wx", `${((clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty("--wy", `${((clientY - r.top) / r.height) * 100}%`);
-    el.classList.add("webbed", "pinned");
-    el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake");
-    stuck.set(el, shot.g);
-  }
-
-  function release(el) {
-    const g = stuck.get(el);
-    if (!g) return;
-    g.remove();               // removes the outer group and everything inside it
-    stuck.delete(el);
-    el.classList.remove("webbed", "pinned", "shake");
+    if (stuck.has(el)) {
+      stuck.get(el).remove();
+      stuck.delete(el);
+      el.classList.remove("pinned");
+      return;
+    }
+    const g = webPattern(
+      clientX, clientY,
+      Math.max(38, Math.min(r.width, r.height) * 0.42)
+    );
+    svg.appendChild(g);
+    el.classList.add("pinned");
+    stuck.set(el, g);
   }
 
   function clearAll() {
     stuck.forEach((g) => g.remove());
     stuck.clear();
-    document.querySelectorAll(".webbed")
-      .forEach((c) => c.classList.remove("webbed", "pinned", "shake"));
+    document.querySelectorAll(".pinned").forEach((c) => c.classList.remove("pinned"));
   }
 
-  return { svg, fire, buildShot, webTo, clearAll, stuck };
+  return { webTo, clearAll, stuck, TARGETS };
 }
 
 /* ── 5. spider sense ── */
@@ -277,82 +187,74 @@ function initSense() {
  * The web IS the navigation. Sections are nodes; silk runs from your cursor
  * to whichever one holds it, so you can always see what you're attached to.
  */
+/**
+ * Sections are web nodes. A silk strand runs from the cursor to whichever
+ * section holds it, so you always know which part of the page you're in.
+ * Uses pointerenter/leave on sections rather than a mousemove hot path,
+ * and leaves link clicks entirely alone.
+ */
 function initWebNav(shooter) {
-  const cur = document.querySelector(".cur");
-  const curtain = document.getElementById("curtain");
   const layer = document.getElementById("websvg");
-  const TARGETS = ".p,.rlist>div,.pj,.next div";
+  const sections = [...document.querySelectorAll("section[id]")];
 
   const tethers = new Map();
-  document.querySelectorAll("section[id]").forEach((sec) => {
+  sections.forEach((sec) => {
     const p = document.createElementNS(NS, "path");
     p.setAttribute("class", "tether");
     layer.appendChild(p);
     tethers.set(sec, p);
   });
 
-  /** Silk from the cursor to the heading of the section under it. */
-  function tetherTo(sec, fromX, fromY) {
+  function draw(sec, x, y) {
     tethers.forEach((path, s) => {
       if (s !== sec) { path.classList.remove("on"); return; }
       path.classList.add("on");
       const head = s.querySelector(".mline") || s.querySelector("h2") || s;
       const r = head.getBoundingClientRect();
-      const ax = Math.max(r.left, Math.min(r.right, fromX));
-      const ay = Math.max(r.top, Math.min(r.bottom, fromY));
-      const mx = (fromX + ax) / 2;
-      const my = (fromY + ay) / 2;
-      const sag = 24 + Math.hypot(ax - fromX, ay - fromY) * 0.05;
-      path.setAttribute("d", `M${fromX} ${fromY} Q${mx} ${my + sag} ${ax} ${ay}`);
+      const ax = Math.max(r.left, Math.min(r.right, x));
+      const ay = Math.max(r.top, Math.min(r.bottom, y));
+      const mx = (x + ax) / 2;
+      const my = (y + ay) / 2;
+      const sag = 24 + Math.hypot(ax - x, ay - y) * 0.05;
+      path.setAttribute("d", `M${x} ${y} Q${mx} ${my + sag} ${ax} ${ay}`);
     });
   }
 
-  if (cur) {
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    (function loop() {
-      cx += (tx - cx) * 0.2; cy += (ty - cy) * 0.2;
-      cur.style.transform = `translate(${cx}px, ${cy}px)`;
-      requestAnimationFrame(loop);
-    })();
-    addEventListener("mousemove", (e) => { tx = e.clientX; ty = e.clientY; });
-  }
-
+  // only redraw when the section actually changes
+  let current = null;
   addEventListener("mousemove", (e) => {
-    const x = e.clientX, y = e.clientY;
-    curtain?.style.setProperty("--cx", `${x}px`);
-    curtain?.style.setProperty("--cy", `${y}px`);
-    const onCard = !!(e.target.closest && e.target.closest(TARGETS));
-    curtain?.classList.toggle("on", onCard);
-    if (cur && !cur.classList.contains("act")) cur.classList.toggle("act", onCard);
-    tetherTo(e.target.closest ? e.target.closest("section[id]") : null, x, y);
-  });
+    const sec = e.target.closest ? e.target.closest("section[id]") : null;
+    if (sec !== current) {
+      current = sec;
+      tethers.forEach((p, s) => p.classList.toggle("on", s === sec));
+    }
+    if (sec) draw(sec, e.clientX, e.clientY);
+  }, { passive: true });
 
+  // Alt+click pins a web on a card. Everything else falls through to the link.
   addEventListener("click", (e) => {
-    const el = e.target.closest(TARGETS);
-    if (el) { e.preventDefault(); shooter.webTo(el, e.clientX, e.clientY); return; }
-    shooter.clearAll();
+    if (!e.altKey) return;
+    const el = e.target.closest(shooter.TARGETS);
+    if (!el) return;
+    e.preventDefault();
+    shooter.webTo(el, e.clientX, e.clientY);
   });
 
+  // hover silk on cards
   addEventListener("mouseover", (e) => {
-    const el = e.target.closest(TARGETS);
-    if (!el || shooter.stuck.has(el)) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--wx", `${((e.clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty("--wy", `${((e.clientY - r.top) / r.height) * 100}%`);
+    const el = e.target.closest(shooter.TARGETS);
+    if (!el || el.classList.contains("pinned")) return;
     el.classList.add("webbed");
   });
-  addEventListener("mousemove", (e) => {
-    const el = e.target.closest(TARGETS);
-    if (!el || shooter.stuck.has(el)) return;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty("--wx", `${((e.clientX - r.left) / r.width) * 100}%`);
-    el.style.setProperty("--wy", `${((e.clientY - r.top) / r.height) * 100}%`);
-  });
   addEventListener("mouseout", (e) => {
-    const el = e.target.closest(TARGETS);
-    if (el && !el.contains(e.relatedTarget) && !shooter.stuck.has(el)) {
+    const el = e.target.closest(shooter.TARGETS);
+    if (el && !el.contains(e.relatedTarget) && !el.classList.contains("pinned")) {
       el.classList.remove("webbed");
     }
+  });
+
+  addEventListener("keydown", (e) => {
+    if (e.key === "Escape") shooter.clearAll();
   });
 }
 
