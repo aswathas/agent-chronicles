@@ -1172,137 +1172,209 @@ footer .socials {
   opacity: 1;
 }
 
-/* ── villains ── */
-.villain {
-  position: fixed;
-  /* without explicit offsets a fixed element keeps its static position —
-     appending to body put every villain ~4800px down the document, where the
-     transform just added to that instead of moving it */
-  top: 0;
-  left: 0;
-  z-index: 940;
-  width: 62px;
-  height: 62px;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.villain svg {
-  width: 100%;
-  height: 100%;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
-}
-
-.villain .body {
-  fill: #17171b;
-}
-
-.villain .eye {
-  fill: #fff;
-}
-
-.villain .grin {
+/* ── navigation tethers ── */
+.tether {
   fill: none;
-  stroke: #fff;
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-.villain .tendril {
-  fill: none;
-  stroke: #17171b;
-  stroke-width: 4;
-  stroke-linecap: round;
-}
-
-.villain.bruise .body {
-  fill: #3b1220;
-}
-
-.villain.bruise .eye {
-  fill: #ff6b5a;
-}
-
-.villain.dead {
-  animation: fadeout 0.6s forwards;
-}
-
-@keyframes fadeout {
-  to {
-    opacity: 0;
-    transform: scale(0.3) rotate(40deg);
-  }
-}
-
-.hp {
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 44px;
-  height: 3px;
-  background: rgba(20, 18, 16, 0.2);
-}
-
-.hp b {
-  display: block;
-  height: 100%;
-  background: var(--red);
-  transition: width 0.3s;
-}
-
-.hud {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 970;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  background: var(--ink);
-  color: var(--paper);
-  border: 1px solid var(--ink);
-  padding: 9px 18px;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 9.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  stroke: var(--red);
+  stroke-width: 1.6;
   opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
+  transition: opacity 0.22s;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgba(214, 48, 30, 0.5));
 }
 
-.hud.on {
+.tether.on {
+  opacity: 0.85;
+}
+
+/* a travelling pulse along the attached strand, so it reads as live silk */
+.tether-pulse {
+  fill: var(--red);
+  opacity: 0;
+}
+
+.tether.on + .tether-pulse {
+  opacity: 0.9;
+}
+
+/* ── spider sense ── */
+.sense {
+  position: fixed;
+  z-index: 960;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.22s, transform 0.5s var(--ease);
+}
+
+.sense.on {
   opacity: 1;
 }
 
-.hud b {
+.sense-l {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 74px;
+  justify-content: center;
+  transform: translateX(-70px);
+}
+
+.sense-l.on {
+  transform: translateX(0);
+}
+
+.sense-r {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 74px;
+  justify-content: center;
+  transform: translateX(70px);
+}
+
+.sense-r.on {
+  transform: translateX(0);
+}
+
+.sense-t {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 70px;
+  justify-content: center;
+  flex-direction: row;
+  transform: translateY(-70px);
+}
+
+.sense-t.on {
+  transform: translateY(0);
+}
+
+.sense-b {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 70px;
+  justify-content: center;
+  flex-direction: row;
+  transform: translateY(70px);
+}
+
+.sense-b.on {
+  transform: translateY(0);
+}
+
+.sigil {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+}
+
+.sigil svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sigil .ring {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 2;
+  stroke-dasharray: 18 9;
+  transform-origin: 50% 50%;
+  animation: spin 2.6s linear infinite;
+}
+
+.sigil .pulse {
+  fill: rgba(214, 48, 30, 0.16);
+  animation: pl2 1.5s ease-in-out infinite;
+}
+
+.sigil .spid {
+  fill: var(--red);
+}
+
+.sigil .eye {
+  fill: #fff;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pl2 {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.14);
+    opacity: 0.9;
+  }
+}
+
+.sense .lbl {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--red);
-  font-size: 13px;
+  background: var(--paper);
+  border: 1px solid var(--red);
+  padding: 3px 7px;
+  white-space: nowrap;
 }
 
-.hud .k {
-  color: rgba(239, 231, 216, 0.55);
+.wash {
+  position: fixed;
+  z-index: 955;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-  .rev {
-    opacity: 1;
-    transform: none;
-  }
-  .name .w i {
-    transform: none;
-  }
-  .strand {
-    stroke-dashoffset: 0;
-  }
+.wash-l {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  background: linear-gradient(90deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash-r {
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 150px;
+  background: linear-gradient(270deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash-t {
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 130px;
+  background: linear-gradient(180deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash-b {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 130px;
+  background: linear-gradient(0deg, rgba(214, 48, 30, 0.3), transparent);
+}
+
+.wash.on {
+  opacity: 1;
 }
 
 @media (max-width: 1000px) {
@@ -1343,9 +1415,7 @@ footer .socials {
     cursor: auto;
   }
   .cur,
-  .curtain,
-  .villain,
-  .hud {
+  .curtain {
     display: none;
   }
 }
