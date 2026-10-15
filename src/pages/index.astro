@@ -26,15 +26,6 @@ const sigil = () => `
 
   <!-- texture + combat layers -->
   <div class="benday" aria-hidden="true"></div>
-  <!-- silk reticle: trails the native cursor, never replaces it -->
-  <div class="reticle" id="reticle" aria-hidden="true">
-    <svg viewBox="0 0 26 26">
-      <circle class="ring" cx="13" cy="13" r="9" />
-      <line class="spoke" x1="13" y1="1" x2="13" y2="25" />
-      <line class="spoke" x1="1" y1="13" x2="25" y2="13" />
-      <circle class="core" cx="13" cy="13" r="1.6" />
-    </svg>
-  </div>
   <!-- the perch: a figure clinging to the right edge, and the right-edge
        spider-sense trigger. A button, so it is focusable and announces. -->
   <button class="perch" id="perch" type="button" aria-label="Return to top of page">
@@ -54,6 +45,33 @@ const sigil = () => `
       <path class="limb" d="M46 84 C52 96 50 110 44 120" />
     </svg>
   </button>
+  <!-- spidey-sense HUD: an instrument over the paper, not a redesign of it -->
+  <div class="alarm" id="alarm" aria-hidden="true"></div>
+  <div class="aberration" aria-hidden="true"></div>
+  <div class="sense-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="sense-ring" id="senseRing" aria-hidden="true"></div>
+  <div class="hotspot" id="hotA" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="hotspot" id="hotB" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="hotspot" id="hotC" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div class="telem tl">
+    <div><span class="lbl">state</span> <b id="tState">idle</b></div>
+    <div><span class="lbl">threat</span> <b id="tThreat">none</b></div>
+  </div>
+  <div class="telem tr">
+    <div><span class="lbl">traj</span> <b id="tTraj">—</b></div>
+    <div><span class="lbl">vel</span> <b id="tVel">0.0</b></div>
+  </div>
+  <div class="telem bl">
+    <div><span class="lbl">arc</span> <b>360°</b></div>
+    <div><span class="lbl">contacts</span> <b id="tCon">0</b></div>
+  </div>
+  <div class="telem br">
+    <div><span class="lbl">t-impact</span> <b id="tTti">—</b></div>
+    <div><span class="lbl">sig</span> <b id="tSig">0%</b></div>
+  </div>
+  <div class="alarm-readout" id="alarmReadout" role="status" aria-live="polite">Danger sensed</div>
+
   <svg id="websvg" aria-hidden="true"></svg>
 
   <!-- spider sense -->
@@ -95,11 +113,24 @@ const sigil = () => `
     <!-- hero -->
     <div class="hero">
       <div class="webbg"><svg viewBox="0 0 400 400" id="webart"></svg></div>
+      <img class="hero-avatar" src="/img/profile.webp" alt="" width="96" height="96" />
       <div class="eyebrow">{profile.eyebrow}</div>
       <h1 class="name"><span class="w"><i>Aswath</i></span> <span class="w"><i>S</i></span></h1>
       <div class="work" set:html={profile.work} />
       <div class="meta">
         {stats.map((s) => <div><b>{s.value}</b><span>{s.label}</span></div>)}
+    
+      <nav class="filters" aria-label="Filter projects by kind">
+        <button class="filter is-on" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter" data-filter="ai" aria-pressed="false">AI</button>
+        <button class="filter" data-filter="mcp" aria-pressed="false">MCP</button>
+        <button class="filter" data-filter="web3" aria-pressed="false">Web3</button>
+        <button class="filter" data-filter="security" aria-pressed="false">Security</button>
+        <button class="filter" data-filter="skills" aria-pressed="false">Skills</button>
+        <button class="filter" data-filter="windows" aria-pressed="false">Windows</button>
+        <button class="filter" data-filter="agents" aria-pressed="false">Agents</button>
+        <button class="filter" data-filter="health" aria-pressed="false">Health</button>
+      </nav>
       </div>
     </div>
     <div class="rt"></div>
@@ -141,36 +172,34 @@ const sigil = () => `
               carry two destinations (source + live), and nesting anchors is invalid.
               The title holds a stretched link that covers the whole card; the explicit
               pair sits above it so both destinations stay reachable. */}
-          <div class:list={["grid", sec.id === "research" && "rlist"]}>
-            {sec.items.map((it) => (
-              <div
-                class:list={[
-                  "p",
-                  it.note && "note",
-                  it.tint === "blue" && "blue",
-                  it.tint === "red" && "red",
-                  it.url && "linked",
-                ]}
-              >
-                {it.tag && <span class="tag">{it.tag}</span>}
-                <h3>
-                  {it.url ? (
-                    <a href={it.url} target="_blank" rel="noopener">{it.name}</a>
-                  ) : (
-                    it.name
-                  )}
-                </h3>
-                {it.meta && <div class="meta">{it.meta}</div>}
-                <p>{it.desc}</p>
-                {it.install && <code>{it.install}</code>}
-                {!it.install && it.code && <code>{it.code}</code>}
-                {it.url && (
-                  <div class="card-links">
-                    <a href={it.url} target="_blank" rel="noopener">Source</a>
-                    {it.live && (
-                      <a href={it.live} target="_blank" rel="noopener">Live ↗</a>
-                    )}
-                  </div>
+          <div
+            class:list={["grid", sec.id === "research" && "rlist", sec.collapsible && "is-collapsible"]}
+            data-collapsible={sec.collapsible ? "true" : undefined}
+          >
+            {sec.items.map((it, ix) => (
+              <div class="p-wrap" data-tags={(it.tags || []).join(",")}>
+                <a
+                  class:list={[
+                    "p",
+                    it.note && "note",
+                    it.tint === "blue" && "blue",
+                    it.tint === "red" && "red",
+                    it.url && "linked",
+                    sec.collapsible && ix >= 3 && "is-more",
+                  ]}
+                  href={it.url}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {it.tag && <span class="tag">{it.tag}</span>}
+                  <h3>{it.name}</h3>
+                  {it.meta && <div class="meta">{it.meta}</div>}
+                  <p>{it.desc}</p>
+                  {it.install && <code>{it.install}</code>}
+                  {!it.install && it.code && <code>{it.code}</code>}
+                </a>
+                {it.live && (
+                  <a class="card-live" href={it.live} target="_blank" rel="noopener">Live</a>
                 )}
               </div>
             ))}

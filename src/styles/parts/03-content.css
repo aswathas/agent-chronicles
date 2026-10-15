@@ -520,3 +520,133 @@ footer .socials {
   background: var(--ink);
   color: var(--paper);
 }
+
+/* ── clickable card ─────────────────────────────────────────
+   The card itself carries a ::before overlay that receives every click.
+   A pseudo-element on the card itself (not on a child) avoids every
+   stacking and overflow problem the child-based version hit, and the
+   explicit Source/Live pair sits above it. */
+.p.linked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.p.linked h3 a {
+  pointer-events: none;
+}
+
+.p.linked .card-links {
+  position: relative;
+  z-index: 3;
+}
+
+.p.linked {
+  cursor: pointer;
+}
+
+/* the heading link is only for keyboard and middle-click */
+.p.linked h3 a:focus-visible {
+  pointer-events: auto;
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+
+
+/* ── hero filters ─────────────────────────────────────────── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 26px;
+  justify-content: center;
+}
+
+.filter {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 13px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+
+.filter:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.filter.is-on {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--paper);
+}
+
+/* ── card wrapper: holds the anchor, so the Live link can sit above ── */
+.p-wrap {
+  position: relative;
+  display: flex;
+}
+
+.p-wrap > .p {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-live {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  padding: 3px 10px;
+  transition: background 0.16s, color 0.16s;
+}
+
+.card-live:hover {
+  background: var(--red);
+  color: var(--paper);
+}
+
+/* ── collapsible ──────────────────────────────────────────── */
+.grid.is-collapsible .p-wrap:nth-child(n + 4) {
+  display: none;
+}
+
+.grid.is-collapsible.is-open .p-wrap:nth-child(n + 4) {
+  display: flex;
+}
+
+.expand {
+  display: block;
+  margin: 20px auto 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  background: transparent;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+
+.expand:hover {
+  background: var(--ink);
+  color: var(--paper);
+}

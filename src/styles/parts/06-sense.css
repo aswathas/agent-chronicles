@@ -1,0 +1,478 @@
+/* ══════════════════════════════════════════════════════════════
+   SPIDEY-SENSE HUD
+
+   A spatial instrument laid over the newspaper, not a redesign of it.
+   The cream paper, the type and the red accent never change — only the
+   instrument does. It stays invisible until the pointer nears an edge.
+
+     idle   → a slow indigo breath at the frame, almost nothing
+     warn   → amber; the ring clusters toward the threat vector
+     impact → crimson #c21f45; chromatic split and a nervous jolt
+   ══════════════════════════════════════════════════════════════ */
+
+:root {
+  --sense-idle: #4a4aff;
+  --sense-warn: #c98a00;
+  --sense-alarm: #c21f45;
+  --telem: #7d7466;
+}
+
+/* ── peripheral threat ring ─────────────────────────────────── */
+.sense-ring {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 620px;
+  height: 620px;
+  z-index: 958;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+
+.sense-ring svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.sense-ring .track {
+  fill: none;
+  stroke: var(--sense-idle);
+  stroke-width: 1;
+  opacity: 0.18;
+}
+
+.sense-ring .tick {
+  stroke: var(--sense-idle);
+  stroke-width: 1;
+  opacity: 0.26;
+}
+
+.sense-ring .seg {
+  fill: none;
+  stroke: var(--sense-idle);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+
+.sense-ring .blip {
+  fill: var(--sense-idle);
+  opacity: 0;
+  transition: opacity 0.18s;
+}
+
+.sense-ring .halo {
+  fill: none;
+  stroke: var(--sense-alarm);
+  stroke-width: 10;
+  opacity: 0;
+  filter: blur(10px);
+  transition: opacity 0.18s;
+}
+
+[data-sense="idle"] .sense-ring {
+  animation: breathe 7s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.26;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+[data-sense="warn"] .sense-ring {
+  opacity: 1;
+}
+
+[data-sense="warn"] .sense-ring .track {
+  stroke: var(--sense-warn);
+  opacity: 0.2;
+}
+
+[data-sense="warn"] .sense-ring .tick {
+  stroke: var(--sense-warn);
+  opacity: 0.5;
+}
+
+[data-sense="warn"] .sense-ring .seg {
+  stroke: var(--sense-warn);
+}
+
+[data-sense="warn"] .sense-ring .blip {
+  fill: var(--sense-warn);
+}
+
+[data-sense="impact"] .sense-ring {
+  opacity: 1;
+  animation: jitter 0.09s steps(2) infinite;
+}
+
+[data-sense="impact"] .sense-ring .track {
+  stroke: var(--sense-alarm);
+  opacity: 0.26;
+}
+
+[data-sense="impact"] .sense-ring .tick {
+  stroke: var(--sense-alarm);
+  opacity: 0.6;
+}
+
+[data-sense="impact"] .sense-ring .seg {
+  stroke: var(--sense-alarm);
+  filter: drop-shadow(0 0 5px rgba(193, 31, 69, 0.6));
+}
+
+[data-sense="impact"] .sense-ring .blip {
+  fill: var(--sense-alarm);
+}
+
+[data-sense="impact"] .sense-ring .halo {
+  opacity: 0.8;
+}
+
+@keyframes jitter {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translate(2px, -2px);
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(-2px, 2px);
+  }
+}
+
+/* ── the alarm wash ────────────────────────────────────────── */
+.alarm {
+  position: fixed;
+  inset: 0;
+  z-index: 957;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.28s var(--ease);
+  background: radial-gradient(circle at var(--ax, 50%) var(--ay, 50%),
+    rgba(193, 31, 69, 0.26), rgba(193, 31, 69, 0.08) 38%, transparent 72%);
+}
+
+[data-sense="warn"] .alarm {
+  opacity: 0.3;
+}
+
+[data-sense="warn"] .alarm::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--ax, 50%) var(--ay, 50%),
+    rgba(201, 138, 0, 0.2), transparent 60%);
+}
+
+[data-sense="impact"] .alarm {
+  opacity: 0.72;
+  animation: throb 1.05s ease-in-out infinite;
+}
+
+.alarm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--sense-alarm);
+  box-shadow: inset 0 0 90px rgba(193, 31, 69, 0.34);
+  opacity: 0;
+}
+
+[data-sense="impact"] .alarm::before {
+  opacity: 1;
+}
+
+@keyframes throb {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* chromatic aberration: a red/cyan split over the whole page */
+.aberration {
+  position: fixed;
+  inset: 0;
+  z-index: 959;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  transition: opacity 0.2s;
+}
+
+.aberration::before,
+.aberration::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.aberration::before {
+  background: linear-gradient(90deg, rgba(193, 31, 69, 0.24), transparent 42%);
+}
+
+.aberration::after {
+  background: linear-gradient(270deg, rgba(0, 150, 190, 0.22), transparent 42%);
+}
+
+[data-sense="impact"] .aberration {
+  opacity: 1;
+  animation: split 0.18s steps(2) infinite;
+}
+
+@keyframes split {
+  0% {
+    transform: translateX(-9px);
+  }
+  100% {
+    transform: translateX(9px);
+  }
+}
+
+/* ── proximity hotspots ────────────────────────────────────── */
+.hotspot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+  z-index: 956;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.hotspot i {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--sense-warn);
+  border-radius: 50%;
+  animation: ripple 1.6s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  opacity: 0;
+}
+
+.hotspot i:nth-child(2) {
+  animation-delay: 0.32s;
+}
+
+.hotspot i:nth-child(3) {
+  animation-delay: 0.64s;
+}
+
+[data-sense="impact"] .hotspot i {
+  border-color: var(--sense-alarm);
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(9);
+    opacity: 0;
+  }
+}
+
+/* ── telemetry ─────────────────────────────────────────────── */
+.telem {
+  position: fixed;
+  z-index: 961;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--telem);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: color 0.25s, opacity 0.4s;
+}
+
+.telem b {
+  font-weight: 500;
+  color: var(--ink);
+  transition: color 0.25s;
+}
+
+.telem.tl {
+  top: 20px;
+  left: 24px;
+}
+
+.telem.tr {
+  top: 20px;
+  right: 24px;
+  text-align: right;
+}
+
+.telem.bl {
+  bottom: 20px;
+  left: 24px;
+}
+
+.telem.br {
+  bottom: 20px;
+  right: 24px;
+  text-align: right;
+}
+
+.telem .lbl {
+  opacity: 0.55;
+}
+
+[data-sense="warn"] .telem,
+[data-sense="warn"] .telem b {
+  color: var(--sense-warn);
+}
+
+[data-sense="impact"] .telem,
+[data-sense="impact"] .telem b {
+  color: var(--sense-alarm);
+}
+
+/* ── the alarm readout ─────────────────────────────────────── */
+.alarm-readout {
+  position: fixed;
+  top: 54px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 962;
+  padding: 6px 18px;
+  background: var(--sense-alarm);
+  color: var(--paper);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.3s var(--ease);
+}
+
+[data-sense="warn"] .alarm-readout {
+  background: var(--sense-warn);
+}
+
+.alarm-readout.on {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  animation: throb 1.05s ease-in-out infinite;
+}
+
+/* ── frame corners ─────────────────────────────────────────── */
+.sense-corners {
+  position: fixed;
+  inset: 14px;
+  z-index: 955;
+  pointer-events: none;
+}
+
+.sense-corners i {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: 1px solid rgba(20, 18, 16, 0.22);
+}
+
+.sense-corners i:nth-child(1) {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.sense-corners i:nth-child(2) {
+  top: 0;
+  right: 0;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.sense-corners i:nth-child(3) {
+  bottom: 0;
+  left: 0;
+  border-right: 0;
+  border-top: 0;
+}
+
+.sense-corners i:nth-child(4) {
+  bottom: 0;
+  right: 0;
+  border-left: 0;
+  border-top: 0;
+}
+
+[data-sense="impact"] .sense-corners i {
+  border-color: var(--sense-alarm);
+}
+
+/* ── click silk ────────────────────────────────────────────── */
+.silk-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 960;
+  pointer-events: none;
+}
+
+.silk-layer path,
+.silk-layer circle {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
+.silk-layer path {
+  filter: drop-shadow(0 0 3px rgba(184, 51, 31, 0.5));
+}
+
+.silk-layer g {
+  animation: silkfade 0.95s ease-out forwards;
+}
+
+@keyframes silkfade {
+  to {
+    opacity: 0;
+  }
+}
+
+[data-sense="impact"] .silk-layer path,
+[data-sense="impact"] .silk-layer circle {
+  stroke: var(--sense-alarm);
+}
+
+@media (pointer: coarse), (max-width: 900px) {
+  .sense-ring,
+  .telem,
+  .alarm-readout {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sense-ring,
+  .alarm,
+  .aberration,
+  .hotspot i,
+  .alarm-readout.on,
+  .silk-layer g {
+    animation: none !important;
+  }
+
+  [data-sense="impact"] .alarm {
+    opacity: 0.5;
+  }
+}

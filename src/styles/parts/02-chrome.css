@@ -17,13 +17,25 @@
   border-bottom: 1px solid var(--grey);
   background: var(--paper2);
   color: var(--grey);
+  /* the mask clips the marquee: without it the 3500px track makes the whole
+     page scroll sideways */
   overflow: hidden;
-  /* inset so the marquee text is not flush against the bar's own edges */
   padding: 5px 16px;
   display: flex;
   align-items: center;
   position: relative;
   z-index: 901;
+}
+
+/* the marquee track is ~3500px wide; this clips it so the page itself
+   never scrolls sideways */
+.ticker-mask {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+  /* without this the flex item sizes to its 3500px content and the page
+     scrolls sideways again */
+  min-width: 0;
 }
 
 .tk {
@@ -114,6 +126,9 @@
 .webbg {
   position: absolute;
   inset: 0;
+  /* the drawn strands reach past the hero box; clip them so they never
+     widen the page */
+  overflow: hidden;
   pointer-events: none;
   opacity: 0.1;
 }
@@ -160,7 +175,7 @@
   position: relative;
   z-index: 2;
   font-family: "Archivo Black", sans-serif;
-  font-size: clamp(var(--display-lg), 13.5vw, 30rem);
+  font-size: clamp(2.6rem, 9vw, 9.5rem);
   text-wrap: balance;
   line-height: 0.84;
   letter-spacing: -0.04em;
@@ -169,6 +184,7 @@
 
 .name .w {
   display: inline-block;
+  white-space: nowrap;
   overflow: hidden;
   vertical-align: top;
   padding-bottom: 0.06em;
@@ -319,6 +335,9 @@
 }
 
 .cover-r {
+  /* the rotated burst overhangs this column; clip it so it cannot widen
+     the page */
+  overflow: hidden;
   padding: 44px 0 44px 40px;
   display: flex;
   flex-direction: column;
@@ -330,6 +349,8 @@
 .burst {
   width: 124px;
   height: 124px;
+  /* the 3px offset shadow reached past the viewport edge; contain it */
+  box-sizing: border-box;
   padding: 12px;
   border-radius: 50%;
   background: #b8331f;
@@ -342,6 +363,8 @@
   transform: rotate(-7deg);
   box-shadow: 3px 3px 0 var(--grey);
   align-self: flex-end;
+  /* its hard shadow reaches past the container edge; keep it inside */
+  max-width: 100%;
 }
 
 .burst b {
@@ -379,4 +402,50 @@
 .chip:hover {
   background: var(--ink);
   color: var(--paper);
+}
+
+/* the portrait, large, in the hero */
+.hero-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(20, 18, 16, 0.14);
+  filter: saturate(0.94) contrast(1.04);
+  position: relative;
+  z-index: 3;
+  margin-bottom: 22px;
+  opacity: 0;
+  animation: fade 0.8s 0.05s var(--ease) forwards;
+}
+
+@media (max-width: 560px) {
+  .hero-avatar {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+/* the portrait in the hero — a local webp, no remote fetch */
+.hero-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(20, 18, 16, 0.14);
+  filter: saturate(0.94) contrast(1.04);
+  position: relative;
+  z-index: 3;
+  margin-bottom: 22px;
+  opacity: 0;
+  animation: fade 0.8s 0.05s var(--ease) forwards;
+}
+
+@media (max-width: 560px) {
+  .hero-avatar {
+    width: 72px;
+    height: 72px;
+  }
 }

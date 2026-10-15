@@ -7,6 +7,11 @@
   --card: #fbf8f1;
   --ink: #141210;
   --red: #b8331f;
+  /* The web has two states. In Spider-Man mode it is red silk: dim at rest,
+     live and bright where the pointer passes. Symbiote mode turns it black
+     instead. Only the web changes - the paper, type and accent never do. */
+  --web-ink: #c23a26;
+  --web-live: #e0402a;
   --blue: #1b45c8;
   --grey: #5f594e;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);

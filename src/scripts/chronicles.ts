@@ -42,15 +42,6 @@ function drawHeroWeb() {
 /* ── 2. section dividers ── */
 function drawDividers() {
   document.querySelectorAll(".webrule svg").forEach((s) => {
-    for (let x = 0; x <= 1200; x += 120) {
-      const c = document.createElementNS(NS, "path");
-      const up = (x / 120) % 2 === 0;
-      c.setAttribute("d", `M${x} 15 Q${x + 60} ${up ? 0 : 30} ${x + 120} 15`);
-      c.setAttribute("class", "strand");
-      c.style.setProperty("--L", 260);
-      c.style.animationDelay = `${(x / 1200) * 0.5}s`;
-      s.appendChild(c);
-    }
   });
 }
 
@@ -149,51 +140,197 @@ function initShooter() {
 }
 
 /* ── 5. spider sense ── */
+/**
+ * The spidey-sense HUD. Proximity to any edge drives a three-state machine:
+ * idle is nearly invisible, warn clusters the ring toward the vector, impact
+ * floods the page and jolts. The paper underneath never changes.
+ */
 function initSense() {
-  // a generous band so it reliably triggers, but with hysteresis so it
-  // doesn't flicker on and off as you hover right at the threshold
-  const NEAR = 110;
-  const FAR = 150;
-  const N = { L: "senseL", R: "senseR", T: "senseT", B: "senseB" };
-  const W = { L: "washL", R: "washR", T: "washT", B: "washB" };
-  let armed = null;
-  const perch = document.getElementById("perch");
+  const RING = 280;
+  const SEGS = 48;
 
-  function set(side) {
-    if (armed === side) return;
-    for (const k in N) document.getElementById(N[k])?.classList.remove("on");
-    for (const k in W) document.getElementById(W[k])?.classList.remove("on");
-    armed = side;
-    if (side) {
-      document.getElementById(N[side])?.classList.add("on");
-      document.getElementById(W[side])?.classList.add("on");
+  const ringHost = document.getElementById("senseRing");
+  const alarm = document.getElementById("alarm");
+  const readout = document.getElementById("alarmReadout");
+  const silk = document.getElementById("silkLayer");
+  if (!ringHost) return;
+
+  let segs: SVGPathElement[] = [];
+  const pt = (a: number, r: number): [number, number] => [
+    Math.cos(a) * r,
+    Math.sin(a) * r,
+  ];
+
+  /* build the 360-degree ring once */
+  ringHost.innerHTML =
+    `<svg viewBox="${-RING - 20} ${-RING - 20} ${RING * 2 + 40} ${RING * 2 + 40}">` +
+    `<circle class="track" r="${RING}"/>` +
+    `<circle class="track" r="${RING - 16}" opacity=".5"/>` +
+    `<g class="ticks"></g><g class="segs"></g>` +
+    `<circle class="halo" r="${RING}"/><g class="blips"></g></svg>`;
+
+  const svg = ringHost.querySelector("svg");
+  const ticks = svg!.querySelector(".ticks");
+  const segGroup = svg!.querySelector(".segs");
+
+  for (let i = 0; i < 24; i++) {
+    const a = (Math.PI * 2 / 24) * i - Math.PI / 2;
+    const [x1, y1] = pt(a, i % 6 === 0 ? RING - 13 : RING - 7);
+    const [x2, y2] = pt(a, RING - 1);
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("class", "tick");
+    l.setAttribute("x1", x1.toFixed(1));
+    l.setAttribute("y1", y1.toFixed(1));
+    l.setAttribute("x2", x2.toFixed(1));
+    l.setAttribute("y2", y2.toFixed(1));
+    ticks!.appendChild(l);
+  }
+
+  for (let i = 0; i < SEGS; i++) {
+    const a0 = (Math.PI * 2 / SEGS) * i - Math.PI / 2 - 0.045;
+    const a1 = a0 + 0.09;
+    const [x1, y1] = pt(a0, RING);
+    const [x2, y2] = pt(a1, RING);
+    const p = document.createElementNS(NS, "path");
+    p.setAttribute("class", "seg");
+    p.setAttribute(
+      "d",
+      `M${x1.toFixed(1)} ${y1.toFixed(1)} A ${RING} ${RING} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}`
+    );
+    segGroup!.appendChild(p);
+    segs.push(p);
+  }
+
+  const spots = ["hotA", "hotB", "hotC"]
+    .map((id) => document.getElementById(id))
+    .filter(Boolean) as HTMLElement[];
+
+  const $ = (id: string) => document.getElementById(id);
+  let state = "idle";
+  let armedEdge = "";
+
+  /** Which ring segment faces the pointer. */
+  function segFor(x: number, y: number) {
+    let a = Math.atan2(y - 0.5, x - 0.5) + Math.PI / 2;
+    if (a < 0) a += Math.PI * 2;
+    return Math.floor((a / (Math.PI * 2)) * SEGS) % SEGS;
+  }
+
+  function apply(next: string, x: number, y: number) {
+    if (next === state) return;
+    state = next;
+    document.documentElement.dataset.sense = next;
+    $("tState")!.textContent = next;
+
+    alarm?.style.setProperty("--ax", `${(x * 100).toFixed(1)}%`);
+    alarm?.style.setProperty("--ay", `${(y * 100).toFixed(1)}%`);
+
+    if (next === "idle") {
+      segs.forEach((e) => (e.style.opacity = "0"));
+      spots.forEach((s) => (s.style.opacity = "0"));
+      readout?.classList.remove("on");
+      armedEdge = "";
+      $("tThreat")!.textContent = "none";
+      $("tTti")!.textContent = "—";
+      $("tTraj")!.textContent = "—";
+      $("tVel")!.textContent = "0.0";
+      $("tCon")!.textContent = "0";
+      $("tSig")!.textContent = "0%";
+      return;
+    }
+
+    // announce once per edge entered, not on every pixel
+    const edge = y < 0.2 ? "top" : y > 0.8 ? "bottom" : x < 0.2 ? "left" : "right";
+    if (edge !== armedEdge) {
+      armedEdge = edge;
+      readout?.classList.add("on");
+    }
+
+    const idx = segFor(x, y);
+    const spread = next === "impact" ? 8 : 3;
+    segs.forEach((e, i) => {
+      const d = Math.min(Math.abs(i - idx), SEGS - Math.abs(i - idx));
+      e.style.opacity = d <= spread ? String(1 - d / (spread + 1)) : "0";
+    });
+
+    // ripples bloom from the threat's own position on the ring
+    const [bx, by] = pt((Math.PI * 2 / SEGS) * idx - Math.PI / 2, RING);
+    const cx = innerWidth / 2 + bx;
+    const cy = innerHeight / 2 + by;
+    spots.forEach((s, i) => {
+      s.style.opacity = "1";
+      s.style.left = `${cx}px`;
+      s.style.top = `${cy}px`;
+      s.style.transform = `scale(${0.9 + i * 0.22})`;
+    });
+
+    if (next === "warn") {
+      $("tThreat")!.textContent = "anomaly";
+      $("tTti")!.textContent = "0.9s";
+      $("tTraj")!.textContent = `${edge.toUpperCase()}`;
+      $("tVel")!.textContent = "14.2";
+      $("tCon")!.textContent = "1";
+      $("tSig")!.textContent = "62%";
+    } else {
+      $("tThreat")!.textContent = "impact";
+      $("tTti")!.textContent = "0.04s";
+      $("tTraj")!.textContent = `${edge.toUpperCase()} / DESC`;
+      $("tVel")!.textContent = "38.7";
+      $("tCon")!.textContent = "3";
+      $("tSig")!.textContent = "100%";
     }
   }
-
-  function near(x, y) {
-    const t = armed ? FAR : NEAR;
-    if (x < t) return "L";
-    if (x > innerWidth - t) return "R";
-    if (y < t) return "T";
-    if (y > innerHeight - t) return "B";
-    return null;
-  }
-
 
   addEventListener(
     "mousemove",
     (e) => {
-      const side = near(e.clientX, e.clientY);
-      // the right edge belongs to the perch: she is the warning there,
-      // so no sigil is shown and she lights up instead
-      const right = side === "R";
-      set(right ? null : side);
-      perch?.classList.toggle("on", right);
+      const x = e.clientX / innerWidth;
+      const y = e.clientY / innerHeight;
+      const edgePx = Math.min(e.clientX, innerWidth - e.clientX, e.clientY, innerHeight - e.clientY);
+      // bands in px rather than fractions: 0.045 of 1440 is 65px, which a
+      // cursor reaches only by deliberately jamming it into the corner
+      if (edgePx < 26) apply("impact", x, y);
+      else if (edgePx < 130) apply("warn", x, y);
+      else apply("idle", x, y);
     },
     { passive: true }
   );
-  // a window resize can leave you inside the band with no mouse movement
-  addEventListener("resize", () => set(null), { passive: true });
+
+  addEventListener("resize", () => apply("idle", 0.5, 0.5), { passive: true });
+
+  /* clicking throws silk from the point you clicked */
+  addEventListener("pointerdown", (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    const g = document.createElementNS(NS, "g");
+    const spokes = 7 + Math.floor(Math.random() * 5);
+    const reach = 70 + Math.random() * 90;
+
+    for (let i = 0; i < spokes; i++) {
+      const a = (Math.PI * 2 / spokes) * i + Math.random() * 0.3;
+      const len = reach * (0.6 + Math.random() * 0.6);
+      const p = document.createElementNS(NS, "path");
+      // bow each thread so it reads as silk under tension, not spokes
+      const mx = x + Math.cos(a) * len * 0.55 + Math.cos(a + 0.6) * len * 0.16;
+      const my = y + Math.sin(a) * len * 0.55 + Math.sin(a + 0.6) * len * 0.16;
+      p.setAttribute(
+        "d",
+        `M${x} ${y} Q${mx.toFixed(1)} ${my.toFixed(1)} ${(x + Math.cos(a) * len).toFixed(1)} ${(y + Math.sin(a) * len).toFixed(1)}`
+      );
+      g.appendChild(p);
+    }
+    for (const r of [18, 31, 44]) {
+      const c = document.createElementNS(NS, "circle");
+      c.setAttribute("cx", x);
+      c.setAttribute("cy", y);
+      c.setAttribute("r", String(r));
+      g.appendChild(c);
+    }
+    silk?.appendChild(g);
+    setTimeout(() => g.remove(), 980);
+  });
+
+  apply("idle", 0.5, 0.5);
 }
 
 /* ── 6. cursor + web navigation ── */
@@ -273,88 +410,6 @@ function initWebNav(shooter) {
   });
 }
 
-/**
- * The reticle. It trails the pointer on an exponential ease so it feels
- * attached rather than glued, opens into a web node over anything
- * actionable, and blooms where a click lands. It never replaces the
- * native cursor — selection, middle-click and a11y all keep working.
- */
-function initReticle() {
-  const el = document.getElementById("reticle");
-  if (!el) return;
-
-  let tx = innerWidth / 2, ty = innerHeight / 2;
-  let cx = tx, cy = ty;
-  let seen = false;
-
-  addEventListener("mousemove", (e) => {
-    tx = e.clientX;
-    ty = e.clientY;
-    if (!seen) {
-      // first move: no swoop in from the middle of the page
-      seen = true;
-      cx = tx;
-      cy = ty;
-      el.style.opacity = "1";
-    }
-    const actionable = !!(e.target as Element | null)?.closest?.(
-      "a, button, .chip, .soc, summary, [role='button']"
-    );
-    el.classList.toggle("on-link", actionable);
-  }, { passive: true });
-
-  addEventListener("mousedown", () => el.classList.add("down"), { passive: true });
-  addEventListener("mouseup", () => el.classList.remove("down"), { passive: true });
-
-  addEventListener("click", (e) => {
-    const b = document.createElement("div");
-    b.className = "bloom";
-    b.setAttribute("aria-hidden", "true");
-    b.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-    b.innerHTML =
-      '<svg viewBox="0 0 90 90">' +
-      Array.from({ length: 8 }, (_, i) => {
-        const a = (Math.PI * 2) / 8 * i;
-        const x2 = 45 + Math.cos(a) * 40;
-        const y2 = 45 + Math.sin(a) * 40;
-        return `<line x1="45" y1="45" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
-      }).join("") +
-      '<circle cx="45" cy="45" r="16" fill="none"/>' +
-      '<circle cx="45" cy="45" r="28" fill="none"/>' +
-      "</svg>";
-    document.body.appendChild(b);
-    setTimeout(() => b.remove(), 600);
-  });
-
-  (function follow() {
-    cx += (tx - cx) * 0.18;
-    cy += (ty - cy) * 0.18;
-    el.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px)`;
-    requestAnimationFrame(follow);
-  })();
-}
-
-/**
- * Clicking the perch throws a strand at the top of the page and reels
- * you back up it. Keyboard reachable, and it is the only thing on the
- * page that moves you somewhere you did not scroll.
- */
-function initPerch() {
-  const el = document.getElementById("perch");
-  if (!el) return;
-  el.addEventListener("click", () => {
-    const r = el.getBoundingClientRect();
-    const shot = document.createElement("div");
-    shot.className = "perch-shot";
-    shot.style.left = `${r.left + r.width / 2 - 1}px`;
-    shot.style.top = `${r.top}px`;
-    shot.style.height = `${Math.max(80, r.top - 8)}px`;
-    shot.setAttribute("aria-hidden", "true");
-    document.body.appendChild(shot);
-    setTimeout(() => shot.remove(), 540);
-    scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
 
 /* ── boot ── */
 drawHeroWeb();
@@ -366,7 +421,62 @@ if (!reduce && fine) {
   if (shooter) {
     initSense();
     initWebNav(shooter);
-    initReticle();
-    initPerch();
+    initBrowse();
+  }
+}
+/**
+ * Two behaviours for the hero filter row and the AI Projects section.
+ *
+ * Filtering hides whole sections that contain nothing matching, so choosing
+ * "Web3" narrows the page rather than leaving gaps. The AI Projects section
+ * shows three cards until asked for the rest, because sixteen at once is a
+ * wall, not a showcase.
+ */
+function initBrowse() {
+  /* ---- filters ---- */
+  const filters = [...document.querySelectorAll<HTMLElement>(".filter")];
+  const sections = [...document.querySelectorAll<HTMLElement>("section[id]")];
+
+  function applyFilter(tag: string) {
+    for (const sec of sections) {
+      if (!sec.querySelector(".p")) continue;
+      // tags ride on the wrapper as a comma list
+      const tagged = [...sec.querySelectorAll<HTMLElement>(".p-wrap")];
+      const hit = tagged.filter((w) =>
+        (w.dataset.tags || "").split(",").map((t) => t.trim()).includes(tag)
+      ).length;
+      sec.hidden = tag !== "all" && hit === 0;
+    }
+    for (const f of filters) {
+      const on = f.dataset.filter === tag;
+      f.classList.toggle("is-on", on);
+      f.setAttribute("aria-pressed", String(on));
+    }
+  }
+
+  for (const f of filters) {
+    f.addEventListener("click", () => applyFilter(f.dataset.filter || "all"));
+  }
+
+  /* ---- collapsible sections ---- */
+  for (const grid of document.querySelectorAll<HTMLElement>("[data-collapsible]")) {
+    const more = grid.querySelectorAll<HTMLElement>(".is-more");
+    if (!more.length) continue;
+
+    const btn = document.createElement("button");
+    btn.className = "expand";
+    btn.type = "button";
+    btn.setAttribute("aria-expanded", "false");
+    const label = () =>
+      `${more.length} more — show all ${more.length + 3}`;
+    btn.textContent = label();
+    grid.insertAdjacentElement("afterend", btn);
+
+    btn.addEventListener("click", () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      btn.setAttribute("aria-expanded", String(!open));
+      grid.classList.toggle("is-open", !open);
+      btn.textContent = open ? label() : "Show fewer";
+    });
   }
 }
