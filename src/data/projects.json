@@ -1,0 +1,136 @@
+{
+  "profile": {
+    "handle": "aswathas",
+    "name": "Aswath S",
+    "tagline": "building agentic systems that ship",
+    "subline": "CLI tools · agent skills · MCP servers · courses",
+    "github": "https://github.com/aswathas",
+    "skillsRepo": "https://github.com/aswathas/agent-skills"
+  },
+  "stats": [
+    { "label": "SKILLS", "value": "9", "detail": "published" },
+    { "label": "CLI", "value": "4", "detail": "tools" },
+    { "label": "COURSES", "value": "2", "detail": "teaching AI" }
+  ],
+  "categories": [
+    {
+      "id": "skills",
+      "label": "Skills",
+      "blurb": "Instruction sets that make a coding agent genuinely better at something specific.",
+      "items": [
+        {
+          "name": "deep-teach",
+          "lang": "Skill",
+          "desc": "8-lens concept decoder. Any topic through first principles, Feynman, chunking, analogy, inversion, systems view, MECE and memory lock — then writes the exam answer.",
+          "url": "https://github.com/aswathas/agent-skills/tree/main/deep-teach",
+          "install": "npx skills add aswathas/agent-skills@deep-teach -g"
+        },
+        {
+          "name": "project-chronicle",
+          "lang": "Skill",
+          "desc": "Documents a project's whole history as it happens — problem, options, decision, MVP scope, failed attempts, verification. The dead ends get kept.",
+          "url": "https://github.com/aswathas/agent-skills/tree/main/project-chronicle",
+          "install": "npx skills add aswathas/agent-skills@project-chronicle -g"
+        },
+        {
+          "name": "second-brain skills",
+          "lang": "7 skills",
+          "desc": "The skill layer of the second brain — auto-skill-builder, ingest-source, log-decision, lint-wiki, onboarding, give-advice, log-interaction.",
+          "url": "https://github.com/aswathas/second-brain/tree/main/skills"
+        }
+      ]
+    },
+    {
+      "id": "cli",
+      "label": "CLI & Tools",
+      "blurb": "Things you run from a terminal. Every one works with any MCP-compatible agent.",
+      "items": [
+        {
+          "name": "ai-brain",
+          "lang": "TypeScript",
+          "desc": "Personal wiki CLI with AI-powered context and personas. Connects to Claude, ChatGPT, Gemini and 20+ other providers.",
+          "url": "https://github.com/aswathas/ai-brain"
+        },
+        {
+          "name": "postiee",
+          "lang": "Astro",
+          "desc": "LinkedIn CLI for people who use terminals. Posts through the official API.",
+          "url": "https://github.com/aswathas/postiee"
+        },
+        {
+          "name": "olx-india-cli",
+          "lang": "TypeScript",
+          "desc": "Search, score and track second-hand cars on OLX India with AI-powered recommendations.",
+          "url": "https://github.com/aswathas/olx-india-cli"
+        },
+        {
+          "name": "second-brain",
+          "lang": "JavaScript",
+          "desc": "AI-powered knowledge wiki that evolves with you. Framework for Claude Code, Hermes and other CLI agents.",
+          "url": "https://github.com/aswathas/second-brain"
+        }
+      ]
+    },
+    {
+      "id": "products",
+      "label": "Products",
+      "blurb": "The same systems with a face.",
+      "items": [
+        {
+          "name": "ai-brain-desktop",
+          "lang": "TypeScript",
+          "desc": "Electron desktop app wrapping the second brain in a chat UI.",
+          "url": "https://github.com/aswathas/ai-brain-desktop"
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "label": "Agents",
+      "blurb": "Autonomous systems that act, not just answer.",
+      "items": [
+        {
+          "name": "executive-assistant",
+          "lang": "Agent",
+          "desc": "Personal assistant agent for scheduling and follow-through.",
+          "url": "https://github.com/aswathas/executive-assistant"
+        }
+      ]
+    },
+    {
+      "id": "mcp",
+      "label": "MCP Servers",
+      "blurb": "Model Context Protocol servers — tools that plug any model into an external service.",
+      "items": [],
+      "empty": "Nothing published yet. MCP servers are the next build — check back."
+    },
+    {
+      "id": "plugins",
+      "label": "Plugins",
+      "blurb": "Bundled Claude Code plugins — skills, agents, commands and hooks that install together.",
+      "items": [],
+      "empty": "Nothing published yet."
+    },
+    {
+      "id": "courses",
+      "label": "Courses",
+      "blurb": "Teaching the material, not just using it.",
+      "items": [
+        {
+          "name": "AI Engineering from Scratch",
+          "lang": "523 lessons",
+          "desc": "A 20-phase curriculum building AI systems from first principles. Every framework rebuilt from nothing — no assumed knowledge.",
+          "url": "https://github.com/aswathas",
+          "status": "building"
+        },
+        {
+          "name": "Agent101",
+          "lang": "Course",
+          "desc": "The agent-building course. From what an agent is to shipping one that works against a real model.",
+          "url": "https://aswathas.github.io/agent101/",
+          "status": "live"
+        }
+      ]
+    }
+  ]
+}
