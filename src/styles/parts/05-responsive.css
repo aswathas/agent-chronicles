@@ -41,3 +41,41 @@
     display: none;
   }
 }
+
+/* ── reduced motion ──
+   Every infinite loop stops; scroll-triggered movement becomes instant
+   visibility. Entrance fades keep their end state so content never hides. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* the six infinite loops, named explicitly so the intent is auditable */
+  .tk,
+  .benday,
+  .burst,
+  .sigil .ring,
+  .sigil .pulse,
+  .shake,
+  .impact {
+    animation: none !important;
+  }
+
+  /* anything that only moved in order to be revealed is simply revealed */
+  .rev,
+  .mline span {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}

@@ -1,10 +1,24 @@
+/* ── page texture (static; the halftone never needs to drift) ── */
+.benday {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 900;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  background-image: radial-gradient(circle, rgba(20, 18, 16, 0.06) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+
 /* ── ticker ── */
+/* deliberately lower contrast than the hero name: it is a running head,
+   not a headline */
 .ticker {
-  border-bottom: 3px solid var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+  border-bottom: 1px solid var(--grey);
+  background: var(--paper2);
+  color: var(--grey);
   overflow: hidden;
-  height: 34px;
+  height: 26px;
   display: flex;
   align-items: center;
   position: relative;
@@ -15,11 +29,12 @@
   display: flex;
   gap: 44px;
   white-space: nowrap;
-  animation: slide 30s linear infinite;
+  animation: slide 40s linear infinite;
   font-family: "IBM Plex Mono", monospace;
   font-size: var(--text-xs);
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  color: var(--grey);
 }
 
 .tk span b {
@@ -310,32 +325,22 @@
   gap: 26px;
 }
 
+/* decoration, not a headline: it must never out-weigh the name */
 .burst {
-  width: 172px;
-  height: 172px;
-  padding: 14px;
+  width: 124px;
+  height: 124px;
+  padding: 12px;
   border-radius: 50%;
-  background: var(--red);
-  color: #fff;
+  background: #b8331f;
+  color: var(--paper);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   transform: rotate(-7deg);
-  box-shadow: 5px 5px 0 var(--ink);
+  box-shadow: 3px 3px 0 var(--grey);
   align-self: flex-end;
-  animation: pl 3.2s ease-in-out infinite;
-}
-
-@keyframes pl {
-  0%,
-  100% {
-    transform: rotate(-7deg) scale(1);
-  }
-  50% {
-    transform: rotate(-7deg) scale(1.05);
-  }
 }
 
 .burst b {
