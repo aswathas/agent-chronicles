@@ -4,6 +4,8 @@ import data from "../data/projects.json";
 import "../styles/chronicles.css";
 
 const { profile, stats, chips, sections, mcp, ticker } = data;
+// BASE_URL has no trailing slash, so join rather than concatenate
+const asset = (p: string) => import.meta.env.BASE_URL.replace(/\/$/, "") + "/" + p;
 const tickerItems = [...ticker, ...ticker];
 
 const sigil = () => `
@@ -95,8 +97,11 @@ const sigil = () => `
   <div class="s" id="main" role="main" tabindex="-1">
     <!-- masthead -->
     <div class="mast">
-      <div>
+      <div class="mast-id">
+        <img class="avatar" src={asset("img/profile.webp")} alt="" width="44" height="44" />
+        <div>
         <b>Est. 2024</b>Published by {profile.name}<br>Agent Systems Desk
+        </div>
       </div>
       <div>
         <b>Issue 0116 · 2026</b>Skills · CLI · MCP · Web3
@@ -113,7 +118,7 @@ const sigil = () => `
     <!-- hero -->
     <div class="hero">
       <div class="webbg"><svg viewBox="0 0 400 400" id="webart"></svg></div>
-      <img class="hero-avatar" src="/img/profile.webp" alt="" width="96" height="96" />
+      <img class="hero-avatar" src={asset("img/profile.webp")} alt="" width="96" height="96" />
       <div class="eyebrow">{profile.eyebrow}</div>
       <h1 class="name"><span class="w"><i>Aswath</i></span> <span class="w"><i>S</i></span></h1>
       <div class="work" set:html={profile.work} />

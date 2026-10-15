@@ -112,3 +112,24 @@ test('no card nests one anchor inside another', () => {
   assert.equal(/<a[^>]*>(?:(?!<\/a>)[\s\S])*<a\s/.test(html), false,
     'no <a> may contain another <a>');
 });
+
+test('every asset URL carries the deploy base path', () => {
+  // A leading "/" resolves to the domain root, so on a project Pages site
+  // (/agent-chronicles/) the avatar 404s. Every src/href must carry the base.
+  const html = readFileSync(`${dist}index.html`, 'utf8');
+  // a path that starts at the domain root without the base prefix
+  const BASE = '/agent-chronicles/';
+  const bad = [...html.matchAll(/(?:src|href)="(\/[^"]*)"/g)]
+    .map((m) => m[1])
+    .filter((u) => !u.startsWith(BASE) && !u.startsWith('//'));
+  assert.deepEqual(bad, [], `absolute asset paths break under the base path: ${bad.join(', ')}`);
+});
+
+test('the profile photo is a local webp, not a remote fetch', () => {
+  const html = readFileSync(`${dist}index.html`, 'utf8');
+  const refs = [...html.matchAll(/(?:src|href)="([^"]*profile\.webp)"/g)].map((m) => m[1]);
+  assert.ok(refs.length > 0, 'the hero must carry the profile photo');
+  for (const r of refs) {
+    assert.ok(r.startsWith('/agent-chronicles/'), `profile photo must carry the base path: ${r}`);
+  }
+});
