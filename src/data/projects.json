@@ -125,7 +125,7 @@
           "tag": "skill · 5 skills · gate",
           "meta": "brand-conditioned · 21 tests",
           "desc": "Frontend design agent. Establishes a six-line brief before any code, then routes each surface to the method that fits — marketing, product UI, mobile, canvas, i18n. Ships a gate that reads your own tokens first, so your brand colour is never flagged as the AI default.",
-          "url": "https://github.com/aswathas/agent-templates/tree/main/templates/uiux",
+          "url": "https://github.com/aswathas/agent-templates/tree/master/templates/uiux",
           "install": "/plugin marketplace add aswathas/agent-templates",
           "wide": true,
           "tags": [
