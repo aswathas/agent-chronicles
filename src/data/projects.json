@@ -28,7 +28,7 @@
   },
   "stats": [
     {
-      "value": "09",
+      "value": "10",
       "label": "Skills"
     },
     {
@@ -36,7 +36,7 @@
       "label": "CLI"
     },
     {
-      "value": "03",
+      "value": "05",
       "label": "Shipped"
     },
     {
@@ -79,7 +79,7 @@
       "id": "skills",
       "title": "Skills",
       "blurb": "instruction sets",
-      "count": "03 of 09 published",
+      "count": "04 of 10 published",
       "layout": "grid",
       "items": [
         {
@@ -118,6 +118,20 @@
             "ai",
             "skills",
             "mcp"
+          ]
+        },
+        {
+          "name": "uiux",
+          "tag": "skill · 5 skills · gate",
+          "meta": "brand-conditioned · 21 tests",
+          "desc": "Frontend design agent. Establishes a six-line brief before any code, then routes each surface to the method that fits — marketing, product UI, mobile, canvas, i18n. Ships a gate that reads your own tokens first, so your brand colour is never flagged as the AI default.",
+          "url": "https://github.com/aswathas/agent-templates/tree/main/templates/uiux",
+          "install": "/plugin marketplace add aswathas/agent-templates",
+          "wide": true,
+          "tags": [
+            "ai",
+            "frontend",
+            "design"
           ]
         }
       ]
@@ -181,7 +195,7 @@
       "id": "shipped",
       "title": "Shipped",
       "blurb": "things with a window",
-      "count": "03 released",
+      "count": "05 released",
       "layout": "grid",
       "items": [
         {
@@ -216,6 +230,30 @@
           "tags": [
             "ai",
             "web"
+          ]
+        },
+        {
+          "name": "Postiee",
+          "tag": "windows · go · tauri",
+          "meta": "linkedin cli · v0.1.0",
+          "desc": "Posts to LinkedIn from the terminal over the official API, so a CLI agent can publish without a browser. Multi-image posts, local history because LinkedIn will not let you read your own posts back, and OAuth handled properly.",
+          "url": "https://github.com/aswathas/postiee",
+          "tags": [
+            "cli",
+            "ai",
+            "windows"
+          ]
+        },
+        {
+          "name": "MDView",
+          "tag": "windows · tauri · typescript",
+          "meta": "markdown + jsonl viewer",
+          "desc": "A desktop markdown viewer a CLI agent can open a file in. Run mdview notes.md and the window comes up already rendered; run it again and the existing window takes focus. Claude Code .jsonl transcripts render as a readable timeline.",
+          "url": "https://github.com/aswathas/mdview",
+          "tags": [
+            "ai",
+            "windows",
+            "cli"
           ]
         }
       ]
@@ -578,8 +616,8 @@
   },
   "ticker": [
     "Vol. XXVI · No. 0116 · Agent Systems Desk",
-    "9 skills published",
-    "4 CLI tools shipping",
+    "10 skills published",
+    "5 CLI tools shipping",
     "Web3 forensics suite",
     "MCP servers — nothing shipped yet",
     "The web never misses"
