@@ -1005,50 +1005,59 @@
     "diagramSvg": "<svg viewBox=\"0 0 600 160\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"600\" height=\"160\" rx=\"12\" fill=\"#0c121e\" stroke=\"#1e293b\"/><text x=\"30\" y=\"30\" fill=\"#64748b\" font-family=\"monospace\" font-size=\"11\" font-weight=\"700\">SKILLHUB: CENTRAL STORE WITH NTFS JUNCTIONS</text><circle cx=\"100\" cy=\"95\" r=\"30\" fill=\"#1e293b\" stroke=\"#3b82f6\"/><text x=\"100\" y=\"99\" fill=\"#93c5fd\" font-family=\"sans-serif\" font-size=\"9\" text-anchor=\"middle\" font-weight=\"700\">Central Store</text><path d=\"M135 85 L230 65\" stroke=\"#38bdf8\" stroke-width=\"2\"/><path d=\"M135 95 L230 95\" stroke=\"#10b981\" stroke-width=\"2\"/><path d=\"M135 105 L230 125\" stroke=\"#f59e0b\" stroke-width=\"2\"/><text x=\"240\" y=\"68\" fill=\"#bae6fd\" font-family=\"monospace\" font-size=\"10\">~/.claude/skills (Junction)</text><text x=\"240\" y=\"98\" fill=\"#6ee7b7\" font-family=\"monospace\" font-size=\"10\">~/.gemini/skills (Junction)</text><text x=\"240\" y=\"128\" fill=\"#fcd34d\" font-family=\"monospace\" font-size=\"10\">~/.cursor/rules (Junction)</text></svg>"
   },
   {
-    "slug": "egm-swarm",
-    "name": "egm-swarm",
-    "title": "egm-swarm: 7-Persona Goldfish Review Swarm & Intermediate Compiler",
-    "category": "Swarm & Workflow Protocols",
-    "categorySlug": "workflows",
-    "badge": "SWARM WORKFLOW",
-    "eyebrow": "PARALLEL AUDIT SWARM · COMPREHENSIVE COMPILER",
-    "tagline": "Intermediate swarm coordinator running 7 specialized subagent personas in parallel to eliminate blind spots.",
-    "installCommand": "npx skills add aswathas/agent-skills@egm-swarm -g",
-    "cliCommand": "python -m egm.swarm audit --doc ARCHITECTURE.md",
+    "slug": "aswath-skill-router",
+    "name": "aswath-skill-router",
+    "title": "aswath-skill-router: MiniMax Code Adaptive Learning Plugin",
+    "category": "Capability Routers",
+    "categorySlug": "routers",
+    "badge": "MCODE PLUGIN · PUBLISHED",
+    "eyebrow": "MINIMAX CODE LIFECYCLE HOOK · ADAPTIVE ROUTING",
+    "tagline": "MCode plugin that learns from what really happens in a session — user edits, corrections, and deletes — updating routing weights dynamically.",
+    "installCommand": "python $env:USERPROFILE/.minimax/plugins/aswath-skill-router/scripts/learning-hook.py --status",
+    "cliCommand": "python ~/.minimax/plugins/aswath-skill-router/scripts/learning-hook.py --ledger",
     "repoUrl": "https://github.com/aswathas/agent-skills",
-    "trigger": "Use when reviewing complex architecture docs, RFCs, PRDs, or mission-critical code changes before release.",
+    "trigger": "Use when configuring autonomous routing inside MiniMax Code (mcode), learning from user corrections, or auditing capability decisions.",
     "modelCard": {
-      "runtime": "Parallel Subagent Swarm (Antigravity / Claude Code)",
-      "type": "Multi-Persona Swarm Compiler",
-      "transport": "Subagent IPC & Markdown Aggregator",
-      "contextTax": "Parallelized subagent context (0 root bloat)",
-      "testCoverage": "Production tested on 25 system architecture proposals",
+      "runtime": "MiniMax Code (mcode) Plugin Runtime",
+      "type": "MCode Adaptive Lifecycle Hook Plugin",
+      "transport": "mcode hook IPC (hooks/hooks.json)",
+      "contextTax": "0 permanent context tokens",
+      "testCoverage": "Validated against 298 routing benchmark cases",
       "license": "MIT",
-      "dependencies": []
+      "dependencies": [
+        "python >=3.10",
+        "mcode"
+      ]
     },
-    "problem": "A single AI reviewer produces shallow feedback: it cannot simultaneously scrutinize low-level implementation details, high-altitude architecture, and layman reader comprehension without losing depth.",
-    "solution": "Deploys 7 parallel 'Goldfish' subagents: 1) Structural Layout, 2) Design Critic, 3) Naive Comprehension Reader, 4) Codebase Details Auditor, 5) Implementation Readiness, 6) Style Editor, 7) Zoom-Out Minimalist. An intermediate Synthesizer compiles and deduplicates findings.",
+    "problem": "Static router configs repeatedly make the same mistaken tool invocation whenever user prompts are terse or ambiguous, requiring manual corrections across repeated sessions.",
+    "solution": "Registers an official MiniMax Code plugin hook that listens to file edits and user prompt corrections. When a route is corrected, the learning hook updates routing weights in real time so the same mistake is never repeated.",
     "evaluation": {
-      "headlineMetric": "7",
-      "headlineSub": "Parallel Auditor Personas",
-      "proofText": "Identifies 3.4x more architectural contradictions and unmitigated operational risks than a standard single-pass LLM review.",
-      "verificationCmd": "egm audit --summary",
+      "headlineMetric": "0",
+      "headlineSub": "Repeat Routing Mistakes",
+      "proofText": "Guarantees zero repeat misroutes on previously corrected ambiguous prompts through persistent local weight updates.",
+      "verificationCmd": "python learning-hook.py --test",
       "comparisonTable": [
         {
-          "metric": "Review Dimensions",
-          "traditional": "1 generalist pass",
-          "proposed": "7 specialized parallel personas",
-          "delta": "7x coverage"
+          "metric": "Learning Mechanism",
+          "traditional": "Static keyword map (never learns)",
+          "proposed": "Feedback-driven hook in MCode lifecycle",
+          "delta": "Continuous adaptation"
+        },
+        {
+          "metric": "Correction Retention",
+          "traditional": "Forgotten on next session",
+          "proposed": "Persistent in routing ledger",
+          "delta": "Permanent fix"
         }
       ]
     },
     "codeExample": {
-      "title": "EGM Swarm Dispatch",
+      "title": "MCode Learning Hook Execution",
       "language": "bash",
-      "code": "$ python -m egm.swarm run --target PRD.md\n[1/7] egm-structural: Layout and heading hierarchy verified\n[2/7] egm-design: Flagged unmitigated network failure in step 4\n[3/7] egm-comprehension: Identified 2 undefined acronyms\n[4/7] egm-codebase-details: Found duplicate helper in utils.py\n[5/7] egm-implementation-readiness: Missing migration rollback plan\n[SYNTHESIZER] Aggregating final markdown report...",
-      "output": "Delivered unified actionable review artifact in 12 seconds."
+      "code": "$ python learning-hook.py --inspect-last-turn\nCaptured user correction: \"use olxcars in memory instead of mcp\"\n-> Routing priority updated: [olxcars.in_memory = 1.0]\n-> Weight saved to ~/.minimax/plugins/aswath-skill-router/data/\nStatus: Learned from session.",
+      "output": "Routing ledger updated. Zero repeat misroutes."
     },
-    "diagramSvg": "<svg viewBox=\"0 0 600 160\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"600\" height=\"160\" rx=\"12\" fill=\"#0c121e\" stroke=\"#1e293b\"/><text x=\"30\" y=\"30\" fill=\"#64748b\" font-family=\"monospace\" font-size=\"11\" font-weight=\"700\">EGM SWARM: 7-PERSONA PARALLEL COMPILER</text><circle cx=\"70\" cy=\"95\" r=\"28\" fill=\"#1e293b\" stroke=\"#3b82f6\"/><text x=\"70\" y=\"99\" fill=\"#93c5fd\" font-family=\"sans-serif\" font-size=\"9\" text-anchor=\"middle\" font-weight=\"700\">Document</text><path d=\"M105 95 H170\" stroke=\"#38bdf8\" stroke-width=\"2\"/><rect x=\"180\" y=\"50\" width=\"220\" height=\"90\" rx=\"6\" fill=\"#151d2f\" stroke=\"#10b981\"/><text x=\"290\" y=\"75\" fill=\"#6ee7b7\" font-family=\"sans-serif\" font-size=\"11\" text-anchor=\"middle\" font-weight=\"700\">7 Parallel Personas</text><text x=\"290\" y=\"95\" fill=\"#94a3b8\" font-family=\"monospace\" font-size=\"9\" text-anchor=\"middle\">Design · Details · Layout · Style</text><text x=\"290\" y=\"115\" fill=\"#94a3b8\" font-family=\"monospace\" font-size=\"9\" text-anchor=\"middle\">Comprehension · Readiness · Zoom-out</text><path d=\"M410 95 H470\" stroke=\"#38bdf8\" stroke-width=\"2\"/><circle cx=\"515\" cy=\"95\" r=\"28\" fill=\"#1e293b\" stroke=\"#ec4899\"/><text x=\"515\" y=\"99\" fill=\"#f472b6\" font-family=\"sans-serif\" font-size=\"9\" text-anchor=\"middle\" font-weight=\"700\">Synthesizer</text></svg>"
+    "diagramSvg": "<svg viewBox=\"0 0 600 160\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><rect width=\"600\" height=\"160\" rx=\"12\" fill=\"#0c121e\" stroke=\"#1e293b\"/><text x=\"30\" y=\"30\" fill=\"#64748b\" font-family=\"monospace\" font-size=\"11\" font-weight=\"700\">MCODE ADAPTIVE LEARNING HOOK PIPELINE</text><rect x=\"40\" y=\"55\" width=\"140\" height=\"75\" rx=\"6\" fill=\"#151d2f\" stroke=\"#3b82f6\"/><text x=\"110\" y=\"85\" fill=\"#93c5fd\" font-family=\"sans-serif\" font-size=\"11\" text-anchor=\"middle\" font-weight=\"700\">MCode Session</text><text x=\"110\" y=\"105\" fill=\"#64748b\" font-family=\"monospace\" font-size=\"9\" text-anchor=\"middle\">Edits &amp; Corrections</text><path d=\"M190 92 H260\" stroke=\"#38bdf8\" stroke-width=\"2\"/><rect x=\"270\" y=\"55\" width=\"160\" height=\"75\" rx=\"6\" fill=\"#151d2f\" stroke=\"#10b981\"/><text x=\"350\" y=\"85\" fill=\"#6ee7b7\" font-family=\"sans-serif\" font-size=\"11\" text-anchor=\"middle\" font-weight=\"700\">learning-hook.py</text><text x=\"350\" y=\"105\" fill=\"#64748b\" font-family=\"monospace\" font-size=\"9\" text-anchor=\"middle\">Extracts correction signal</text><path d=\"M440 92 H500\" stroke=\"#38bdf8\" stroke-width=\"2\"/><circle cx=\"530\" cy=\"92\" r=\"25\" fill=\"#151d2f\" stroke=\"#10b981\"/><text x=\"530\" y=\"96\" fill=\"#6ee7b7\" font-family=\"sans-serif\" font-size=\"9\" text-anchor=\"middle\" font-weight=\"700\">LEDGER</text></svg>"
   },
   {
     "slug": "doubt-driven-development",

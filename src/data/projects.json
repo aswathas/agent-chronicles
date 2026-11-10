@@ -85,7 +85,7 @@
     "skill-router: 298-case eval & outcome-driven learning",
     "aswath-capability: 3,114 skills indexed",
     "Zero paid proxies · ₹0 external infrastructure",
-    "EGM Reviewer Swarms: multi-persona adversarial audits"
+    "MCode Plugins: aswath-token-guard, aswath-compact & skill-router"
   ],
   "sections": [
     {
@@ -385,16 +385,16 @@
       "layout": "grid",
       "items": [
         {
-          "name": "EGM Goldfish Reviewer Swarm",
-          "tag": "multi-agent swarm",
-          "meta": "7 independent audit personas",
-          "desc": "Parallel subagent review protocol utilizing specialized personas (Hostile Critic, Skeptical Minimalist, Naive Reader, Document Architect) to review architecture without bias.",
-          "url": "https://github.com/aswathas/olx-car-search",
+          "name": "MCode Adaptive Learning & Token Guard",
+          "tag": "mcode plugin suite",
+          "meta": "lifecycle hooks · learning-hook.py",
+          "desc": "Lifecycle hook plugins running inside MiniMax Code (~/.minimax/plugins/) enforcing read-once file discipline, command folding, and learning routing weights from user corrections.",
+          "url": "https://github.com/aswathas/agent-skills",
           "wide": true,
           "tags": [
             "ai",
             "workflows",
-            "agents"
+            "plugins"
           ]
         },
         {
