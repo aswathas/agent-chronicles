@@ -4,13 +4,16 @@ interface Props {
 }
 const { currentPath = "/" } = Astro.props;
 
+const rawBase = import.meta.env.BASE_URL || "/";
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
 const navItems = [
-  { label: "Home", href: import.meta.env.BASE_URL },
-  { label: "Code Mode & MCP", href: `${import.meta.env.BASE_URL}code-mode/` },
-  { label: "Skills Catalog", href: `${import.meta.env.BASE_URL}skills/` },
-  { label: "Routers & Harness", href: `${import.meta.env.BASE_URL}routers/` },
-  { label: "AI Research", href: `${import.meta.env.BASE_URL}research/` },
-  { label: "Workflows & Swarms", href: `${import.meta.env.BASE_URL}workflows/` },
+  { label: "Home", href: base },
+  { label: "Code Mode & MCP", href: `${base}code-mode/` },
+  { label: "Skills Catalog", href: `${base}skills/` },
+  { label: "Routers & Harness", href: `${base}routers/` },
+  { label: "AI Research", href: `${base}research/` },
+  { label: "Workflows & Swarms", href: `${base}workflows/` },
 ];
 
 const clean = (p: string) => p.replace(/\/$/, "") || "/";
@@ -18,7 +21,7 @@ const clean = (p: string) => p.replace(/\/$/, "") || "/";
 
 <header class="global-nav">
   <div class="s nav-inner">
-    <a href={import.meta.env.BASE_URL} class="brand">
+    <a href={base} class="brand">
       <span class="brand-title">THE AGENT CHRONICLES</span>
       <span class="brand-sub">AI SYSTEMS DESK · ASWATH S</span>
     </a>

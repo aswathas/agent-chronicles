@@ -3,6 +3,9 @@ import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/chronicles.css";
+
+const rawBase = import.meta.env.BASE_URL || "/";
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 ---
 
 <Base
@@ -75,7 +78,8 @@ import "../styles/chronicles.css";
           <code>python scripts/delegate.py --backend agy --model fast --prompt "..."</code>
         </div>
         <div class="sys-footer">
-          <a href="https://github.com/aswathas/aswath-capability" target="_blank" rel="noopener">GitHub Repository ➔</a>
+          <a href={`${base}skills/aswath-capability/`} class="card-spec-link">Model Card &amp; Specs ➔</a>
+          <a href="https://github.com/aswathas/aswath-capability" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
 
@@ -98,7 +102,8 @@ import "../styles/chronicles.css";
           <code>python -m skill_router.eval --cases tests/cases.json</code>
         </div>
         <div class="sys-footer">
-          <a href="https://github.com/aswathas/skill-router" target="_blank" rel="noopener">GitHub Repository ➔</a>
+          <a href={`${base}skills/skill-router/`} class="card-spec-link">298-Case Evals &amp; Card ➔</a>
+          <a href="https://github.com/aswathas/skill-router" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
 
@@ -121,7 +126,8 @@ import "../styles/chronicles.css";
           <code>claude plugin install aswathas/capability-router</code>
         </div>
         <div class="sys-footer">
-          <a href="https://github.com/aswathas/capability-router" target="_blank" rel="noopener">GitHub Repository ➔</a>
+          <a href={`${base}skills/capability-router/`} class="card-spec-link">Model Card &amp; Hook ➔</a>
+          <a href="https://github.com/aswathas/capability-router" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
 
@@ -144,7 +150,8 @@ import "../styles/chronicles.css";
           <code>skillhub sync --global</code>
         </div>
         <div class="sys-footer">
-          <a href="https://github.com/aswathas/skillhub" target="_blank" rel="noopener">GitHub Repository ➔</a>
+          <a href={`${base}skills/skillhub/`} class="card-spec-link">Model Card &amp; Junctions ➔</a>
+          <a href="https://github.com/aswathas/skillhub" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
     </div>
@@ -333,6 +340,24 @@ import "../styles/chronicles.css";
     font-size: 12px;
     display: block;
     overflow-x: auto;
+  }
+  .sys-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed var(--paper2);
+    padding-top: 12px;
+  }
+  .card-spec-link {
+    background: #38bdf8 !important;
+    color: #020617 !important;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px !important;
+  }
+  .card-spec-link:hover {
+    background: #0284c7 !important;
+    color: #fff !important;
   }
   .sys-footer a {
     font-family: "IBM Plex Mono", monospace;

@@ -3,118 +3,31 @@ import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
 import "../styles/chronicles.css";
+import catalog from "../data/catalog.json";
 
-const skills = [
-  {
-    category: "Core Minted Skills",
-    items: [
-      {
-        name: "aswath-olx-car-search",
-        tag: "TLS Fingerprint Bypass",
-        trigger: "Use when querying OLX India listings, filter parameter normalization, or handling TLS handshake resets.",
-        desc: "Solves the edge TLS ClientHello reset by wrapping curl_cffi with Chrome impersonation. Handles category 84, location resolution trees, and in-memory owner filtering.",
-        install: "claude plugin install olxcars@olx-car-search",
-        url: "https://github.com/aswathas/olx-car-search/tree/main/skills/catalog/aswath-olx-car-search",
-      },
-      {
-        name: "aswath-chronicle",
-        tag: "Persistent Audit Trail",
-        trigger: "Use when non-trivial engineering decisions require a persistent markdown and git trail without context inflation.",
-        desc: "Enforces writing decision milestones, options, failed attempts, and real user prompts to disk (docs/interactions/) with granular git commits instead of echoing into LLM context.",
-        install: "npx skills add aswathas/agent-skills@aswath-chronicle -g",
-        url: "https://github.com/aswathas/olx-car-search/tree/main/skills/catalog/aswath-chronicle",
-      },
-      {
-        name: "aswath-forge",
-        tag: "Capability Router",
-        trigger: "Use at the start of any new task to determine if a minted skill exists or if first-principles spec discovery is required.",
-        desc: "Classification gateway that guarantees checking ~/.agents/skills/, ~/.claude/skills/, and repo catalogs before allowing an agent to write code or guess requirements.",
-        install: "npx skills add aswathas/agent-skills@aswath-forge -g",
-        url: "https://github.com/aswathas/aswath-forge",
-      },
-      {
-        name: "aswath-token-guard",
-        tag: "Context Window Guard",
-        trigger: "Use when long-running sessions risk context bloat or when commands return verbose terminal output.",
-        desc: "Hooks enforcing read-once file discipline, command folding via rtk/context-mode, and automated compaction when context ledger passes 200k tokens.",
-        install: "npx skills add aswathas/agent-skills@aswath-token-guard -g",
-        url: "https://github.com/aswathas/agent-skills",
-      },
-    ],
-  },
-  {
-    category: "Obsidian Knowledge Suite",
-    items: [
-      {
-        name: "json-canvas",
-        tag: "Visual Flowcharts & Maps",
-        trigger: "Use when creating or editing Obsidian visual mind maps, flowchart nodes, or .canvas files.",
-        desc: "Validates and generates JSON Canvas Spec 1.0 files containing nodes, connecting edges, groups, and color tokens for visual system design.",
-        install: "npx skills add aswathas/agent-skills@json-canvas -g",
-        url: "https://github.com/aswathas/agent-skills",
-      },
-      {
-        name: "obsidian-markdown",
-        tag: "Wikilinks & Properties",
-        trigger: "Use when authoring Obsidian notes with wikilinks, callouts, embeds, or frontmatter YAML properties.",
-        desc: "Ensures compliance with Obsidian-specific extensions: double bracket wikilinks ([[Note]]), typed callouts (> [!NOTE]), and YAML frontmatter properties.",
-        install: "npx skills add aswathas/agent-skills@obsidian-markdown -g",
-        url: "https://github.com/aswathas/agent-skills",
-      },
-      {
-        name: "obsidian-bases",
-        tag: "Database Views & Formulas",
-        trigger: "Use when creating database-like views, card grids, table views, or computed formulas in Obsidian (.base files).",
-        desc: "Full specification for Obsidian Bases: filters by tag/folder, computed formula expressions, and multi-view definitions (table, cards, list, map).",
-        install: "npx skills add aswathas/agent-skills@obsidian-bases -g",
-        url: "https://github.com/aswathas/agent-skills",
-      },
-      {
-        name: "obsidian-cli",
-        tag: "Vault Automation",
-        trigger: "Use to interact with a running Obsidian vault from the terminal: search content, capture notes, reload plugins.",
-        desc: "CLI integration for executing vault operations, capturing console errors, and inspecting DOM during plugin development.",
-        install: "npx skills add aswathas/agent-skills@obsidian-cli -g",
-        url: "https://github.com/aswathas/agent-skills",
-      },
-    ],
-  },
-  {
-    category: "Thinking Frameworks & Design",
-    items: [
-      {
-        name: "deep-teach",
-        tag: "8 Thinking Lenses",
-        trigger: "Use when learning complex technical subjects or stress-testing a concept from multiple cognitive angles.",
-        desc: "Applies 8 cognitive frameworks in sequence: first principles, Feynman technique, chunking, inversion, MECE trees, and memory lock.",
-        install: "npx skills add aswathas/agent-skills@deep-teach -g",
-        url: "https://github.com/aswathas/agent-skills/tree/main/deep-teach",
-      },
-      {
-        name: "uiux",
-        tag: "Brand-Conditioned Design",
-        trigger: "Use when building frontend interfaces that require strict design briefs, token compliance, and zero AI defaults.",
-        desc: "Enforces 6-line design briefs before coding and protects brand tokens with automated pre-commit gates.",
-        install: "/plugin marketplace add aswathas/agent-templates",
-        url: "https://github.com/aswathas/agent-templates",
-      },
-    ],
-  },
-];
+// Group catalog items by category
+const rawBase = import.meta.env.BASE_URL || "/";
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+
+const categories = Array.from(new Set(catalog.map((i) => i.category)));
+const groupedSkills = categories.map((cat) => ({
+  category: cat,
+  items: catalog.filter((i) => i.category === cat),
+}));
 ---
 
 <Base
-  title="Minted Skills Catalog — The Agent Chronicles"
-  description="Tested, procedure-first agent skill catalog inspired by skill.sh and skill.fish."
+  title="Minted Skills & Tool Catalog — The Agent Chronicles"
+  description="Tested, procedure-first agent skill catalog inspired by skill.sh, skill.fish, and mcpservers.org."
 >
   <Nav currentPath="/skills/" />
 
   <main class="s page-container">
     <header class="page-header">
-      <div class="eyebrow">AGENT CAPABILITY CATALOG · TESTED PROCEDURES</div>
-      <h1 class="page-title">Minted Skills Catalog</h1>
+      <div class="eyebrow">AGENT CAPABILITY CATALOG · TESTED PROCEDURES · MODEL CARDS</div>
+      <h1 class="page-title">Minted Skills &amp; Tools Catalog</h1>
       <p class="page-lede">
-        Instructions designed for agents that know nothing about the project. Every skill defines unambiguous trigger conditions, real procedures, commands that work, and mistakes to avoid.
+        Instructions and code modes designed for AI agents. Every item has its own dedicated page with verified evaluations, failure-mode forensics, model cards, interactive SVG architecture diagrams, and copyable one-line install snippets.
       </p>
     </header>
 
@@ -123,37 +36,49 @@ const skills = [
       <input
         type="search"
         id="skillSearch"
-        placeholder="Filter skills by keyword (e.g. olx, chronicle, obsidian, canvas)..."
+        placeholder="Filter 20 skills & tools by keyword (e.g. olx, chronicle, router, obsidian, audit)..."
         class="skill-search-input"
       />
     </div>
 
     <!-- Skills Grouped Sections -->
-    {skills.map((group) => (
+    {groupedSkills.map((group) => (
       <section class="skill-group-section">
         <div class="group-title-row">
           <h2>{group.category}</h2>
-          <span class="group-count">{group.items.length} skills</span>
+          <span class="group-count">{group.items.length} skills &amp; tools</span>
         </div>
 
         <div class="skills-stack">
           {group.items.map((skill) => (
-            <div class="skill-entry" data-name={skill.name.toLowerCase()} data-desc={skill.desc.toLowerCase()}>
+            <div class="skill-entry" data-name={skill.name.toLowerCase()} data-desc={skill.tagline.toLowerCase()}>
               <div class="skill-main">
                 <div class="skill-top">
-                  <h3 class="skill-name">{skill.name}</h3>
-                  <span class="skill-pill">{skill.tag}</span>
+                  <a href={`${base}skills/${skill.slug}/`} class="skill-name-link">
+                    <h3 class="skill-name">{skill.name}</h3>
+                  </a>
+                  <span class="skill-pill">{skill.modelCard.type}</span>
                 </div>
                 <div class="skill-trigger">
                   <span class="lbl">TRIGGER:</span> {skill.trigger}
                 </div>
-                <p class="skill-desc">{skill.desc}</p>
+                <p class="skill-desc">{skill.tagline}</p>
+
+                <!-- Spec Pill Highlights -->
+                <div class="spec-pills-row">
+                  <span class="mini-spec-pill">Runtime: <b>{skill.modelCard.runtime}</b></span>
+                  <span class="mini-spec-pill highlight">Proof: <b>{skill.evaluation.headlineMetric} {skill.evaluation.headlineSub}</b></span>
+                </div>
+
                 <div class="skill-footer">
                   <div class="install-block">
                     <span>Install:</span>
-                    <code class="copyable">{skill.install}</code>
+                    <code class="copyable" data-copy={skill.installCommand}>{skill.installCommand}</code>
                   </div>
-                  <a href={skill.url} target="_blank" rel="noopener" class="src-link">Source ➔</a>
+                  <div class="card-links">
+                    <a href={`${base}skills/${skill.slug}/`} class="detail-link">Model Card &amp; Proof ➔</a>
+                    <a href={skill.repoUrl} target="_blank" rel="noopener" class="src-link">Source ↗</a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -182,7 +107,8 @@ const skills = [
       code.title = "Click to copy";
       code.style.cursor = "pointer";
       code.addEventListener("click", () => {
-        navigator.clipboard.writeText(code.textContent || "").then(() => {
+        const text = code.dataset.copy || code.textContent || "";
+        navigator.clipboard.writeText(text.trim()).then(() => {
           const orig = code.textContent;
           code.textContent = "✔ Copied!";
           setTimeout(() => { code.textContent = orig; }, 1500);
@@ -195,6 +121,7 @@ const skills = [
 <style>
   .page-container {
     padding-top: 48px;
+    padding-bottom: 96px;
   }
   .page-header {
     margin-bottom: 36px;
@@ -236,6 +163,7 @@ const skills = [
     font-size: 14px;
     color: var(--ink);
     outline: none;
+    box-shadow: 4px 4px 0 var(--ink);
   }
   .skill-search-input:focus {
     background: #fff;
@@ -251,11 +179,11 @@ const skills = [
     align-items: baseline;
     border-bottom: 2px solid var(--ink);
     padding-bottom: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   .group-title-row h2 {
     font-family: "Archivo Black", sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
   }
   .group-count {
@@ -270,93 +198,166 @@ const skills = [
     flex-direction: column;
     gap: 16px;
   }
+
   .skill-entry {
     background: var(--card);
     border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
     padding: 24px;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .skill-entry:hover {
     transform: translateY(-2px);
-    box-shadow: 4px 4px 0 var(--ink);
+    box-shadow: 6px 6px 0 var(--ink);
   }
+
   .skill-top {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     margin-bottom: 10px;
+    gap: 12px;
     flex-wrap: wrap;
-    gap: 8px;
+  }
+  .skill-name-link {
+    text-decoration: none;
+    color: inherit;
+  }
+  .skill-name-link:hover .skill-name {
+    color: var(--red);
   }
   .skill-name {
     font-family: "Archivo Black", sans-serif;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     text-transform: uppercase;
+    letter-spacing: -0.01em;
   }
   .skill-pill {
     font-family: "IBM Plex Mono", monospace;
     font-size: 10px;
     letter-spacing: 0.1em;
     background: var(--paper2);
+    color: var(--ink);
+    padding: 3px 10px;
     border: 1px solid var(--ink);
-    padding: 3px 8px;
+    border-radius: 999px;
     text-transform: uppercase;
   }
+
   .skill-trigger {
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
-    background: rgba(184, 51, 31, 0.08);
-    border-left: 3px solid var(--red);
+    color: var(--grey);
+    background: var(--paper);
     padding: 8px 12px;
+    border-left: 3px solid var(--red);
     margin-bottom: 12px;
-    color: var(--ink);
+    line-height: 1.4;
   }
   .skill-trigger .lbl {
-    font-weight: bold;
     color: var(--red);
-    margin-right: 4px;
+    font-weight: 700;
   }
+
   .skill-desc {
-    font-size: 15px;
-    color: var(--grey);
-    line-height: 1.5;
-    margin-bottom: 16px;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.45;
+    margin-bottom: 14px;
   }
+
+  .spec-pills-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .mini-spec-pill {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    background: var(--paper);
+    border: 1px solid var(--paper2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--grey);
+  }
+  .mini-spec-pill b {
+    color: var(--ink);
+  }
+  .mini-spec-pill.highlight {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+  }
+  .mini-spec-pill.highlight b {
+    color: #15803d;
+  }
+
   .skill-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid rgba(20, 18, 16, 0.12);
+    border-top: 1px dashed var(--paper2);
     padding-top: 14px;
+    gap: 16px;
     flex-wrap: wrap;
-    gap: 12px;
   }
   .install-block {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
-  }
-  .copyable {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 4px 10px;
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
-    border-radius: 3px;
-    transition: background 0.15s;
   }
-  .copyable:hover {
-    background: var(--red);
+  .install-block span {
+    color: var(--grey);
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  .install-block code {
+    background: #0c121e;
+    color: #38bdf8;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #1e293b;
+    font-size: 12px;
+    max-width: 500px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .install-block code:hover {
+    border-color: #38bdf8;
+  }
+
+  .card-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .detail-link {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: #020617;
+    background: #38bdf8;
+    padding: 5px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.15s ease;
+  }
+  .detail-link:hover {
+    background: #0284c7;
+    color: #fff;
   }
   .src-link {
     font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
     color: var(--ink);
     text-decoration: none;
-    font-weight: bold;
+    border-bottom: 1px solid var(--ink);
   }
   .src-link:hover {
     color: var(--red);
+    border-color: var(--red);
   }
 </style>

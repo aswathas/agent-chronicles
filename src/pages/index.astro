@@ -6,7 +6,9 @@ import data from "../data/projects.json";
 import "../styles/chronicles.css";
 
 const { profile, stats, ticker } = data;
-const asset = (p: string) => import.meta.env.BASE_URL.replace(/\/$/, "") + "/" + p;
+const rawBase = import.meta.env.BASE_URL || "/";
+const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
+const asset = (p: string) => base + p.replace(/^\//, "");
 const tickerItems = [...ticker, ...ticker];
 
 const pillars = [
@@ -16,7 +18,7 @@ const pillars = [
     tag: "99.5% Token Reduction",
     desc: "In-memory programmatic execution harnesses and stdio MCP servers. Paging, joining, and filtering in RAM beats dumping 120 KB of raw JSON into context.",
     featured: "olxcars · TradeMCP · Instagram MCP",
-    href: `${import.meta.env.BASE_URL}code-mode/`,
+    href: `${base}code-mode/`,
   },
   {
     num: "02",
@@ -24,7 +26,7 @@ const pillars = [
     tag: "Tested Procedures",
     desc: "A procedure-first skill store inspired by skill.sh. Zero-ambiguity instructions, trigger conditions, and verified commands for Claude Code, Gemini, and Cursor.",
     featured: "aswath-olx-car-search · aswath-chronicle · json-canvas · obsidian-markdown",
-    href: `${import.meta.env.BASE_URL}skills/`,
+    href: `${base}skills/`,
   },
   {
     num: "03",
@@ -32,7 +34,7 @@ const pillars = [
     tag: "Zero-Context Routing",
     desc: "Scale an agent to 3,000+ skills without burning permanent context window tokens. Plugin hook routers, outcome-driven learning, and cross-harness NTFS junctions.",
     featured: "aswath-capability · skill-router · capability-router · skillhub",
-    href: `${import.meta.env.BASE_URL}routers/`,
+    href: `${base}routers/`,
   },
   {
     num: "04",
@@ -40,7 +42,7 @@ const pillars = [
     tag: "Empirical Benchmarks",
     desc: "Rigorous benchmarks on LLM context tax, TLS ClientHello edge fingerprinting, and autonomous Web3 smart contract forensics with live Foundry simulations.",
     featured: "The Token Tax Study · TLS Bypass Forensics · Mayall",
-    href: `${import.meta.env.BASE_URL}research/`,
+    href: `${base}research/`,
   },
   {
     num: "05",
@@ -48,7 +50,7 @@ const pillars = [
     tag: "Multi-Agent Coordination",
     desc: "Eliminate self-confirmation bias and agent hallucinations. Parallel reviewer swarms with 7 adversarial personas, doubt-driven loops, and token guardrails.",
     featured: "EGM Reviewer Swarms · Doubt-Driven Development · aswath-talk",
-    href: `${import.meta.env.BASE_URL}workflows/`,
+    href: `${base}workflows/`,
   },
 ];
 ---
