@@ -2,10 +2,10 @@
   "profile": {
     "handle": "aswathas",
     "name": "Aswath S",
-    "eyebrow": "Agent Systems · Skills · CLI · MCP · Web3",
-    "work": "I build the <b>tools, skills & agents</b> that make AI actually work.",
+    "eyebrow": "Agent Systems · Code Modes · Skills · MCP · Routers",
+    "work": "I build the <b>Code Modes, skills, routers & agents</b> that make AI actually work.",
     "github": "https://github.com/aswathas",
-    "skillsRepo": "https://github.com/aswathas/agent-skills",
+    "skillsRepo": "https://github.com/aswathas/olx-car-search",
     "agent101": "https://aswathas.github.io/agent101/",
     "socials": [
       {
@@ -32,594 +32,494 @@
       "label": "Skills"
     },
     {
-      "value": "04",
-      "label": "CLI"
-    },
-    {
-      "value": "05",
-      "label": "Shipped"
+      "value": "03",
+      "label": "Code Modes & MCP"
     },
     {
       "value": "04",
-      "label": "Web3"
+      "label": "Routers"
+    },
+    {
+      "value": "99.5%",
+      "label": "Token Save"
     }
   ],
   "chips": [
     {
-      "label": "deep-teach",
+      "label": "olxcars",
+      "href": "#code-mode"
+    },
+    {
+      "label": "Code Modes & MCP",
+      "href": "#code-mode"
+    },
+    {
+      "label": "Skills Catalog",
       "href": "#skills"
     },
     {
-      "label": "project-chronicle",
-      "href": "#skills"
+      "label": "Routers",
+      "href": "#routers"
     },
     {
-      "label": "ai-brain",
-      "href": "#cli"
-    },
-    {
-      "label": "executive-assistant",
-      "href": "#agents"
-    },
-    {
-      "label": "chaintrace",
-      "href": "#web3"
-    },
-    {
-      "label": "axiom",
+      "label": "Research & Evals",
       "href": "#research"
     },
     {
-      "label": "clipper",
-      "href": "#shipped"
+      "label": "Workflows & Swarms",
+      "href": "#workflows"
+    },
+    {
+      "label": "Prompts & Hooks",
+      "href": "#prompts"
+    },
+    {
+      "label": "Agents",
+      "href": "#agents"
     }
+  ],
+  "ticker": [
+    "99.5% token reduction with native Code Mode",
+    "olxcars: in-memory Python SDK + stdio MCP server",
+    "TradeMCP: 14 tools, 57 indicators, NSE/BSE screener",
+    "skill-router: 298-case eval & outcome-driven learning",
+    "aswath-capability: 3,114 skills indexed",
+    "Zero paid proxies · ₹0 external infrastructure",
+    "EGM Reviewer Swarms: multi-persona adversarial audits"
   ],
   "sections": [
     {
-      "id": "skills",
-      "title": "Skills",
-      "blurb": "instruction sets",
-      "count": "04 of 10 published",
+      "id": "code-mode",
+      "title": "Code Modes & MCP Servers",
+      "blurb": "in-memory execution & tool bridges",
+      "count": "03 published",
       "layout": "grid",
       "items": [
         {
-          "name": "deep-teach",
-          "tag": "skill",
-          "meta": "8 lenses · any topic",
-          "desc": "Eight thinking frameworks applied in sequence — first principles, Feynman, chunking, inversion, MECE, memory lock — ending in an exam answer written from memory.",
-          "url": "https://github.com/aswathas/agent-skills/tree/main/deep-teach",
-          "install": "npx skills add aswathas/agent-skills@deep-teach -g",
+          "name": "olxcars (Code Mode & MCP)",
+          "tag": "code-mode · mcp",
+          "meta": "99.5% token save · ₹0 infra · Chrome TLS bypass",
+          "desc": "Dual-mode used car search for AI agents. Native in-memory Code Mode for CLI agents (142 tokens vs 32,450 tokens in MCP) plus stdio MCP server for Claude Desktop. Zero paid proxies.",
+          "url": "https://github.com/aswathas/olx-car-search",
+          "install": "claude plugin install olxcars@olx-car-search",
           "wide": true,
+          "tint": "blue",
+          "tags": [
+            "ai",
+            "mcp",
+            "code-mode",
+            "tools"
+          ]
+        },
+        {
+          "name": "TradeMCP",
+          "tag": "mcp server · 14 tools",
+          "meta": "57 indicators · 54 ratios · NSE/BSE screener",
+          "desc": "Free Model Context Protocol server for Indian equities (NSE/BSE). Live quotes, technical analysis indicators, fundamental ratios, screener. No API keys.",
+          "url": "https://github.com/aswathas/TradeMCP",
+          "install": "npx -y trademcp",
+          "wide": true,
+          "tags": [
+            "ai",
+            "mcp",
+            "tools"
+          ]
+        },
+        {
+          "name": "Instagram MCP (Fixed)",
+          "tag": "mcp server",
+          "meta": "session auth · one-file patch",
+          "desc": "Fixed Instagram MCP server resolving password login crashes with verified session cookies and direct read/write tools.",
+          "url": "https://github.com/aswathas/instagram-mcp-logs",
+          "tags": [
+            "ai",
+            "mcp",
+            "tools"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "skills",
+      "title": "Minted Skills Catalog",
+      "blurb": "tested agent procedures (skill.sh / skill.fish style)",
+      "count": "10 published",
+      "layout": "grid",
+      "items": [
+        {
+          "name": "aswath-olx-car-search",
+          "tag": "minted skill",
+          "meta": "TLS fingerprint · category 84",
+          "desc": "Procedure and parameters for querying OLX India without getting reset at TLS layer. Filter mapping, pagination caps, and location resolution.",
+          "url": "https://github.com/aswathas/olx-car-search/tree/main/skills/catalog/aswath-olx-car-search",
+          "install": "claude plugin install olxcars@olx-car-search",
           "tags": [
             "ai",
             "skills"
           ]
         },
         {
-          "name": "project-chronicle",
-          "tag": "skill",
-          "meta": "project history",
-          "desc": "Records a project's whole history as it happens. Problem, options, decisions, MVP scope — and every attempt that failed, kept on purpose.",
-          "url": "https://github.com/aswathas/agent-skills/tree/main/project-chronicle",
-          "install": "npx skills add aswathas/agent-skills@project-chronicle -g",
-          "wide": true,
-          "tags": [
-            "ai",
-            "skills"
-          ]
-        },
-        {
-          "name": "Second brain",
-          "tag": "7 skills",
-          "meta": "auto-skill-builder · log-decision",
-          "desc": "The skill layer beneath a knowledge wiki that rewrites itself.",
-          "url": "https://github.com/aswathas/second-brain/tree/main/skills",
+          "name": "aswath-chronicle",
+          "tag": "minted skill · audit trail",
+          "meta": "atomic git commits · zero token tax",
+          "desc": "Persistent audit trail of user prompts, agent choices, and git history written to disk rather than echoing into LLM context.",
+          "url": "https://github.com/aswathas/olx-car-search/tree/main/skills/catalog/aswath-chronicle",
+          "install": "npx skills add aswathas/agent-skills@aswath-chronicle -g",
           "tags": [
             "ai",
             "skills",
-            "mcp"
+            "research"
+          ]
+        },
+        {
+          "name": "aswath-forge",
+          "tag": "minted skill · router",
+          "meta": "classify -> reuse -> mint",
+          "desc": "The core skill router: routes tasks to minted catalog skills if matched, or to first-principles spec discovery before any code is written.",
+          "url": "https://github.com/aswathas/aswath-forge",
+          "tags": [
+            "ai",
+            "skills",
+            "router"
+          ]
+        },
+        {
+          "name": "aswath-token-guard",
+          "tag": "minted skill · hook",
+          "meta": "ledger · read-once discipline",
+          "desc": "Token control hook enforcing read-once discipline, quiet context ledgers, and automated compaction before context explosion.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "tags": [
+            "ai",
+            "skills",
+            "research"
+          ]
+        },
+        {
+          "name": "json-canvas",
+          "tag": "minted skill · visual",
+          "meta": "JSON Canvas 1.0 spec",
+          "desc": "Create and edit JSON Canvas files (.canvas) with nodes, edges, groups, and connections for Obsidian visual mind maps.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "tags": [
+            "ai",
+            "skills",
+            "tools"
+          ]
+        },
+        {
+          "name": "obsidian-markdown",
+          "tag": "minted skill",
+          "meta": "wikilinks · callouts · embeds",
+          "desc": "Create and edit Obsidian Flavored Markdown with wikilinks, embeds, callouts, YAML properties, and tag hierarchies.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "tags": [
+            "ai",
+            "skills"
+          ]
+        },
+        {
+          "name": "obsidian-bases",
+          "tag": "minted skill · databases",
+          "meta": ".base syntax · formulas · views",
+          "desc": "Create database-like views, card grids, table views, and formulas inside Obsidian vaults.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "tags": [
+            "ai",
+            "skills"
+          ]
+        },
+        {
+          "name": "obsidian-cli",
+          "tag": "minted skill · cli",
+          "meta": "vault automation · plugin reload",
+          "desc": "Interact with running Obsidian vaults from the command line: create notes, search content, reload plugins.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "tags": [
+            "ai",
+            "skills",
+            "cli"
+          ]
+        },
+        {
+          "name": "deep-teach",
+          "tag": "skill",
+          "meta": "8 thinking lenses",
+          "desc": "Eight thinking frameworks applied in sequence (first principles, Feynman, chunking, inversion, MECE) ending in a verified answer.",
+          "url": "https://github.com/aswathas/agent-skills/tree/main/deep-teach",
+          "tags": [
+            "ai",
+            "skills"
           ]
         },
         {
           "name": "uiux",
-          "tag": "skill · 5 skills · gate",
+          "tag": "skill · 5 skills",
           "meta": "brand-conditioned · 21 tests",
-          "desc": "Frontend design agent. Establishes a six-line brief before any code, then routes each surface to the method that fits — marketing, product UI, mobile, canvas, i18n. Ships a gate that reads your own tokens first, so your brand colour is never flagged as the AI default.",
-          "url": "https://github.com/aswathas/agent-templates/tree/master/templates/uiux",
-          "install": "/plugin marketplace add aswathas/agent-templates",
-          "wide": true,
+          "desc": "Frontend design agent establishing strict design briefs before coding, with automatic brand token protection.",
+          "url": "https://github.com/aswathas/agent-templates",
           "tags": [
             "ai",
-            "frontend",
-            "design"
+            "skills"
           ]
         }
       ]
     },
     {
-      "id": "cli",
-      "title": "CLI & Tools",
-      "blurb": "run from a terminal",
+      "id": "routers",
+      "title": "Routers & Harnesses",
+      "blurb": "capability routing & multi-agent bridges",
       "count": "04 published",
       "layout": "grid",
       "items": [
         {
-          "name": "AI Brain",
-          "tag": "cli · typescript",
-          "meta": "20+ LLM providers",
-          "desc": "A personal wiki CLI with AI-powered context and personas. Desktop app on top.",
-          "url": "https://github.com/aswathas/ai-brain",
-          "tint": "blue",
+          "name": "aswath-capability",
+          "tag": "orchestrator router",
+          "meta": "3,114 skills indexed · agy/cmdc",
+          "desc": "Orchestrator skill for Claude Code and Gemini CLI. Indexes skills, detects capability gaps, writes missing skills, and delegates loops to external agent runtimes.",
+          "url": "https://github.com/aswathas/aswath-capability",
+          "wide": true,
           "tags": [
             "ai",
-            "cli"
-          ]
-        },
-        {
-          "name": "postiee",
-          "tag": "cli · astro",
-          "meta": "linkedin api",
-          "desc": "Post to LinkedIn from the terminal, for people who live there anyway.",
-          "url": "https://github.com/aswathas/postiee",
-          "tags": [
-            "cli"
-          ]
-        },
-        {
-          "name": "olx-india-cli",
-          "tag": "cli · typescript",
-          "meta": "mcp compatible",
-          "desc": "Search, score and track second-hand cars with model-scored recommendations.",
-          "url": "https://github.com/aswathas/olx-india-cli",
-          "tags": [
-            "ai",
-            "cli"
-          ]
-        },
-        {
-          "name": "second-brain",
-          "tag": "cli · javascript",
-          "meta": "claude · hermes",
-          "desc": "A knowledge wiki that evolves with you, built to run inside any CLI agent.",
-          "url": "https://github.com/aswathas/second-brain",
-          "tint": "red",
-          "tags": [
-            "ai",
-            "cli",
-            "mcp"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "shipped",
-      "title": "Shipped",
-      "blurb": "things with a window",
-      "count": "05 released",
-      "layout": "grid",
-      "items": [
-        {
-          "name": "Clipper",
-          "tag": "windows · tauri",
-          "meta": "v0.1.1 · local only",
-          "desc": "A clipboard watch-later for Windows. A hotkey captures any URL or screenshot, Claude Code classifies it into structured notes in your Obsidian vault, and a local dashboard indexes everything. No cloud, no account, no telemetry.",
-          "code": "github.com/aswathas/smart-clipboard",
-          "tint": "red",
-          "tags": [
-            "ai",
-            "windows"
-          ]
-        },
-        {
-          "name": "AI Brain Desktop",
-          "tag": "electron · typescript",
-          "meta": "chat ui",
-          "desc": "The second brain with a face — an Electron desktop app wrapping the AI-powered wiki in a chat interface over the same multi-provider backend.",
-          "url": "https://github.com/aswathas/ai-brain-desktop",
-          "tags": [
-            "ai",
-            "windows"
-          ]
-        },
-        {
-          "name": "OLX India Web",
-          "tag": "web app · typescript",
-          "meta": "model-scored",
-          "desc": "The browser side of olx-india-cli — search and track second-hand cars with AI-scored recommendations. Shares a backend with the terminal tool.",
-          "url": "https://github.com/aswathas/olx-india-cli",
-          "tags": [
-            "ai",
-            "web"
-          ]
-        },
-        {
-          "name": "Postiee",
-          "tag": "windows · go · tauri",
-          "meta": "linkedin cli · v0.1.0",
-          "desc": "Posts to LinkedIn from the terminal over the official API, so a CLI agent can publish without a browser. Multi-image posts, local history because LinkedIn will not let you read your own posts back, and OAuth handled properly.",
-          "url": "https://github.com/aswathas/postiee",
-          "tags": [
-            "cli",
-            "ai",
-            "windows"
-          ]
-        },
-        {
-          "name": "MDView",
-          "tag": "windows · tauri · typescript",
-          "meta": "markdown + jsonl viewer",
-          "desc": "A desktop markdown viewer a CLI agent can open a file in. Run mdview notes.md and the window comes up already rendered; run it again and the existing window takes focus. Claude Code .jsonl transcripts render as a readable timeline.",
-          "url": "https://github.com/aswathas/mdview",
-          "tags": [
-            "ai",
-            "windows",
-            "cli"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "agents",
-      "title": "Agents",
-      "blurb": "autonomous systems",
-      "count": "01 published",
-      "layout": "grid",
-      "items": [
-        {
-          "name": "Executive Assistant",
-          "tag": "agent",
-          "meta": "scheduling · follow-through",
-          "desc": "A personal assistant agent that holds the calendar and the loose ends. Built for the work between the meetings, not the meetings themselves.",
-          "url": "https://github.com/aswathas/executive-assistant",
-          "code": "github.com/aswathas/executive-assistant",
-          "tags": [
-            "ai",
+            "router",
             "agents"
           ]
         },
         {
-          "name": "Healthcare AI Agent",
-          "tag": "in progress",
-          "meta": "clinical reasoning",
-          "desc": "Clinical decision support across patient records — an earlier branch being rebuilt on the current stack before it returns to this page.",
-          "url": "https://github.com/aswathas/Healthcare-AI-Agent",
-          "tint": "red",
+          "name": "skill-router",
+          "tag": "research router",
+          "meta": "298-case eval · taxonomy",
+          "desc": "Capability routing for agent skill libraries: a taxonomy, a router that resolves an intent to exactly one skill, an outcome-driven learning loop, and a research paper.",
+          "url": "https://github.com/aswathas/skill-router",
+          "wide": true,
           "tags": [
             "ai",
-            "agents",
-            "health"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "web3",
-      "title": "Web3",
-      "blurb": "on-chain, built and shipped",
-      "count": "05 published",
-      "layout": "grid3",
-      "items": [
-        {
-          "name": "BlockAuth",
-          "tag": "auth · blockchain",
-          "meta": "otp · solidity",
-          "desc": "Blockchain-based authentication. One-time passwords anchor an identity to an on-chain record, so the credential cannot be replayed once it is used.",
-          "url": "https://github.com/aswathas/Safe_Passfortest",
-          "tags": [
-            "project"
+            "router",
+            "research"
           ]
         },
         {
-          "name": "ColdTrust",
-          "tag": "hyperledger · typescript",
-          "meta": "live",
-          "desc": "A Hyperledger Fabric smart contract for cold-chain supply records — every custody handoff written to a shared, tamper-evident ledger.",
-          "url": "https://github.com/aswathas/ColdTrust-Hyperledger-Fabric-Smart-Contract",
-          "live": "https://aswathas.github.io/ColdTrust-Hyperledger-Fabric-Smart-Contract/",
+          "name": "capability-router",
+          "tag": "zero-context router",
+          "meta": "plugin hook · 0 tokens",
+          "desc": "Zero-context-cost capability router for AI agents. Resolves slash commands and applies pinned rules as a hook with zero permanent context bloat.",
+          "url": "https://github.com/aswathas/capability-router",
           "tags": [
-            "project"
+            "ai",
+            "router",
+            "tools"
           ]
         },
         {
-          "name": "ChainTrace",
-          "tag": "web3 · python",
-          "meta": "multi-chain forensics",
-          "desc": "Self-hostable forensic tracing: follow stolen funds hop by hop and profile any wallet. Neo4j graph, self-hosted, open source.",
-          "url": "https://github.com/aswathas/chaintrace",
+          "name": "skillhub",
+          "tag": "cross-runtime harness",
+          "meta": "symlinks · cross-harness",
+          "desc": "One global skill store for every AI agent harness. Install once, live everywhere using junctions and symlinks instead of duplicate copies.",
+          "url": "https://github.com/aswathas/skillhub",
           "tags": [
-            "project"
-          ]
-        },
-        {
-          "name": "EVM Log Extractor",
-          "tag": "forensics · python",
-          "meta": "ndjson",
-          "desc": "Pulls structured evidence out of raw on-chain event logs, so an investigation starts from parsed data rather than raw RPC output.",
-          "url": "https://github.com/aswathas/evm-log-extractor",
-          "tags": [
-            "project"
-          ]
-        },
-        {
-          "name": "Border Payment",
-          "tag": "payments · web3",
-          "meta": "live on vercel",
-          "desc": "A cross-border payment rail that settles where correspondent banking stops being economical — moving value between jurisdictions without a chain of intermediaries each taking a cut.",
-          "url": "https://github.com/aswathas/borderpayment",
-          "tags": [
-            "project"
-          ],
-          "live": "https://borderpayment.vercel.app"
-        }
-      ]
-    },
-    {
-      "id": "security",
-      "title": "Security",
-      "blurb": "attack analysis & forensics",
-      "count": "03 published",
-      "layout": "grid3",
-      "items": [
-        {
-          "name": "ChainSentinel",
-          "tag": "security · solidity",
-          "meta": "evm exploit analysis",
-          "desc": "ChainSentinel from Project Hail Mary. Investigate on-chain exploits end to end, from the attack transaction to the drained funds.",
-          "url": "https://github.com/aswathas/Project-Hail-Mary",
-          "tags": [
-            "project"
-          ]
-        },
-        {
-          "name": "ForensicTool W3",
-          "tag": "forensics · typescript",
-          "meta": "investigation toolkit",
-          "desc": "A TypeScript toolkit for web3 forensic investigation workflows — parsing, tracing and evidence assembly in one place.",
-          "url": "https://github.com/aswathas/ForensicToolW3",
-          "tags": [
-            "project"
-          ]
-        },
-        {
-          "name": "Attack Logs",
-          "tag": "dataset · solidity",
-          "meta": "36 exploits",
-          "desc": "An EVM attack simulation dataset — 36 documented smart-contract exploits with forensic-grade NDJSON logs, usable as ground truth for detection work.",
-          "url": "https://github.com/aswathas/AttackLogs",
-          "tags": [
-            "project"
+            "ai",
+            "tools",
+            "router"
           ]
         }
       ]
     },
     {
       "id": "research",
-      "title": "Research",
-      "blurb": "papers & archives",
-      "count": "02 published",
+      "title": "AI Research & Benchmarks",
+      "blurb": "benchmarks & systems papers",
+      "count": "03 studies",
       "layout": "grid",
       "items": [
         {
-          "name": "Axiom",
-          "desc": "Evidence-grounded clinical intelligence layer for EMRs — calibrated refusal when the record cannot support an answer. Hackathon District 04.",
-          "url": "https://github.com/aswathas/axiom",
+          "name": "The Token Tax Study: Code Mode vs MCP",
+          "tag": "research paper",
+          "meta": "32,450 tokens down to 142 tokens",
+          "desc": "Benchmark showing that programmatic tool use (Code Mode) slashes context consumption by 99.5% and latency by 77% compared to traditional JSON tool-calling.",
+          "url": "https://github.com/aswathas/olx-car-search/blob/main/docs/code-mode/02-options.md",
+          "wide": true,
+          "tint": "red",
           "tags": [
             "ai",
-            "health"
+            "research",
+            "code-mode"
           ]
         },
         {
-          "name": "Web3 Forensics Research",
-          "desc": "A self-guided research archive: the tool landscape, an enterprise architecture blueprint, and editable diagrams.",
-          "url": "https://github.com/aswathas/web3-forensics-research",
+          "name": "TLS Fingerprint Bypass Forensics",
+          "tag": "systems research",
+          "meta": "curl_cffi vs requests vs Chrome",
+          "desc": "Comparative study proving how edge anti-bots drop standard HTTP clients at the ClientHello layer, and how Chrome impersonation bypasses it at ₹0 cost.",
+          "url": "https://github.com/aswathas/olx-car-search/blob/main/SPEC.md",
           "tags": [
-            "web3",
+            "ai",
+            "research",
+            "tools"
+          ]
+        },
+        {
+          "name": "Mayall — Web3 Exploit Forensics",
+          "tag": "simulation forensics",
+          "meta": "real Foundry simulations · heuristic detectors",
+          "desc": "Web3 exploit forensics: real Foundry simulations, heuristic detectors, forensic reports and evidence bundles.",
+          "url": "https://github.com/aswathas/mayall",
+          "tags": [
+            "ai",
             "research"
           ]
         }
       ]
     },
     {
-      "id": "projects",
-      "title": "Projects",
-      "blurb": "standalone builds, each shipped on its own",
-      "count": "12 builds",
-      "layout": "grid3",
-      "collapsible": true,
+      "id": "workflows",
+      "title": "Workflows, Swarms & Loops",
+      "blurb": "verification loops & multi-agent protocols",
+      "count": "03 protocols",
+      "layout": "grid",
       "items": [
         {
-          "name": "Health Lovely",
-          "tag": "health · next.js",
-          "meta": "supabase + tailwind",
-          "desc": "A full-stack health platform on Next.js and Supabase — components, contexts, migrations and middleware wired together rather than a scaffold.",
-          "url": "https://github.com/aswathas/health-lovely",
+          "name": "EGM Goldfish Reviewer Swarm",
+          "tag": "multi-agent swarm",
+          "meta": "7 independent audit personas",
+          "desc": "Parallel subagent review protocol utilizing specialized personas (Hostile Critic, Skeptical Minimalist, Naive Reader, Document Architect) to review architecture without bias.",
+          "url": "https://github.com/aswathas/olx-car-search",
+          "wide": true,
           "tags": [
-            "project",
-            "health",
-            "web"
+            "ai",
+            "workflows",
+            "agents"
           ]
         },
         {
-          "name": "Healthcare Tracker",
-          "tag": "health · next.js",
-          "meta": "longitudinal records",
-          "desc": "Tracks a patient over time instead of one consultation. Its own migrations, hook layer and docs directory for the data model.",
-          "url": "https://github.com/aswathas/healthcare-tracker",
+          "name": "Doubt-Driven Development",
+          "tag": "verification loop",
+          "meta": "adversarial cross-examination",
+          "desc": "Subjects every non-trivial decision to a fresh-context adversarial review before it stands. Stress-tests plans for hidden failure modes before code is written.",
+          "url": "https://github.com/aswathas/agent-skills",
           "tags": [
-            "project",
-            "health",
-            "web"
+            "ai",
+            "workflows"
           ]
         },
         {
-          "name": "Prawn Diagnosis",
-          "tag": "next.js · typescript",
-          "meta": "diagnostic assistant",
-          "desc": "A Next.js diagnostic tool built as a real application with its own app router, components and styling pipeline.",
-          "url": "https://github.com/aswathas/Prawn-diagnosis",
+          "name": "Chronicle Decision Loop",
+          "tag": "audit workflow",
+          "meta": "disk logging · atomic git commits",
+          "desc": "Automated interaction and decision logging mechanism that records every user prompt and agent pivot to disk with atomic commits.",
+          "url": "https://github.com/aswathas/olx-car-search/tree/main/tools/chronicle.py",
           "tags": [
-            "project",
-            "health",
-            "web"
-          ]
-        },
-        {
-          "name": "Shrimp Git",
-          "tag": "git · typescript",
-          "meta": "version control tooling",
-          "desc": "A Git tool built around a Node backend and a documented command set, aimed at making history inspection less painful than the default tooling.",
-          "url": "https://github.com/aswathas/shrimp-git",
-          "tags": [
-            "project",
-            "cli-less",
-            "devtools"
-          ]
-        },
-        {
-          "name": "Investment",
-          "tag": "finance · javascript",
-          "meta": "frontend + backend",
-          "desc": "A portfolio and stock-basket application split into a dedicated frontend and backend, so the two halves can evolve independently.",
-          "url": "https://github.com/aswathas/Invesment",
-          "tags": [
-            "project",
-            "finance",
-            "web"
-          ]
-        },
-        {
-          "name": "Club Rank",
-          "tag": "go · full stack",
-          "meta": "sports analytics",
-          "desc": "A rankings platform with a Go backend and its own frontend, planned and documented before it was written — the plan documents are part of the repo.",
-          "url": "https://github.com/aswathas/club-rank",
-          "tags": [
-            "project",
-            "sports",
-            "web"
-          ]
-        },
-        {
-          "name": "Clean Energy Project",
-          "tag": "typescript · web",
-          "meta": "open elective",
-          "desc": "A clean and green energy web project built for an open elective, covering renewable data and energy transitions.",
-          "url": "https://github.com/aswathas/Clean-Energy-Project",
-          "tags": [
-            "project",
-            "climate",
-            "web"
-          ]
-        },
-        {
-          "name": "Resume Builder",
-          "tag": "java · application",
-          "meta": "document tooling",
-          "desc": "A Java application for building and editing résumés, the one build in the collection that is deliberately not web-based.",
-          "url": "https://github.com/aswathas/ResumeBuilderAPP",
-          "tags": [
-            "project",
-            "tooling"
-          ]
-        },
-        {
-          "name": "Elasticsearch Tool",
-          "tag": "python · search",
-          "meta": "data tooling",
-          "desc": "A Python toolkit for building and querying Elasticsearch indexes, with its own indexing and search surface.",
-          "url": "https://github.com/aswathas/ElasticSearchTool",
-          "tags": [
-            "project",
-            "data",
-            "tooling"
-          ]
-        },
-        {
-          "name": "Web3 Log Simulation",
-          "tag": "javascript · web3",
-          "meta": "event replay",
-          "desc": "Simulates on-chain event logs so a forensic workflow can be rehearsed without touching a live network.",
-          "url": "https://github.com/aswathas/Project-Web3-Log-simulation",
-          "tags": [
-            "project",
-            "web3"
-          ]
-        },
-        {
-          "name": "Admin Abuse Simulation",
-          "tag": "solidity · web3",
-          "meta": "attack modelling",
-          "desc": "A Solidity model of an administrative-abuse scenario, written as a study of what goes wrong when privileged actions are not constrained.",
-          "url": "https://github.com/aswathas/AdminAbuseSim_Storyline-1",
-          "tags": [
-            "project",
-            "web3",
-            "security"
-          ]
-        },
-        {
-          "name": "Stripe Stablecoin",
-          "tag": "payments · scaffold",
-          "meta": "fiat to token",
-          "desc": "A bridge from fiat rails to stablecoin settlement — the on-ramp experiment behind the Border Payment rail.",
-          "url": "https://github.com/aswathas/Stripe-Stablecoin-",
-          "tags": [
-            "project",
-            "web3",
-            "finance"
+            "ai",
+            "workflows",
+            "skills"
           ]
         }
       ]
     },
     {
-      "id": "courses",
-      "title": "Courses",
-      "blurb": "teaching it back",
-      "count": "01 published",
+      "id": "prompts",
+      "title": "Prompts, Rules & Hooks",
+      "blurb": "zero-fluff compression & context guardrails",
+      "count": "03 rulesets",
       "layout": "grid",
       "items": [
         {
-          "name": "Agent101",
-          "tag": "course · live",
-          "meta": "from zero to shipping",
-          "desc": "What an agent actually is, through to shipping one that holds up against a real model. Built for people who have read the docs and still don't get it.",
-          "url": "https://aswathas.github.io/agent101/",
-          "code": "aswathas.github.io/agent101",
-          "wide": true,
+          "name": "aswath-talk / ponytail",
+          "tag": "prompt & style",
+          "meta": "zero fluff · high-signal",
+          "desc": "Compression style combining caveman brevity with ponytail minimalism. Eliminates polite filler, buzzwords, and ceremony in favor of plain words and small working solutions.",
+          "url": "https://github.com/aswathas/agent-skills",
           "tags": [
             "ai",
-            "courses"
+            "prompts"
+          ]
+        },
+        {
+          "name": "Token Guard Ledger Hooks",
+          "tag": "agent hooks",
+          "meta": "read-once · context tax audit",
+          "desc": "Enforces read-once file discipline, intercepts long command outputs via rtk/context-mode, and audits context tax before task completion.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "tags": [
+            "ai",
+            "tools",
+            "prompts"
+          ]
+        },
+        {
+          "name": "LinkedIn Post Humanizer Gate",
+          "tag": "audit gate",
+          "meta": "F7 odd-precision money ledger · 0-2 hashtags",
+          "desc": "Automated gate tool rejecting banned AI buzzwords, enforcing sentence length distribution, and verifying code/test citations.",
+          "url": "https://github.com/aswathas/olx-car-search/blob/main/tools/linkedin_post.py",
+          "tags": [
+            "ai",
+            "prompts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "title": "AI Agents & Products",
+      "blurb": "autonomous runtimes & client systems",
+      "count": "03 shipped",
+      "layout": "grid",
+      "items": [
+        {
+          "name": "apex-agent-platform",
+          "tag": "autonomous agent platform",
+          "meta": "multi-agent runtime",
+          "desc": "Full-lifecycle autonomous agent platform coordinating research, execution, and verification loops.",
+          "url": "https://github.com/aswathas/apex-agent-platform",
+          "tags": [
+            "ai",
+            "agents"
+          ]
+        },
+        {
+          "name": "payment-agent-demo",
+          "tag": "autonomous payments",
+          "meta": "A2P · agent-to-agent transactions",
+          "desc": "Autonomous agent-to-agent and agent-to-peer payment execution protocol.",
+          "url": "https://github.com/aswathas/payment-agent-demo",
+          "tags": [
+            "ai",
+            "agents"
+          ]
+        },
+        {
+          "name": "ai-brain-desktop",
+          "tag": "desktop agent",
+          "meta": "Electron · chat UI",
+          "desc": "Electron desktop app with chat UI for running local agents and orchestrating tools.",
+          "url": "https://github.com/aswathas/ai-brain-desktop",
+          "tags": [
+            "ai",
+            "agents",
+            "tools"
           ]
         }
       ]
     }
   ],
   "mcp": {
-    "title": "MCP Servers",
-    "blurb": "coming next",
-    "count": "00 published",
+    "title": "Code Mode vs Traditional MCP",
+    "blurb": "the paradigm shift",
+    "count": "99.5% savings",
     "cells": [
       {
-        "h": "Model Context Protocol",
-        "p": "Tools that plug any model into an external service. The next build.",
+        "h": "Traditional MCP",
+        "p": "32,450 tokens per search. Every ad dumps 2 KB raw JSON into the context window. 3 round-trips to find 3 cars."
+      },
+      {
+        "h": "Native Code Mode",
+        "p": "142 tokens returned. Loop and filter in local RAM via curl-cffi. Single turn. 99.5% context reduction.",
         "dark": true
       },
       {
-        "h": "Nothing shipped yet",
-        "p": "This block replaces itself when the first server goes live."
-      },
-      {
-        "h": "Watch this space",
-        "p": "Or follow the GitHub to catch it first."
+        "h": "The Dual Architecture",
+        "p": "Native Code Mode for terminal agents (Claude Code, Antigravity) + stdio MCP server for locked chat apps (Claude Desktop)."
       }
     ]
-  },
-  "ticker": [
-    "Vol. XXVI · No. 0116 · Agent Systems Desk",
-    "10 skills published",
-    "5 CLI tools shipping",
-    "Web3 forensics suite",
-    "MCP servers — nothing shipped yet",
-    "The web never misses"
-  ]
+  }
 }

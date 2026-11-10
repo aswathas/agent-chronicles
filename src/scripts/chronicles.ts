@@ -458,6 +458,26 @@ function initBrowse() {
     f.addEventListener("click", () => applyFilter(f.dataset.filter || "all"));
   }
 
+  /* ---- click to copy on code blocks (skill.sh / mcpservers.org style) ---- */
+  for (const code of document.querySelectorAll<HTMLElement>(".p code")) {
+    code.title = "Click to copy command";
+    code.style.cursor = "pointer";
+    code.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const text = code.textContent || "";
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = code.textContent;
+        code.textContent = "✔ copied to clipboard!";
+        code.style.borderColor = "var(--red, #e23636)";
+        setTimeout(() => {
+          code.textContent = orig;
+          code.style.borderColor = "";
+        }, 1500);
+      });
+    });
+  }
+
   /* ---- collapsible sections ---- */
   for (const grid of document.querySelectorAll<HTMLElement>("[data-collapsible]")) {
     const more = grid.querySelectorAll<HTMLElement>(".is-more");
