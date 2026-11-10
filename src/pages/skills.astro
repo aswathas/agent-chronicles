@@ -5,13 +5,14 @@ import Footer from "../components/Footer.astro";
 import "../styles/chronicles.css";
 import catalog from "../data/catalog.json";
 
-// Group catalog items by category
 const rawBase = import.meta.env.BASE_URL || "/";
 const base = rawBase.endsWith("/") ? rawBase : `${rawBase}/`;
 
+// Group catalog items by category
 const categories = Array.from(new Set(catalog.map((i) => i.category)));
 const groupedSkills = categories.map((cat) => ({
   category: cat,
+  slug: cat.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
   items: catalog.filter((i) => i.category === cat),
 }));
 ---
@@ -27,23 +28,34 @@ const groupedSkills = categories.map((cat) => ({
       <div class="eyebrow">AGENT CAPABILITY CATALOG · TESTED PROCEDURES · MODEL CARDS</div>
       <h1 class="page-title">Minted Skills &amp; Tools Catalog</h1>
       <p class="page-lede">
-        Instructions and code modes designed for AI agents. Every item has its own dedicated page with verified evaluations, failure-mode forensics, model cards, interactive SVG architecture diagrams, and copyable one-line install snippets.
+        Every skill, code mode, and router engineered by Aswath S. Each item has its own dedicated model card page with empirical evaluations, failure-mode forensics, interactive SVG architecture diagrams, and one-line install snippets.
       </p>
     </header>
 
-    <!-- Search / Filter Bar -->
-    <div class="skills-filter-bar">
-      <input
-        type="search"
-        id="skillSearch"
-        placeholder="Filter 20 skills & tools by keyword (e.g. olx, chronicle, router, obsidian, audit)..."
-        class="skill-search-input"
-      />
+    <!-- UX Category Chips & Search Bar -->
+    <div class="skills-filter-wrapper">
+      <div class="category-chips-row">
+        <button class="cat-chip is-active" data-filter="all">All AI Capabilities ({catalog.length})</button>
+        {groupedSkills.map((g) => (
+          <button class="cat-chip" data-filter={g.slug}>
+            {g.category} ({g.items.length})
+          </button>
+        ))}
+      </div>
+
+      <div class="skills-filter-bar">
+        <input
+          type="search"
+          id="skillSearch"
+          placeholder="Filter 21 AI skills by name, trigger, or problem (e.g. thinking, first-principles, token-guard, olx)..."
+          class="skill-search-input"
+        />
+      </div>
     </div>
 
     <!-- Skills Grouped Sections -->
     {groupedSkills.map((group) => (
-      <section class="skill-group-section">
+      <section class="skill-group-section" data-cat={group.slug}>
         <div class="group-title-row">
           <h2>{group.category}</h2>
           <span class="group-count">{group.items.length} skills &amp; tools</span>
@@ -51,7 +63,13 @@ const groupedSkills = categories.map((cat) => ({
 
         <div class="skills-stack">
           {group.items.map((skill) => (
-            <div class="skill-entry" data-name={skill.name.toLowerCase()} data-desc={skill.tagline.toLowerCase()}>
+            <div
+              class="skill-entry"
+              data-cat={group.slug}
+              data-name={skill.name.toLowerCase()}
+              data-desc={skill.tagline.toLowerCase()}
+              data-trigger={skill.trigger.toLowerCase()}
+            >
               <div class="skill-main">
                 <div class="skill-top">
                   <a href={`${base}skills/${skill.slug}/`} class="skill-name-link">
@@ -92,16 +110,50 @@ const groupedSkills = categories.map((cat) => ({
 
   <script>
     const searchInput = document.getElementById("skillSearch") as HTMLInputElement;
-    if (searchInput) {
-      searchInput.addEventListener("input", () => {
-        const query = searchInput.value.toLowerCase().trim();
-        document.querySelectorAll<HTMLElement>(".skill-entry").forEach((el) => {
-          const name = el.dataset.name || "";
-          const desc = el.dataset.desc || "";
-          el.style.display = name.includes(query) || desc.includes(query) ? "block" : "none";
+    const chips = document.querySelectorAll<HTMLButtonElement>(".cat-chip");
+    const sections = document.querySelectorAll<HTMLElement>(".skill-group-section");
+    const entries = document.querySelectorAll<HTMLElement>(".skill-entry");
+
+    let activeFilter = "all";
+
+    function filterSkills() {
+      const query = (searchInput?.value || "").toLowerCase().trim();
+
+      sections.forEach((sec) => {
+        const secCat = sec.dataset.cat || "";
+        const catMatches = activeFilter === "all" || secCat === activeFilter;
+        let visibleCount = 0;
+
+        sec.querySelectorAll<HTMLElement>(".skill-entry").forEach((entry) => {
+          const name = entry.dataset.name || "";
+          const desc = entry.dataset.desc || "";
+          const trig = entry.dataset.trigger || "";
+          const textMatches = !query || name.includes(query) || desc.includes(query) || trig.includes(query);
+
+          if (catMatches && textMatches) {
+            entry.style.display = "block";
+            visibleCount++;
+          } else {
+            entry.style.display = "none";
+          }
         });
+
+        sec.style.display = visibleCount > 0 ? "block" : "none";
       });
     }
+
+    if (searchInput) {
+      searchInput.addEventListener("input", filterSkills);
+    }
+
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        chips.forEach((c) => c.classList.remove("is-active"));
+        chip.classList.add("is-active");
+        activeFilter = chip.dataset.filter || "all";
+        filterSkills();
+      });
+    });
 
     document.querySelectorAll<HTMLElement>(".copyable").forEach((code) => {
       code.title = "Click to copy";
@@ -151,8 +203,39 @@ const groupedSkills = categories.map((cat) => ({
     max-width: 860px;
   }
 
-  .skills-filter-bar {
+  /* Filter UX */
+  .skills-filter-wrapper {
     margin-bottom: 40px;
+  }
+  .category-chips-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .cat-chip {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .cat-chip:hover {
+    background: var(--paper2);
+  }
+  .cat-chip.is-active {
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+  }
+
+  .skills-filter-bar {
+    width: 100%;
   }
   .skill-search-input {
     width: 100%;

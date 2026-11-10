@@ -196,49 +196,55 @@
           ]
         },
         {
-          "name": "json-canvas",
-          "tag": "minted skill · visual",
-          "meta": "JSON Canvas 1.0 spec",
-          "desc": "Create and edit JSON Canvas files (.canvas) with nodes, edges, groups, and connections for Obsidian visual mind maps.",
+          "name": "aswath-thinking",
+          "tag": "cognitive protocol",
+          "meta": "deconstruct assumptions · inversion",
+          "desc": "Cognitive reasoning framework deconstructing ungrounded assumptions via first principles, inversion, and adversarial verification before executing code.",
           "url": "https://github.com/aswathas/agent-skills",
+          "install": "npx skills add aswathas/agent-skills@aswath-thinking -g",
+          "tags": [
+            "ai",
+            "skills",
+            "thinking"
+          ]
+        },
+        {
+          "name": "aswath-first-principles",
+          "tag": "hard gate · spec first",
+          "meta": "10-point spec · zero code without approval",
+          "desc": "Strict pre-implementation discipline: no code is written until an approved 10-section spec is reviewed by the user.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "install": "npx skills add aswathas/agent-skills@aswath-first-principles -g",
+          "tags": [
+            "ai",
+            "skills",
+            "spec"
+          ]
+        },
+        {
+          "name": "aswath-compact",
+          "tag": "context optimizer",
+          "meta": "200k token threshold · window reset",
+          "desc": "Distills long-running agent trajectories to high-signal milestones and releases the window when ledger exceeds 200k tokens.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "install": "npx skills add aswathas/agent-skills@aswath-compact -g",
+          "tags": [
+            "ai",
+            "skills",
+            "tokens"
+          ]
+        },
+        {
+          "name": "aswath-csvjson",
+          "tag": "cli tool · rfc 4180",
+          "meta": "preserves types & zeroes · stdout",
+          "desc": "Strict CSV to JSON converter preserving cell types, dates, and leading zeros without naive comma-splitting bugs.",
+          "url": "https://github.com/aswathas/agent-skills",
+          "install": "npx skills add aswathas/agent-skills@aswath-csvjson -g",
           "tags": [
             "ai",
             "skills",
             "tools"
-          ]
-        },
-        {
-          "name": "obsidian-markdown",
-          "tag": "minted skill",
-          "meta": "wikilinks · callouts · embeds",
-          "desc": "Create and edit Obsidian Flavored Markdown with wikilinks, embeds, callouts, YAML properties, and tag hierarchies.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "tags": [
-            "ai",
-            "skills"
-          ]
-        },
-        {
-          "name": "obsidian-bases",
-          "tag": "minted skill · databases",
-          "meta": ".base syntax · formulas · views",
-          "desc": "Create database-like views, card grids, table views, and formulas inside Obsidian vaults.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "tags": [
-            "ai",
-            "skills"
-          ]
-        },
-        {
-          "name": "obsidian-cli",
-          "tag": "minted skill · cli",
-          "meta": "vault automation · plugin reload",
-          "desc": "Interact with running Obsidian vaults from the command line: create notes, search content, reload plugins.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "tags": [
-            "ai",
-            "skills",
-            "cli"
           ]
         },
         {
@@ -358,14 +364,15 @@
           ]
         },
         {
-          "name": "Mayall — Web3 Exploit Forensics",
-          "tag": "simulation forensics",
-          "meta": "real Foundry simulations · heuristic detectors",
-          "desc": "Web3 exploit forensics: real Foundry simulations, heuristic detectors, forensic reports and evidence bundles.",
-          "url": "https://github.com/aswathas/mayall",
+          "name": "298-Case Intent Resolution Benchmark",
+          "tag": "taxonomy research",
+          "meta": "hierarchical taxonomy · 99.2% top-1 accuracy",
+          "desc": "Benchmarking hierarchical capability routing vs flat semantic vector search across 298 adversarial test cases with outcome-driven learning loops.",
+          "url": "https://github.com/aswathas/skill-router",
           "tags": [
             "ai",
-            "research"
+            "research",
+            "router"
           ]
         }
       ]
