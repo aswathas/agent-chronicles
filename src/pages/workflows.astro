@@ -1,0 +1,291 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/chronicles.css";
+
+const personas = [
+  { name: "egm-design", role: "Hostile Design Critic", focus: "System architecture, scalability, infrastructure economics, and unmitigated risks." },
+  { name: "egm-zoom-out", role: "Skeptical Architect", focus: "High-altitude simplicity, minimalism, YAGNI, and codebase reuse." },
+  { name: "egm-structural", role: "Document Architect", focus: "Heading hierarchy, layout symmetry, formatting, and structural compliance." },
+  { name: "egm-codebase-details", role: "Quality Auditor", focus: "Verifies documentation exhaustively matches actual codebase implementation." },
+  { name: "egm-comprehension", role: "Naive Reader", focus: "Zero assumed knowledge; flags undefined terms and comprehension gaps." },
+  { name: "egm-synthesizer", role: "Swarm Compiler", focus: "Coordinates parallel reviewers, deduplicates findings, and compiles reports." },
+  { name: "egm-inventive-catalyst", role: "TRIZ Problem Solver", focus: "Applies TRIZ inventive principles to eliminate system contradictions." },
+];
+---
+
+<Base
+  title="Workflows, Swarms & Prompts — The Agent Chronicles"
+  description="Multi-agent reviewer swarms, doubt-driven loops, and prompt compression systems."
+>
+  <Nav currentPath="/workflows/" />
+
+  <main class="s page-container">
+    <header class="page-header">
+      <div class="eyebrow">AGENT PROTOCOLS · SWARMS · PROMPTS</div>
+      <h1 class="page-title">Workflows, Swarms & Prompts</h1>
+      <p class="page-lede">
+        Multi-agent coordination protocols, adversarial review swarms, and prompt compression systems designed to prevent agent drift and token waste.
+      </p>
+    </header>
+
+    <!-- Workflow 1: EGM Swarm -->
+    <section class="wf-section">
+      <div class="wf-badge">MULTI-AGENT SWARM PROTOCOL</div>
+      <h2>The EGM Goldfish Reviewer Swarm</h2>
+      <p class="wf-desc">
+        A single agent reviewing its own output suffers from self-confirmation bias. The EGM Swarm coordinates <b>seven independent audit personas</b> running in parallel. Each persona evaluates the system through a strictly isolated lens with zero assumed context.
+      </p>
+
+      <div class="persona-grid">
+        {personas.map((p) => (
+          <div class="persona-card">
+            <span class="p-name">{p.name}</span>
+            <b class="p-role">{p.role}</b>
+            <p class="p-focus">{p.focus}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Workflow 2: Doubt-Driven Development -->
+    <section class="wf-section">
+      <div class="wf-badge">VERIFICATION LOOP</div>
+      <h2>Doubt-Driven Development</h2>
+      <p class="wf-desc">
+        Subjects every non-trivial decision to a fresh-context adversarial review before code or config is written. Used when correctness matters more than speed: production authentication, schema migrations, and irreversible system operations.
+      </p>
+      <div class="loop-steps">
+        <div class="step">
+          <span class="step-num">STEP 1</span>
+          <b>Hypothesis & Plan</b>
+          <p>Agent drafts proposed implementation spec.</p>
+        </div>
+        <div class="step-arrow">➔</div>
+        <div class="step alert">
+          <span class="step-num">STEP 2</span>
+          <b>Adversarial Cross-Exam</b>
+          <p>Fresh subagent attacks assumptions & hidden failures.</p>
+        </div>
+        <div class="step-arrow">➔</div>
+        <div class="step">
+          <span class="step-num">STEP 3</span>
+          <b>Hardened Spec</b>
+          <p>Contradictions resolved before code is written.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Workflow 3: Prompt Library & Compression -->
+    <section class="wf-section">
+      <div class="wf-badge">PROMPT COMPRESSION & RULES</div>
+      <h2>Prompt Library & Token Guardrails</h2>
+      <p class="wf-desc">
+        Rules and system prompts that strip conversational ceremony, enforce read-once discipline, and compress responses to pure signal.
+      </p>
+
+      <div class="prompts-grid">
+        <div class="prompt-card">
+          <h3>aswath-talk / ponytail</h3>
+          <span class="p-rule">Compression Rule</span>
+          <p>Combines caveman brevity with ponytail minimalism. Bans fluff words ("delighted to", "game-changer", "let's dive in") in favor of short sentences, plain words, and the smallest thing that actually works.</p>
+        </div>
+        <div class="prompt-card">
+          <h3>Token Guard Hooks</h3>
+          <span class="p-rule">Lifecycle Hook</span>
+          <p>Enforces read-once file rules: never re-read an unchanged file region. Intercepts terminal commands with rtk folding and triggers automated session compaction before context passes 200k tokens.</p>
+        </div>
+        <div class="prompt-card">
+          <h3>LinkedIn Humanizer Gate</h3>
+          <span class="p-rule">Gate Tool</span>
+          <p>Automated verification script checking post drafts against 24 banned AI tropes, enforcing sentence distribution, and validating code and test proof citations.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .page-container {
+    padding-top: 48px;
+  }
+  .page-header {
+    margin-bottom: 48px;
+    border-bottom: 3px double var(--ink);
+    padding-bottom: 24px;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .page-lede {
+    font-size: 1.25rem;
+    color: var(--grey);
+    line-height: 1.5;
+    max-width: 860px;
+  }
+
+  .wf-section {
+    margin-bottom: 80px;
+    border-top: 1px solid var(--ink);
+    padding-top: 36px;
+  }
+  .wf-badge {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    background: var(--red);
+    color: #fff;
+    padding: 3px 8px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+  .wf-section h2 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .wf-desc {
+    font-size: 1.1rem;
+    color: var(--grey);
+    max-width: 820px;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  /* Persona Grid */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .persona-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    padding: 20px;
+  }
+  .p-name {
+    display: block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+  .p-role {
+    display: block;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .p-focus {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.45;
+  }
+
+  /* Loop Steps */
+  .loop-steps {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--card);
+    border: 2px solid var(--ink);
+    padding: 24px;
+    flex-wrap: wrap;
+  }
+  .step {
+    flex: 1;
+    min-width: 180px;
+    background: var(--paper2);
+    border: 1px solid var(--ink);
+    padding: 16px;
+  }
+  .step.alert {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .step-num {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--red);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .step.alert .step-num {
+    color: var(--paper2);
+  }
+  .step b {
+    display: block;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .step p {
+    font-size: 13px;
+    color: var(--grey);
+    line-height: 1.4;
+  }
+  .step.alert p {
+    color: rgba(239, 231, 216, 0.75);
+  }
+  .step-arrow {
+    font-size: 24px;
+    color: var(--red);
+  }
+
+  /* Prompts Grid */
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .prompt-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    padding: 20px;
+  }
+  .prompt-card h3 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .p-rule {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: var(--red);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .prompt-card p {
+    font-size: 14px;
+    color: var(--grey);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .persona-grid, .prompts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

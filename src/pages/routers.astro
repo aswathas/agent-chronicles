@@ -1,0 +1,353 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/chronicles.css";
+---
+
+<Base
+  title="Capability Routers & Harnesses — The Agent Chronicles"
+  description="Zero-context-cost capability routers, skill indexers, and multi-agent harnesses."
+>
+  <Nav currentPath="/routers/" />
+
+  <main class="s page-container">
+    <header class="page-header">
+      <div class="eyebrow">AGENT HARNESSES · INTENT RESOLUTION</div>
+      <h1 class="page-title">Routers & Harnesses</h1>
+      <p class="page-lede">
+        How to scale an agent's capability library to thousands of skills without burning permanent context window tokens. Resolving slash commands, bridging backends, and learning routes from corrections.
+      </p>
+    </header>
+
+    <!-- Architecture Visual Box -->
+    <div class="router-arch-card">
+      <div class="arch-badge">THE ZERO-CONTEXT ARCHITECTURE</div>
+      <h3>Plugin Hook vs Permanent MCP Context</h3>
+      <p>
+        Traditional agent setups inject 50 tool schemas into the system prompt, burning 10,000+ tokens on every turn whether they are used or not. Our routers act as <b>pre-execution lifecycle hooks</b>: they intercept the user's intent, map it to exactly one relevant skill, and load it on demand with <b>0 permanent context overhead</b>.
+      </p>
+      <div class="arch-flow">
+        <div class="flow-step">
+          <span class="num">01</span>
+          <b>User Prompt</b>
+          <span>"audit this contract"</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step active">
+          <span class="num">02</span>
+          <b>Capability Router</b>
+          <span>Matches Mayall / Foundry</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <span class="num">03</span>
+          <b>Just-In-Time Injection</b>
+          <span>Loads skill only for this turn</span>
+        </div>
+        <div class="flow-arrow">➔</div>
+        <div class="flow-step">
+          <span class="num">04</span>
+          <b>Context Reset</b>
+          <span>Headroom restored</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Systems Grid -->
+    <div class="systems-grid">
+      <!-- 1. aswath-capability -->
+      <div class="sys-card">
+        <div class="sys-card-header">
+          <span class="sys-type">ORCHESTRATOR ROUTER</span>
+          <h2>aswath-capability</h2>
+        </div>
+        <p class="sys-summary">
+          An orchestrator skill for Claude Code and Gemini CLI. Indexes <b>3,114 skills</b>, detects capability gaps in runtime environments, writes the skills it is missing, and delegates loops to external agent runtimes (<code>agy</code> and <code>cmdc</code>).
+        </p>
+        <div class="sys-specs">
+          <div><b>Index Size</b> 3,114 verified skills</div>
+          <div><b>Delegation Backends</b> agy · cmdc</div>
+          <div><b>Subagents</b> researcher · planner · critic</div>
+        </div>
+        <div class="sys-code">
+          <div class="c-title">Delegate to external fast model</div>
+          <code>python scripts/delegate.py --backend agy --model fast --prompt "..."</code>
+        </div>
+        <div class="sys-footer">
+          <a href="https://github.com/aswathas/aswath-capability" target="_blank" rel="noopener">GitHub Repository ➔</a>
+        </div>
+      </div>
+
+      <!-- 2. skill-router -->
+      <div class="sys-card">
+        <div class="sys-card-header">
+          <span class="sys-type">RESEARCH ROUTER</span>
+          <h2>skill-router</h2>
+        </div>
+        <p class="sys-summary">
+          Capability routing for agent skill libraries: a hierarchical taxonomy, a router that resolves a high-level intent to exactly one skill, an outcome-driven learning loop, a <b>298-case evaluation harness</b>, and a research paper.
+        </p>
+        <div class="sys-specs">
+          <div><b>Eval Suite</b> 298 test cases</div>
+          <div><b>Learning Loop</b> Feedback-driven route tuning</div>
+          <div><b>Taxonomy</b> Multi-domain clustering</div>
+        </div>
+        <div class="sys-code">
+          <div class="c-title">Run 298-case evaluation</div>
+          <code>python -m skill_router.eval --cases tests/cases.json</code>
+        </div>
+        <div class="sys-footer">
+          <a href="https://github.com/aswathas/skill-router" target="_blank" rel="noopener">GitHub Repository ➔</a>
+        </div>
+      </div>
+
+      <!-- 3. capability-router -->
+      <div class="sys-card">
+        <div class="sys-card-header">
+          <span class="sys-type">PLUGIN HOOK</span>
+          <h2>capability-router</h2>
+        </div>
+        <p class="sys-summary">
+          Zero-context-cost capability router for AI agents. Resolves slash commands (<code>/audit</code>, <code>/forge</code>), applies pinned rules, and learns routes from user corrections. A plugin hook, not an MCP server, so it adds zero permanent context.
+        </p>
+        <div class="sys-specs">
+          <div><b>Cost</b> 0 permanent tokens</div>
+          <div><b>Integration</b> Hook-based interceptor</div>
+          <div><b>Rule Pinning</b> Automatic policy enforcement</div>
+        </div>
+        <div class="sys-code">
+          <div class="c-title">Install plugin hook</div>
+          <code>claude plugin install aswathas/capability-router</code>
+        </div>
+        <div class="sys-footer">
+          <a href="https://github.com/aswathas/capability-router" target="_blank" rel="noopener">GitHub Repository ➔</a>
+        </div>
+      </div>
+
+      <!-- 4. skillhub -->
+      <div class="sys-card">
+        <div class="sys-card-header">
+          <span class="sys-type">CROSS-RUNTIME HARNESS</span>
+          <h2>skillhub</h2>
+        </div>
+        <p class="sys-summary">
+          One global skill store for every AI agent harness. Install once, live everywhere across Claude Code, MiniMax, Gemini, and Cursor using directory junctions and symlinks instead of copying folders.
+        </p>
+        <div class="sys-specs">
+          <div><b>Cross-Harness</b> Claude · Gemini · MiniMax · Cursor</div>
+          <div><b>Storage</b> Zero duplication via NTFS junctions</div>
+          <div><b>Sync</b> Single-command global link</div>
+        </div>
+        <div class="sys-code">
+          <div class="c-title">Sync all agent skills</div>
+          <code>skillhub sync --global</code>
+        </div>
+        <div class="sys-footer">
+          <a href="https://github.com/aswathas/skillhub" target="_blank" rel="noopener">GitHub Repository ➔</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .page-container {
+    padding-top: 48px;
+  }
+  .page-header {
+    margin-bottom: 36px;
+    border-bottom: 3px double var(--ink);
+    padding-bottom: 24px;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .page-lede {
+    font-size: 1.25rem;
+    color: var(--grey);
+    line-height: 1.5;
+    max-width: 860px;
+  }
+
+  /* Arch card */
+  .router-arch-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px;
+    border: 2px solid var(--ink);
+    margin-bottom: 64px;
+  }
+  .arch-badge {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    background: var(--red);
+    color: #fff;
+    padding: 4px 8px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+  .router-arch-card h3 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .router-arch-card p {
+    font-size: 1.1rem;
+    color: rgba(239, 231, 216, 0.8);
+    max-width: 800px;
+    margin-bottom: 32px;
+  }
+  .arch-flow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .flow-step {
+    flex: 1;
+    min-width: 140px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    border-left: 2px solid var(--grey);
+  }
+  .flow-step.active {
+    border-left-color: var(--red);
+    background: rgba(184, 51, 31, 0.15);
+  }
+  .flow-step .num {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    color: var(--paper2);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .flow-step b {
+    display: block;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .flow-step span {
+    font-size: 12px;
+    color: var(--paper2);
+  }
+  .flow-arrow {
+    font-size: 20px;
+    color: var(--red);
+  }
+
+  /* Grid */
+  .systems-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-bottom: 80px;
+  }
+  .sys-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .sys-card-header {
+    margin-bottom: 12px;
+  }
+  .sys-type {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    text-transform: uppercase;
+  }
+  .sys-card h2 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .sys-summary {
+    font-size: 15px;
+    color: var(--grey);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .sys-specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: var(--paper2);
+    border: 1px solid var(--ink);
+    padding: 12px;
+    margin-bottom: 16px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+  }
+  .sys-specs div b {
+    display: block;
+    font-size: 9px;
+    text-transform: uppercase;
+    color: var(--grey);
+  }
+  .sys-code {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    margin-top: auto;
+  }
+  .c-title {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    color: var(--paper2);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding-bottom: 4px;
+    margin-bottom: 6px;
+  }
+  .sys-code code {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+  }
+  .sys-footer a {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .sys-footer a:hover {
+    color: var(--red);
+  }
+
+  @media (max-width: 900px) {
+    .systems-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

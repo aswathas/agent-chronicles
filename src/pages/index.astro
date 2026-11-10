@@ -1,91 +1,66 @@
 ---
 import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
 import data from "../data/projects.json";
 import "../styles/chronicles.css";
 
-const { profile, stats, chips, sections, mcp, ticker } = data;
-// BASE_URL has no trailing slash, so join rather than concatenate
+const { profile, stats, ticker } = data;
 const asset = (p: string) => import.meta.env.BASE_URL.replace(/\/$/, "") + "/" + p;
 const tickerItems = [...ticker, ...ticker];
 
-const sigil = () => `
-<svg viewBox="0 0 60 60" aria-hidden="true">
-  <circle class="pulse" cx="30" cy="30" r="24"/>
-  <circle class="ring" cx="30" cy="30" r="26"/>
-  <g class="spid"><ellipse cx="30" cy="33" rx="7" ry="9"/><circle cx="30" cy="22" r="4.6"/></g>
-  <g class="eye"><circle cx="27.6" cy="21.4" r="1.1"/><circle cx="32.4" cy="21.4" r="1.1"/></g>
-  <g class="spid" stroke="var(--red)" stroke-width="2" stroke-linecap="round" fill="none">
-    <path d="M23 29 L11 21 M23 34 L10 34 M23 38 L11 47 M37 29 L49 21 M37 34 L50 34 M37 38 L49 47"/>
-  </g>
-</svg>`;
+const pillars = [
+  {
+    num: "01",
+    title: "Code Modes & MCP Servers",
+    tag: "99.5% Token Reduction",
+    desc: "In-memory programmatic execution harnesses and stdio MCP servers. Paging, joining, and filtering in RAM beats dumping 120 KB of raw JSON into context.",
+    featured: "olxcars · TradeMCP · Instagram MCP",
+    href: `${import.meta.env.BASE_URL}code-mode/`,
+  },
+  {
+    num: "02",
+    title: "Minted Skills Catalog",
+    tag: "Tested Procedures",
+    desc: "A procedure-first skill store inspired by skill.sh. Zero-ambiguity instructions, trigger conditions, and verified commands for Claude Code, Gemini, and Cursor.",
+    featured: "aswath-olx-car-search · aswath-chronicle · json-canvas · obsidian-markdown",
+    href: `${import.meta.env.BASE_URL}skills/`,
+  },
+  {
+    num: "03",
+    title: "Routers & Harnesses",
+    tag: "Zero-Context Routing",
+    desc: "Scale an agent to 3,000+ skills without burning permanent context window tokens. Plugin hook routers, outcome-driven learning, and cross-harness NTFS junctions.",
+    featured: "aswath-capability · skill-router · capability-router · skillhub",
+    href: `${import.meta.env.BASE_URL}routers/`,
+  },
+  {
+    num: "04",
+    title: "AI Systems Research",
+    tag: "Empirical Benchmarks",
+    desc: "Rigorous benchmarks on LLM context tax, TLS ClientHello edge fingerprinting, and autonomous Web3 smart contract forensics with live Foundry simulations.",
+    featured: "The Token Tax Study · TLS Bypass Forensics · Mayall",
+    href: `${import.meta.env.BASE_URL}research/`,
+  },
+  {
+    num: "05",
+    title: "Workflows & Swarms",
+    tag: "Multi-Agent Coordination",
+    desc: "Eliminate self-confirmation bias and agent hallucinations. Parallel reviewer swarms with 7 adversarial personas, doubt-driven loops, and token guardrails.",
+    featured: "EGM Reviewer Swarms · Doubt-Driven Development · aswath-talk",
+    href: `${import.meta.env.BASE_URL}workflows/`,
+  },
+];
 ---
 
 <Base
-  title={`${profile.name} — agent systems, skills & tools`}
+  title={`${profile.name} — The Agent Chronicles`}
   description={profile.work.replace(/<[^>]+>/g, "")}
 >
-  <a class="skip" href="#main">Skip to content</a>
+  <Nav currentPath="/" />
 
-  <!-- texture + combat layers -->
+  <!-- texture layers -->
   <div class="benday" aria-hidden="true"></div>
-  <!-- the perch: a figure clinging to the right edge, and the right-edge
-       spider-sense trigger. A button, so it is focusable and announces. -->
-  <button class="perch" id="perch" type="button" aria-label="Return to top of page">
-    <svg viewBox="0 0 76 132" aria-hidden="true">
-      <path class="thread" d="M38 0 L38 46" />
-      <!-- legs gripping, folded -->
-      <path class="limb" d="M32 44 C22 52 18 62 22 72" />
-      <path class="limb" d="M44 44 C54 52 58 62 54 72" />
-      <!-- torso -->
-      <path class="body" d="M28 40 C22 54 22 72 28 86 L48 86 C54 72 54 54 48 40 Z" />
-      <!-- mask + lenses -->
-      <ellipse class="mask" cx="38" cy="27" rx="15" ry="17" />
-      <path class="lens" d="M27 24 C31 20 35 20 38 24 C35 29 30 29 27 24 Z" />
-      <path class="lens" d="M49 24 C45 20 41 20 38 24 C41 29 46 29 49 24 Z" />
-      <!-- trailing legs -->
-      <path class="limb" d="M30 84 C24 96 26 110 32 120" />
-      <path class="limb" d="M46 84 C52 96 50 110 44 120" />
-    </svg>
-  </button>
-  <!-- spidey-sense HUD: an instrument over the paper, not a redesign of it -->
-  <div class="alarm" id="alarm" aria-hidden="true"></div>
-  <div class="aberration" aria-hidden="true"></div>
-  <div class="sense-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-  <div class="sense-ring" id="senseRing" aria-hidden="true"></div>
-  <div class="hotspot" id="hotA" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="hotspot" id="hotB" aria-hidden="true"><i></i><i></i><i></i></div>
-  <div class="hotspot" id="hotC" aria-hidden="true"><i></i><i></i><i></i></div>
-
-  <div class="telem tl">
-    <div><span class="lbl">state</span> <b id="tState">idle</b></div>
-    <div><span class="lbl">threat</span> <b id="tThreat">none</b></div>
-  </div>
-  <div class="telem tr">
-    <div><span class="lbl">traj</span> <b id="tTraj">—</b></div>
-    <div><span class="lbl">vel</span> <b id="tVel">0.0</b></div>
-  </div>
-  <div class="telem bl">
-    <div><span class="lbl">arc</span> <b>360°</b></div>
-    <div><span class="lbl">contacts</span> <b id="tCon">0</b></div>
-  </div>
-  <div class="telem br">
-    <div><span class="lbl">t-impact</span> <b id="tTti">—</b></div>
-    <div><span class="lbl">sig</span> <b id="tSig">0%</b></div>
-  </div>
-  <div class="alarm-readout" id="alarmReadout" role="status" aria-live="polite">Danger sensed</div>
-
-  <svg id="websvg" aria-hidden="true"></svg>
-
-  <!-- spider sense -->
-  <div class="sense sense-l" id="senseL" aria-hidden="true"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
-  <div class="sense sense-r" id="senseR" aria-hidden="true"><div class="sigil" set:html={sigil()} /><div class="lbl">Spider&nbsp;Sense</div></div>
-  <div class="sense sense-t" id="senseT" aria-hidden="true"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
-  <div class="sense sense-b" id="senseB" aria-hidden="true"><div class="lbl">Spider&nbsp;Sense</div><div class="sigil" set:html={sigil()} /></div>
-  <div class="wash wash-l" id="washL" aria-hidden="true"></div>
-  <div class="wash wash-r" id="washR" aria-hidden="true"></div>
-  <div class="wash wash-t" id="washT" aria-hidden="true"></div>
-  <div class="wash wash-b" id="washB" aria-hidden="true"></div>
-
 
   <!-- ticker -->
   <div class="ticker" aria-hidden="true">
@@ -94,23 +69,21 @@ const sigil = () => `
     </div>
   </div>
 
-  <div class="s" id="main" role="main" tabindex="-1">
+  <div class="s" id="main" role="main">
     <!-- masthead -->
     <div class="mast">
       <div class="mast-id">
         <img class="avatar" src={asset("img/profile.webp")} alt="" width="44" height="44" />
         <div>
-        <b>Est. 2024</b>Published by {profile.name}<br>Agent Systems Desk
+          <b>Est. 2024</b>Published by {profile.name}<br>Agent Systems Desk
         </div>
       </div>
       <div>
-        <b>Issue 0116 · 2026</b>Skills · CLI · MCP · Web3
+        <b>Issue 0116 · 2026</b>Code Modes · Skills · Routers · Swarms
         <div class="socials" style="justify-content:flex-end">
-          {
-            profile.socials.map((s) => (
-              <a class="soc" href={s.url} target="_blank" rel="noopener">{s.label}</a>
-            ))
-          }
+          {profile.socials.map((s) => (
+            <a class="soc" href={s.url} target="_blank" rel="noopener">{s.label}</a>
+          ))}
         </div>
       </div>
     </div>
@@ -124,113 +97,194 @@ const sigil = () => `
       <div class="work" set:html={profile.work} />
       <div class="meta">
         {stats.map((s) => <div><b>{s.value}</b><span>{s.label}</span></div>)}
-    
-      <nav class="filters" aria-label="Filter projects by kind">
-        <button class="filter is-on" data-filter="all" aria-pressed="true">All</button>
-        <button class="filter" data-filter="mcp" aria-pressed="false">Code Mode & MCP</button>
-        <button class="filter" data-filter="skills" aria-pressed="false">Skills</button>
-        <button class="filter" data-filter="router" aria-pressed="false">Routers</button>
-        <button class="filter" data-filter="research" aria-pressed="false">Research</button>
-        <button class="filter" data-filter="workflows" aria-pressed="false">Workflows</button>
-        <button class="filter" data-filter="prompts" aria-pressed="false">Prompts & Hooks</button>
-        <button class="filter" data-filter="agents" aria-pressed="false">Agents</button>
-      </nav>
       </div>
     </div>
+
     <div class="rt"></div>
 
-    <!-- cover -->
+    <!-- cover section -->
     <div class="cover">
       <div class="cover-l">
-        <div class="kick">By {profile.name} · Agent Systems</div>
+        <div class="kick">By {profile.name} · Agent Systems Desk</div>
         <div class="big">I build the<br />tools that<br /><em>teach agents</em><br />to work.</div>
         <p class="lede">
-          Nine published skills, four terminal tools, three shipped apps, a Web3
-          forensics suite, and one course. Everything here is something a model, an
-          agent, or a terminal can actually use.
+          Ten minted skills, dual-mode search tools, zero-context capability routers, multi-agent reviewer swarms, and empirical systems research. Everything here is tested, MIT-licensed, and built for real terminal agents.
         </p>
-        <div class="chips" style="margin-top:26px">
-          {chips.map((c) => <a class="chip" href={c.href}>{c.label}</a>)}
-        </div>
       </div>
       <div class="cover-r">
-        <div class="burst"><b>9</b><span>Skills<br />published</span></div>
+        <div class="burst"><b>99.5%</b><span>Token Save<br />Code Mode</span></div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey);line-height:2">
-          Vol. XXVI · No. 0116<br />Printed in the terminal<br />Est. 2024
+          Vol. XXVI · No. 0116<br />Pure AI Engineering<br />Est. 2024
         </div>
       </div>
     </div>
 
-    <!-- sections -->
-    {
-      sections.map((sec) => (
-        <section id={sec.id} class="rev">
-          <div class="sech">
-            <h2 class="mline"><span>{sec.title}</span></h2>
-            <span class="bl">{sec.blurb}</span>
-            <span class="ct">{sec.count}</span>
-          </div>
-          <div class="webrule"><svg viewBox="0 0 1200 30" preserveAspectRatio="none"></svg></div>
-
-          {/* One container, one card. The card is a div, not an anchor: a card can
-              carry two destinations (source + live), and nesting anchors is invalid.
-              The title holds a stretched link that covers the whole card; the explicit
-              pair sits above it so both destinations stay reachable. */}
-          <div
-            class:list={["grid", sec.id === "research" && "rlist", sec.collapsible && "is-collapsible"]}
-            data-collapsible={sec.collapsible ? "true" : undefined}
-          >
-            {sec.items.map((it, ix) => (
-              <div class="p-wrap" data-tags={(it.tags || []).join(",")}>
-                <a
-                  class:list={[
-                    "p",
-                    it.note && "note",
-                    it.tint === "blue" && "blue",
-                    it.tint === "red" && "red",
-                    it.url && "linked",
-                    sec.collapsible && ix >= 3 && "is-more",
-                  ]}
-                  href={it.url}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {it.tag && <span class="tag">{it.tag}</span>}
-                  <h3>{it.name}</h3>
-                  {it.meta && <div class="meta">{it.meta}</div>}
-                  <p>{it.desc}</p>
-                  {it.install && <code>{it.install}</code>}
-                  {!it.install && it.code && <code>{it.code}</code>}
-                </a>
-                {it.live && (
-                  <a class="card-live" href={it.live} target="_blank" rel="noopener">Live</a>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      ))
-    }
-
-    <!-- MCP -->
-    <section class="rev">
+    <!-- Glimpse: The Five Core Pillars (Multi-page Hub) -->
+    <section class="pillars-section">
       <div class="sech">
-        <h2 class="mline"><span>{mcp.title}</span></h2>
-        <span class="bl">{mcp.blurb}</span>
-        <span class="ct">{mcp.count}</span>
+        <h2 class="mline"><span>System Architecture & Works</span></h2>
+        <span class="bl">explore dedicated deep-dive sections</span>
+        <span class="ct">05 core pillars</span>
       </div>
-      <div class="next">
-        {mcp.cells.map((c) => <div class:list={["cell", c.dark && "dark"]}><b>{c.h}</b><span>{c.p}</span></div>)}
+
+      <div class="pillars-grid">
+        {pillars.map((pillar) => (
+          <a href={pillar.href} class="pillar-card">
+            <div class="p-top">
+              <span class="p-num">{pillar.num}</span>
+              <span class="p-tag">{pillar.tag}</span>
+            </div>
+            <h3 class="p-title">{pillar.title}</h3>
+            <p class="p-desc">{pillar.desc}</p>
+            <div class="p-feat">
+              <span class="p-feat-lbl">Featured:</span>
+              <span>{pillar.featured}</span>
+            </div>
+            <div class="p-cta">Explore Section ➔</div>
+          </a>
+        ))}
       </div>
     </section>
 
-    <footer>
-      <span>{profile.name} · The Agent Chronicles</span>
-      <span class="socials">
-        {profile.socials.map((s) => <a class="soc" href={s.url} target="_blank" rel="noopener">{s.label}</a>)}
-      </span>
-    </footer>
+    <!-- About & Engineering Philosophy Section -->
+    <section class="philosophy-section">
+      <div class="sech">
+        <h2 class="mline"><span>Engineering Philosophy</span></h2>
+        <span class="bl">how we build AI tools</span>
+      </div>
+      <div class="philo-grid">
+        <div class="philo-box">
+          <h4>Zero Context Inflation</h4>
+          <p>We reject dumping megabytes of unparsed JSON or 50 static tool definitions into LLM context. Programmatic tool use (Code Mode) processes arrays in memory and passes only signal into working memory.</p>
+        </div>
+        <div class="philo-box">
+          <h4>Adversarial Verification</h4>
+          <p>A single agent reviewing its own output hallucinates. We mandate independent subagent swarms with hostile and skeptical review personas before any architecture or spec is approved.</p>
+        </div>
+        <div class="philo-box">
+          <h4>₹0 Infra Discipline</h4>
+          <p>Real protocol understanding solves problems that paid third-party proxies hide. We write TLS-level Chrome handshakes and stdio bridges that run 100% locally with zero subscription cost.</p>
+        </div>
+      </div>
+    </section>
   </div>
+
+  <Footer />
 
   <script src="../scripts/chronicles.ts"></script>
 </Base>
+
+<style>
+  .pillars-section {
+    margin-top: 64px;
+    margin-bottom: 80px;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .pillar-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    padding: 32px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .pillar-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 6px 6px 0 var(--ink);
+    background: #fff;
+  }
+  .p-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .p-num {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.4rem;
+    color: var(--red);
+  }
+  .p-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background: var(--paper2);
+    border: 1px solid var(--ink);
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+  .p-title {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .p-desc {
+    font-size: 15px;
+    color: var(--grey);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .p-feat {
+    margin-top: auto;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    background: rgba(20, 18, 16, 0.05);
+    padding: 8px 12px;
+    border-left: 2px solid var(--ink);
+    margin-bottom: 16px;
+  }
+  .p-feat-lbl {
+    font-weight: bold;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .p-cta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--red);
+    text-transform: uppercase;
+  }
+
+  /* Philosophy */
+  .philosophy-section {
+    margin-bottom: 80px;
+  }
+  .philo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .philo-box {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    padding: 24px;
+  }
+  .philo-box h4 {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    color: var(--red);
+  }
+  .philo-box p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--grey);
+  }
+
+  @media (max-width: 900px) {
+    .pillars-grid, .philo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

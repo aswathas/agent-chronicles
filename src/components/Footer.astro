@@ -1,0 +1,63 @@
+---
+import data from "../data/projects.json";
+const { profile } = data;
+---
+
+<footer class="portal-footer">
+  <div class="s footer-inner">
+    <div class="footer-meta">
+      <b>{profile.name} · The Agent Chronicles</b>
+      <span>Pure AI Engineering: Code Modes, Minted Skills, Capability Routers & Multi-Agent Swarms.</span>
+    </div>
+    <div class="footer-links">
+      {profile.socials.map((s) => (
+        <a href={s.url} target="_blank" rel="noopener" class="soc">{s.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  .portal-footer {
+    border-top: 3px double var(--ink, #141210);
+    padding: 36px 0 48px;
+    margin-top: 80px;
+    background: var(--paper2, #e4dac5);
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .footer-meta b {
+    display: block;
+    font-family: "Archivo Black", sans-serif;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .footer-meta span {
+    font-size: 13px;
+    color: var(--grey, #5f594e);
+    font-family: "IBM Plex Mono", monospace;
+  }
+  .footer-links {
+    display: flex;
+    gap: 12px;
+  }
+  .soc {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
+  .soc:hover {
+    color: var(--red, #b8331f);
+  }
+</style>

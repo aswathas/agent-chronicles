@@ -1,0 +1,164 @@
+---
+interface Props {
+  currentPath?: string;
+}
+const { currentPath = "/" } = Astro.props;
+
+const navItems = [
+  { label: "Home", href: import.meta.env.BASE_URL },
+  { label: "Code Mode & MCP", href: `${import.meta.env.BASE_URL}code-mode/` },
+  { label: "Skills Catalog", href: `${import.meta.env.BASE_URL}skills/` },
+  { label: "Routers & Harness", href: `${import.meta.env.BASE_URL}routers/` },
+  { label: "AI Research", href: `${import.meta.env.BASE_URL}research/` },
+  { label: "Workflows & Swarms", href: `${import.meta.env.BASE_URL}workflows/` },
+];
+
+const clean = (p: string) => p.replace(/\/$/, "") || "/";
+---
+
+<header class="global-nav">
+  <div class="s nav-inner">
+    <a href={import.meta.env.BASE_URL} class="brand">
+      <span class="brand-title">THE AGENT CHRONICLES</span>
+      <span class="brand-sub">AI SYSTEMS DESK · ASWATH S</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main Navigation">
+      {navItems.map((item) => {
+        const isActive = clean(currentPath) === clean(item.href);
+        return (
+          <a
+            href={item.href}
+            class:list={["nav-item", isActive && "is-active"]}
+            aria-current={isActive ? "page" : undefined}
+          >
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <div class="nav-actions">
+      <a
+        href="https://github.com/aswathas"
+        target="_blank"
+        rel="noopener"
+        class="nav-gh"
+      >
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        <span>GitHub</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .global-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(239, 231, 216, 0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--ink, #141210);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    gap: 16px;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .brand-title {
+    font-family: "Archivo Black", sans-serif;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .brand-sub {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--grey, #5f594e);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  .nav-item {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey, #5f594e);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .nav-item:hover {
+    color: var(--ink);
+    background: rgba(20, 18, 16, 0.06);
+  }
+
+  .nav-item.is-active {
+    color: var(--paper, #efe7d8);
+    background: var(--ink, #141210);
+    font-weight: 500;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-gh {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid var(--ink);
+    background: transparent;
+    transition: all 0.15s ease;
+  }
+
+  .nav-gh:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  @media (max-width: 900px) {
+    .nav-inner {
+      height: auto;
+      flex-wrap: wrap;
+      padding-block: 8px;
+    }
+    .brand-sub {
+      display: none;
+    }
+  }
+</style>
