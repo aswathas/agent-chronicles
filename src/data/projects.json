@@ -32,7 +32,7 @@
       "label": "Skills"
     },
     {
-      "value": "03",
+      "value": "04",
       "label": "Code Modes & MCP"
     },
     {
@@ -82,6 +82,7 @@
     "99.5% token reduction with native Code Mode",
     "olxcars: in-memory Python SDK + stdio MCP server",
     "TradeMCP: 14 tools, 57 indicators, NSE/BSE screener",
+    "wa-mcp: 31 tools + 1 code tool, resumable waits, rooted file sandbox",
     "skill-router: 298-case eval & outcome-driven learning",
     "aswath-capability: 3,114 skills indexed",
     "Zero paid proxies · ₹0 external infrastructure",
@@ -92,7 +93,7 @@
       "id": "code-mode",
       "title": "Code Modes & MCP Servers",
       "blurb": "in-memory execution & tool bridges",
-      "count": "03 published",
+      "count": "04 published",
       "layout": "grid",
       "items": [
         {
@@ -122,6 +123,22 @@
           "tags": [
             "ai",
             "mcp",
+            "tools"
+          ]
+        },
+        {
+          "name": "wa-mcp (Code Mode & MCP)",
+          "tag": "code-mode · mcp · 31 tools",
+          "meta": "resumable waits · rooted file sandbox · 153 tests",
+          "desc": "WhatsApp MCP server and CLI on Baileys. 31 tools plus a token-lean code-mode entry point: one JavaScript tool instead of 31 schemas, waits that clamp to the budget and resume across calls, and a rooted file sandbox with symlink-safe containment.",
+          "url": "https://github.com/aswathas/wa-mcp",
+          "install": "npx -y wa-mcp",
+          "wide": true,
+          "tint": "blue",
+          "tags": [
+            "ai",
+            "mcp",
+            "code-mode",
             "tools"
           ]
         },
