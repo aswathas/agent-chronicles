@@ -47,6 +47,7 @@ METRIC_KINDS = {"measured", "count", "design"}
 INSTALL_RE = re.compile(r"skills add\s+(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)@(?P<skill>[\w.-]+)")
 REPO_URL_RE = re.compile(r"github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)/tree/(?P<ref>[\w./-]+?)/(?P<path>.+)$")
 REPO_ONLY_RE = re.compile(r"github\.com/(?P<owner>[\w.-]+)/(?P<repo>[\w.-]+)")
+SCRIPT_RE = re.compile(r"skills/(?P<skill>[\w.-]+)/scripts/(?P<file>[\w.-]+\.(?:py|ps1|sh|js))")
 
 _cache: dict[str, object] = {}
 
@@ -97,6 +98,25 @@ def published_slugs(owner: str, repo: str) -> set[str] | None:
     elif isinstance(skills, dict):
         names.update(skills.keys())
     return names
+
+
+def skill_dir(owner: str, repo: str, skill: str) -> str | None:
+    """The folder a published skill lives in, from the repo manifest."""
+    raw = gh(f"repos/{owner}/{repo}/contents/manifest.json")
+    if not isinstance(raw, dict) or "content" not in raw:
+        return None
+    import base64
+    try:
+        manifest = json.loads(base64.b64decode(raw["content"]).decode("utf8", "replace"))
+    except (ValueError, json.JSONDecodeError):
+        return None
+    skills = manifest.get("skills", manifest)
+    entries = skills if isinstance(skills, list) else []
+    for entry in entries:
+        if isinstance(entry, dict) and entry.get("name") == skill:
+            path = str(entry.get("path") or "")
+            return path.rsplit("/", 1)[0] if "/" in path else None
+    return None
 
 
 def main() -> int:
@@ -170,6 +190,23 @@ def main() -> int:
                 problems.append(f"{slug}: repoUrl is not a github URL")
             elif not repo_exists(ro.group("owner"), ro.group("repo")):
                 problems.append(f"{slug}: repoUrl repo {ro.group('owner')}/{ro.group('repo')} does not exist")
+
+        # a script named in the verification command must exist where it is said to live
+        cmd = str(ev.get("verificationCmd", ""))
+        for sm in SCRIPT_RE.finditer(cmd):
+            skill, filename = sm.group("skill"), sm.group("file")
+            owner, repo = "aswathas", "aswath-skills"
+            folder = skill_dir(owner, repo, skill)
+            if folder is None:
+                problems.append(
+                    f"{slug}: verificationCmd runs {skill}/scripts/{filename} but {skill} "
+                    f"is not published in {owner}/{repo}"
+                )
+            elif not path_exists(owner, repo, "main", f"{folder}/scripts/{filename}"):
+                problems.append(
+                    f"{slug}: verificationCmd runs {skill}/scripts/{filename} but that file "
+                    f"does not exist in {owner}/{repo}"
+                )
 
     # nothing published should be missing from the site
     if not args.offline:
