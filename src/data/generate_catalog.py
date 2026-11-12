@@ -219,7 +219,7 @@ CATALOG = [
             "headlineSub": "Average Token Savings",
             "metricKind": "measured",
             "source": "skills/context/aswath-token-guard/scripts/token_guard.py",
-            "proofText": "Token counts come from the usage objects the runtime reports, not from an estimate: Claude Code records them per assistant message, the MiniMax Code runtime per turn in its local database. The tool result share of the context runs around 90% on a busy session, and the biggest sessions here carry 200M+ tokens over a thousand turns - almost all of it context re-served rather than new. The tool names the files a session read more than once.",
+            "proofText": "Token counts come from the usage objects the runtime reports, not from an estimate: Claude Code records them per assistant message, the MiniMax Code runtime per turn in its local database. The tool result share of the context runs around 90% on a busy session, and the biggest sessions here carry 200M+ tokens over a thousand turns - almost all of it context re-served rather than new. The tool names the files a session read more than once. The plugin ships with the skill: one hook injects the orientation at session start, one stays silent until the session passes 200k tokens, and one denies an exact repeat read of an unchanged file.",
             "verificationCmd": "python ~/.agents/skills/aswath-token-guard/scripts/token_guard.py --view guard",
             "comparisonTable": [
                 {
