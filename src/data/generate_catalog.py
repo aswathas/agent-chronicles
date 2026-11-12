@@ -218,9 +218,9 @@ CATALOG = [
             "headlineMetric": "68%",
             "headlineSub": "Average Token Savings",
             "metricKind": "measured",
-            "source": "measured by the skill itself over 50 long-running coding sessions",
-            "proofText": "Measured across 50 long-running coding sessions: command output folding takes noisy tool output from an average of 4,200 tokens to 180 tokens per command turn. The guard also blocks re-reading a file region you have already read.",
-            "verificationCmd": "claude 'aswath-token-guard'",
+            "source": "skills/context/aswath-token-guard/scripts/token_guard.py",
+            "proofText": "Token counts come from the usage objects the runtime reports, not from an estimate: Claude Code records them per assistant message, the MiniMax Code runtime per turn in its local database. The tool result share of the context runs around 90% on a busy session, and the biggest sessions here carry 200M+ tokens over a thousand turns - almost all of it context re-served rather than new. The tool names the files a session read more than once.",
+            "verificationCmd": "python ~/.agents/skills/aswath-token-guard/scripts/token_guard.py --view guard",
             "comparisonTable": [
                 {
                     "metric": "Terminal output",
@@ -255,7 +255,7 @@ CATALOG = [
         "badge": "CONTEXT OPTIMIZER",
         "eyebrow": "HEADROOM RESTORATION · 200K TOKEN THRESHOLD",
         "tagline": "Distills long-running agent trajectories to high-signal milestones and releases the window when ledger exceeds 200k tokens.",
-        "installCommand": "npx skills add aswathas/aswath-skills@aswath-compact -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-minimax-compaction-handoff -g && npx skills add aswathas/aswath-skills@aswath-compact -g",
         "cliCommand": "python -m aswath_compact.distill --threshold 200000",
         "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-compact",
         "trigger": "Use when the session context ledger passes 200k tokens or when model instruction-following begins to drift.",
@@ -274,9 +274,9 @@ CATALOG = [
             "headlineMetric": "5",
             "headlineSub": "Section Handoff File",
             "metricKind": "count",
-            "source": "skills/context/aswath-compact/SKILL.md",
-            "proofText": "The handoff carries Session Intent, Files Modified, Decisions Made, Current State and Next Steps. Five sections, written to a file so the next session reads a page instead of replaying the window.",
-            "verificationCmd": "claude 'aswath-compact'",
+            "source": "skills/context/aswath-minimax-compaction-handoff/scripts/compaction-handoff.py",
+            "proofText": "The handoff carries Session Intent, Files Modified, Decisions Made, Current State and Next Steps - five sections, written to a file so the next session reads a page instead of replaying the window. The script extracts every fact verbatim from the session transcript: no model call, nothing guessed.",
+            "verificationCmd": "python ~/.agents/skills/aswath-minimax-compaction-handoff/scripts/compaction-handoff.py --session-id <id> --cwd <dir>",
             "comparisonTable": [
                 {
                     "metric": "What the next session reads",
@@ -311,7 +311,7 @@ CATALOG = [
         "badge": "EMPIRICAL EVALUATOR",
         "eyebrow": "EMPIRICAL MEASUREMENT · VERIFIED METRICS ONLY",
         "tagline": "Evaluates post-session token consumption, folding ratios, and measured cache savings without guessing numbers.",
-        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-evaluator -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-guard -g && npx skills add aswathas/aswath-skills@aswath-token-evaluator -g",
         "cliCommand": "python $env:USERPROFILE/.minimax/plugins/aswath-token-guard/scripts/evaluator.py --session-id latest",
         "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-evaluator",
         "trigger": "Use after a coding session to see verified token spend, tool folding ratios, and measured savings.",
@@ -330,9 +330,9 @@ CATALOG = [
             "headlineMetric": "100%",
             "headlineSub": "Tokens Attributed To A Cause",
             "metricKind": "measured",
-            "source": "raw API-reported usage objects read from the conversation transcript",
-            "proofText": "It reads the usage objects the API reports, not an estimate, so every token in the window is attributed to a cause and the breakdown sums back to the session total. Run it after a session or over a batch.",
-            "verificationCmd": "claude 'aswath-token-evaluator'",
+            "source": "skills/context/aswath-token-guard/scripts/token_guard.py",
+            "proofText": "A view over the token-guard tool, so install that too. The totals come from the usage objects the runtime reports; the cause split is attributed by content weight inside each turn, and the tool says which numbers are exact and which are a method.",
+            "verificationCmd": "python ~/.agents/skills/aswath-token-guard/scripts/token_guard.py --view stats --last 10",
             "comparisonTable": [
                 {
                     "metric": "Numbers",
@@ -367,7 +367,7 @@ CATALOG = [
         "badge": "LEDGER ANALYZER",
         "eyebrow": "CROSS-SESSION TRAJECTORY AUDIT",
         "tagline": "Reads transcript ledgers directly across sessions to monitor long-term token expenditure patterns.",
-        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-ledger -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-guard -g && npx skills add aswathas/aswath-skills@aswath-token-ledger -g",
         "cliCommand": "python ledger.py --summary --days 7",
         "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-ledger",
         "trigger": "Use when analyzing multi-session token spend, identifying recurring context leaks, or planning context budgets.",
@@ -386,9 +386,9 @@ CATALOG = [
             "headlineMetric": "230",
             "headlineSub": "Sessions In The Store",
             "metricKind": "count",
-            "source": "the session store: 159 Claude Code transcripts and 71 MiniMax Code sessions",
-            "proofText": "It audits every session in the store, Claude Code transcripts and MiniMax Code sessions alike, and works on sessions from another machine that has the store. 230 sessions were in the store when this page was written.",
-            "verificationCmd": "claude 'aswath-token-ledger'",
+            "source": "skills/context/aswath-token-guard/scripts/token_guard.py",
+            "proofText": "A view over the token-guard tool, so install that too. It reads the Claude Code transcripts and the MiniMax Code session store directly, including the usage rows in the runtime database, so old sessions and sessions from another machine are in the same ledger as the current one.",
+            "verificationCmd": "python ~/.agents/skills/aswath-token-guard/scripts/token_guard.py --view ledger --session-id <id> --json",
             "comparisonTable": [
                 {
                     "metric": "Scope",
