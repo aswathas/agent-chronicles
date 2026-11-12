@@ -1063,6 +1063,330 @@ CATALOG = [
             "output": "Routing ledger updated. Zero repeat misroutes."
         },
         "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">MCODE ADAPTIVE LEARNING HOOK PIPELINE</text><rect x="40" y="55" width="140" height="75" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="110" y="85" fill="#93c5fd" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">MCode Session</text><text x="110" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">Edits &amp; Corrections</text><path d="M190 92 H260" stroke="#38bdf8" stroke-width="2"/><rect x="270" y="55" width="160" height="75" rx="6" fill="#151d2f" stroke="#10b981"/><text x="350" y="85" fill="#6ee7b7" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">learning-hook.py</text><text x="350" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">Extracts correction signal</text><path d="M440 92 H500" stroke="#38bdf8" stroke-width="2"/><circle cx="530" cy="92" r="25" fill="#151d2f" stroke="#10b981"/><text x="530" y="96" fill="#6ee7b7" font-family="sans-serif" font-size="9" text-anchor="middle" font-weight="700">LEDGER</text></svg>'
+    },
+
+    # ── 21. aswath-commit ──────────────────────────────────────────────
+    {
+        "slug": "aswath-commit",
+        "name": "aswath-commit",
+        "title": "aswath-commit: Decision Log & Change Inventory Committer",
+        "category": "Minted Skills",
+        "categorySlug": "skills",
+        "badge": "MINTED SKILL · WORKFLOW",
+        "eyebrow": "DECISION LOG · CHANGE INVENTORY · NO MASS DUMPS",
+        "tagline": "Enforces reasoning capture at commit time: appends a decision log with alternatives beat and a file-by-file change inventory before git commit.",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-commit -g",
+        "cliCommand": "claude 'aswath-commit'",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-commit",
+        "trigger": "Use when a change set is ready to commit and the reasoning must be written down. Produces a decision log and a file-by-file change inventory, then commits. No mass dumps.",
+        "modelCard": {
+            "runtime": "Cross-agent (Claude Code, Command Code, Antigravity)",
+            "type": "Workflow & Audit Protocol",
+            "transport": "Git & Markdown Review Protocol",
+            "contextTax": "Zero persistent tax (runs on change set)",
+            "testCoverage": "6 procedural stages, zero unlogged decisions",
+            "license": "MIT",
+            "dependencies": ["git"]
+        },
+        "problem": "In the AI era, diffs are cheap and unreviewable; code dumps lack rationale and future maintainers are left guessing why a particular approach was chosen over alternatives.",
+        "solution": "Executes a strict 6-stage protocol: inventory diffs, run verification test suites, append to docs/reviews/decision-log.md (capturing options, evidence, and consequences), write docs/reviews/change-inventory.md, update truth docs, and commit with structured rationale.",
+        "evaluation": {
+            "headlineMetric": "6",
+            "headlineSub": "Procedural Commit Stages",
+            "proofText": "Enforces 6 distinct stages (inventory, verify, decision log, change inventory, truth docs, commit) before any commit is finalized. The verification command invokes the skill directly in Claude Code.",
+            "verificationCmd": "claude 'aswath-commit'",
+            "comparisonTable": [
+                {
+                    "metric": "Decision Traceability",
+                    "traditional": "Generic one-line commit message with no alternatives recorded",
+                    "proposed": "Structured decision log with options considered, chosen rationale, and evidence",
+                    "delta": "Complete rationale recorded"
+                },
+                {
+                    "metric": "File Change Inventory",
+                    "traditional": "Raw unguided git diff --stat",
+                    "proposed": "One row per changed file detailing why it changed and how tested",
+                    "delta": "100% file coverage"
+                }
+            ]
+        },
+        "codeExample": {
+            "title": "Decision Log Format",
+            "language": "markdown",
+            "code": "## D12 — SQLite Session Cache\n- Date: 2026-11-13\n- Context: File-based JSON locked on concurrent agent writes\n- Options: Redis server, SQLite with WAL mode, In-memory LRU\n- Chosen: SQLite with WAL (zero background daemon, supports concurrent readers)\n- Evidence: pytest tests/test_storage.py passed 42 tests in 0.8s\n- Consequence: Eliminates database server dependency across edge workers",
+            "output": "Appended to docs/reviews/decision-log.md. Change inventory written."
+        },
+        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">ASWATH-COMMIT: 6-STAGE WORKFLOW</text><rect x="30" y="60" width="80" height="70" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="70" y="95" fill="#93c5fd" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">1. Diff</text><rect x="120" y="60" width="80" height="70" rx="6" fill="#151d2f" stroke="#f59e0b"/><text x="160" y="95" fill="#fcd34d" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">2. Verify</text><rect x="210" y="60" width="100" height="70" rx="6" fill="#151d2f" stroke="#10b981"/><text x="260" y="95" fill="#6ee7b7" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">3. Decision</text><rect x="320" y="60" width="90" height="70" rx="6" fill="#151d2f" stroke="#a855f7"/><text x="365" y="95" fill="#d8b4fe" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">4. Inventory</text><rect x="420" y="60" width="80" height="70" rx="6" fill="#151d2f" stroke="#06b6d4"/><text x="460" y="95" fill="#67e8f9" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">5. Truth</text><rect x="510" y="60" width="60" height="70" rx="6" fill="#151d2f" stroke="#10b981"/><text x="540" y="95" fill="#6ee7b7" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">6. Git</text></svg>'
+    },
+
+    # ── 22. aswath-publish-github ──────────────────────────────────────
+    {
+        "slug": "aswath-publish-github",
+        "name": "aswath-publish-github",
+        "title": "aswath-publish-github: Safe GitHub CLI Publishing & Plugin Distribution",
+        "category": "Minted Skills",
+        "categorySlug": "skills",
+        "badge": "MINTED SKILL · PUBLISHING",
+        "eyebrow": "SECRET SCAN · NEVER DIRECT TO MAIN · PLUGIN SPEC",
+        "tagline": "Safe GitHub distribution discipline: scans commits for secrets, prevents default branch pushes, and automates Claude Code plugin packaging.",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-publish-github -g",
+        "cliCommand": "gh auth status",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/publishing/aswath-publish-github",
+        "trigger": "Use when creating a GitHub repository, pushing a project, opening a pull request, cutting a release, or publishing a gist — including phrases like \"push to GitHub\", \"create a repo\", \"open a PR\", \"make a release\", or \"publish this to GitHub\".",
+        "modelCard": {
+            "runtime": "GitHub CLI (gh) 2.0+ & Git",
+            "type": "Publishing Protocol",
+            "transport": "CLI Operations & GitHub API",
+            "contextTax": "Zero persistent tax",
+            "testCoverage": "4 auth scopes (repo, workflow, gist, read:org)",
+            "license": "MIT",
+            "dependencies": ["gh", "git"]
+        },
+        "problem": "AI agents frequently push unreviewed code directly to main branches, accidentally commit sensitive API keys or .env files, and lack proper plugin metadata manifests.",
+        "solution": "Enforces strict pre-publish checks: verifies gh auth scopes, scans historical diffs for leaked secrets, forces feature branching, requires explicit user instruction before any remote push, and standardizes Claude Code plugin packaging.",
+        "evaluation": {
+            "headlineMetric": "4",
+            "headlineSub": "Authenticated Scopes Verified",
+            "proofText": "Verifies 4 authenticated scopes (repo, workflow, gist, read:org) and requires secret scanning across commit history before creating repos or pushing branches.",
+            "verificationCmd": "gh auth status",
+            "comparisonTable": [
+                {
+                    "metric": "Secret Leak Prevention",
+                    "traditional": "Accidental push of .env files and API tokens",
+                    "proposed": "Mandatory history scan with regex filtering before public repo creation",
+                    "delta": "Zero leaked secrets"
+                },
+                {
+                    "metric": "Branch Safety",
+                    "traditional": "Direct commits and pushes to main branch",
+                    "proposed": "Strict feature-branch-and-PR requirement with squash merge",
+                    "delta": "100% protected branch compliance"
+                }
+            ]
+        },
+        "codeExample": {
+            "title": "Pre-Publish Secret Scan & PR Creation",
+            "language": "bash",
+            "code": "# 1. Verify authenticated scopes\n$ gh auth status\n# 2. Check commit history for unredacted secrets\n$ git log --all -p | grep -iE \"token|secret|password|api[_-]?key\"\n# 3. Create branch, push and open PR\n$ git switch -c feature/safe-distribution\n$ git push -u origin feature/safe-distribution\n$ gh pr create --title \"feat: safe publishing protocol\" --base main",
+            "output": "https://github.com/aswathas/aswath-skills/pull/1 created."
+        },
+        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">ASWATH-PUBLISH-GITHUB: SAFETY PIPELINE</text><rect x="40" y="55" width="130" height="75" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="105" y="85" fill="#93c5fd" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">1. gh auth</text><text x="105" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">4 Scopes Validated</text><path d="M180 92 H235" stroke="#38bdf8" stroke-width="2"/><rect x="245" y="55" width="150" height="75" rx="6" fill="#151d2f" stroke="#ef4444"/><text x="320" y="85" fill="#f87171" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">2. Secret Scan</text><text x="320" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">History Grep Gate</text><path d="M405 92 H460" stroke="#10b981" stroke-width="2"/><circle cx="495" cy="92" r="25" fill="#151d2f" stroke="#10b981"/><text x="495" y="96" fill="#6ee7b7" font-family="sans-serif" font-size="9" text-anchor="middle" font-weight="700">PR / PUSH</text></svg>'
+    },
+
+    # ── 23. aswath-publish-instagram ───────────────────────────────────
+    {
+        "slug": "aswath-publish-instagram",
+        "name": "aswath-publish-instagram",
+        "title": "aswath-publish-instagram: Two-Step Confirmed Instagram Publishing",
+        "category": "Minted Skills",
+        "categorySlug": "skills",
+        "badge": "MINTED SKILL · PUBLISHING",
+        "eyebrow": "6-DIGIT CONFIRMATION · 5 MEDIA FORMATS · RATE-LIMIT SAFE",
+        "tagline": "Two-step confirmed Instagram publishing via EveryHand MCP: supports 5 media formats with mandatory owner verification codes and rate controls.",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-publish-instagram -g",
+        "cliCommand": "claude 'aswath-publish-instagram'",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/publishing/aswath-publish-instagram",
+        "trigger": "Use when publishing, scheduling, or checking Instagram posts, reels, carousels, or stories from an AI agent — including phrases like \"post to Instagram\", \"publish a reel\", \"share this carousel on Instagram\", or any task naming Instagram as the destination.",
+        "modelCard": {
+            "runtime": "everyhand-instagram MCP (Node.js/Python daemon)",
+            "type": "Media Publishing Protocol",
+            "transport": "MCP Tools (ig_publish, ig_status, ig_daemon)",
+            "contextTax": "High signal (<300 tokens tool schema)",
+            "testCoverage": "5 media publishing kinds (photo, video, reel, album, story)",
+            "license": "MIT",
+            "dependencies": ["everyhand-instagram MCP", "ffmpeg"]
+        },
+        "problem": "AI agents posting to social media can accidentally post half-baked drafts, spam unapproved images, or exceed API rate limits leading to immediate account bans.",
+        "solution": "Connects via the everyhand-instagram MCP tool suite with mandatory safeguards: verifies session login status, restricts uploads to whitelisted directories, and enforces a mandatory two-step confirmation flow requiring a 6-digit screen code before anything is posted.",
+        "evaluation": {
+            "headlineMetric": "5",
+            "headlineSub": "Supported Media Formats",
+            "proofText": "Natively manages 5 media formats (single photo, video, reel, album with 2-10 slides, and story) with mandatory two-step screen verification. The verification command runs through the agent harness.",
+            "verificationCmd": "claude 'aswath-publish-instagram'",
+            "comparisonTable": [
+                {
+                    "metric": "Human-in-the-Loop Gate",
+                    "traditional": "Unrestricted automated posting directly to account",
+                    "proposed": "Mandatory 6-digit ephemeral confirmation code displayed to account owner",
+                    "delta": "Zero unauthorized posts"
+                },
+                {
+                    "metric": "Session Health Check",
+                    "traditional": "Silently fails or locks account when session expires",
+                    "proposed": "Pre-flight ig_status checks with auto-reload daemon capability",
+                    "delta": "Clean session recovery"
+                }
+            ]
+        },
+        "codeExample": {
+            "title": "Two-Step Instagram Confirmation Flow",
+            "language": "python",
+            "code": "# Step 1: Request publish -> returns preview and 6-digit challenge\nresult = ig_publish(\n    kind=\"carousel\",\n    paths=[\"store/media/slide1.png\", \"store/media/slide2.png\"],\n    caption=\"Agent architecture breakdown #engineering\"\n)\n# Output: status='needs_confirm', code_displayed_on_screen='492011'\n\n# Step 2: User confirms code -> finalized publish\nig_publish(\n    kind=\"carousel\",\n    paths=[\"store/media/slide1.png\", \"store/media/slide2.png\"],\n    caption=\"Agent architecture breakdown #engineering\",\n    confirm=\"492011\"\n)",
+            "output": "Published carousel successfully. Post ID: 35129019284"
+        },
+        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">INSTAGRAM MCP TWO-STEP VERIFICATION</text><rect x="40" y="55" width="130" height="75" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="105" y="85" fill="#93c5fd" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">1. Draft &amp; Status</text><text x="105" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">ig_status verified</text><path d="M180 92 H235" stroke="#38bdf8" stroke-width="2"/><rect x="245" y="55" width="150" height="75" rx="6" fill="#151d2f" stroke="#f59e0b"/><text x="320" y="85" fill="#fcd34d" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">2. 6-Digit Code</text><text x="320" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">Screen preview gate</text><path d="M405 92 H460" stroke="#10b981" stroke-width="2"/><circle cx="495" cy="92" r="25" fill="#151d2f" stroke="#10b981"/><text x="495" y="96" fill="#6ee7b7" font-family="sans-serif" font-size="9" text-anchor="middle" font-weight="700">POST</text></svg>'
+    },
+
+    # ── 24. aswath-thevai ──────────────────────────────────────────────
+    {
+        "slug": "aswath-thevai",
+        "name": "aswath-thevai",
+        "title": "aswath-thevai: Conversational WhatsApp Requirement Gathering",
+        "category": "Thinking & Spec Protocols",
+        "categorySlug": "thinking",
+        "badge": "SPEC PROTOCOL · CONVERSATIONAL",
+        "eyebrow": "WHATSAPP-NATIVE · 5-PHASE ARC · EXPLICIT APPROVAL GATE",
+        "tagline": "Turn real people's raw requests into approved build specs via a warm, 5-phase WhatsApp interview rather than assumption.",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-thevai -g",
+        "cliCommand": "claude 'aswath-thevai'",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-thevai",
+        "trigger": "Use when a real person is the source of the brief — someone asks Aswath for a case study, deck, report, project or writeup and the requirement is not yet known. Collects the requirement from that person over WhatsApp instead of from assumptions: a warm, short conversation that ends in a brief they approved, then hands off to the build. Triggers: \"ask <name> what they want\", \"collect requirements\", \"thevai\", \"what does <name> actually need\", \"brief <name> on <topic>\".",
+        "modelCard": {
+            "runtime": "Cross-agent (Claude Code, WhatsApp MCP / everyhand-wa)",
+            "type": "Client Requirement Gathering Protocol",
+            "transport": "Conversational Messaging & WhatsApp Markdown",
+            "contextTax": "High signal (<200 tokens output)",
+            "testCoverage": "5 sequential conversational phases, 7-point hole checklist",
+            "license": "MIT",
+            "dependencies": ["whatsapp-mcp"]
+        },
+        "problem": "AI assistants receiving third-party build requests either interrogate friends with a 14-question numbered wall at 11pm or silently invent unconfirmed dates and formats, delivering work that completely misses the mark.",
+        "solution": "Applies a structured 5-phase conversational arc: 1) Warm open (no agenda), 2) Open ask (listen first), 3) Expand (reflect back in their words), 4) Drill (one hole at a time across deliverables, audience, scope, format, and deadline), and 5) Close (structured summary with explicit approval gate before code is touched).",
+        "evaluation": {
+            "headlineMetric": "5",
+            "headlineSub": "Phase Conversational Arc",
+            "proofText": "Structures requirements elicitation into 5 phased stages with a 7-point blocker checklist and a hard approval gate before build. Invoked directly via Claude Code.",
+            "verificationCmd": "claude 'aswath-thevai'",
+            "comparisonTable": [
+                {
+                    "metric": "Question Cadence",
+                    "traditional": "14-question interrogative wall of text",
+                    "proposed": "One idea per message, max 2 questions, mirroring contact register",
+                    "delta": "Zero interrogation fatigue"
+                },
+                {
+                    "metric": "Requirement Authenticity",
+                    "traditional": "Silent guesses on deadlines, formats, and budgets",
+                    "proposed": "Explicit human approval on compact brief before execution begins",
+                    "delta": "100% verified brief"
+                }
+            ]
+        },
+        "codeExample": {
+            "title": "5-Phase Conversational Brief",
+            "language": "markdown",
+            "code": "Phase 1 (Warm open): Bro, how are you? 🙂\nPhase 2 (Open ask): Good bro. Tell me what you need — na full ah help pannum.\nPhase 3 (Expand): So case study PPT la vendum, wheelchair project pathi. Ippo submission venum a?\nPhase 4 (Drill): Audience yaaru bro — faculty review or competition judges?\nPhase 5 (Close):\n• Case study PPT — 12 slides, wheelchair project\n• Report — 6 pages Word, same content\n• Audience: faculty | Deadline: Friday\nApprove pannunga bro, appo na build start pannren.",
+            "output": "Explicit approval received. Brief locked into build queue."
+        },
+        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">ASWATH-THEVAI: 5-PHASE CONVERSATIONAL ARC</text><rect x="30" y="60" width="90" height="70" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="75" y="95" fill="#93c5fd" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">1. Warm</text><rect x="135" y="60" width="90" height="70" rx="6" fill="#151d2f" stroke="#f59e0b"/><text x="180" y="95" fill="#fcd34d" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">2. Open Ask</text><rect x="240" y="60" width="90" height="70" rx="6" fill="#151d2f" stroke="#06b6d4"/><text x="285" y="95" fill="#67e8f9" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">3. Expand</text><rect x="345" y="60" width="90" height="70" rx="6" fill="#151d2f" stroke="#a855f7"/><text x="390" y="95" fill="#d8b4fe" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">4. Drill</text><rect x="450" y="60" width="120" height="70" rx="6" fill="#151d2f" stroke="#10b981"/><text x="510" y="95" fill="#6ee7b7" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">5. Approve</text></svg>'
+    },
+
+    # ── 25. aswath-throw ───────────────────────────────────────────────
+    {
+        "slug": "aswath-throw",
+        "name": "aswath-throw",
+        "title": "aswath-throw: Autonomous Adversarial Delegation Pipeline",
+        "category": "Capability Routers",
+        "categorySlug": "routers",
+        "badge": "ORCHESTRATOR · DUAL-VERIFIER",
+        "eyebrow": "LEADER-AUTHORED TEST · ADVERSARIAL GRILL · TIME-PROJECTOR",
+        "tagline": "Takes a raw request, writes a leader-authored test gate, dispatches across agent pools, and enforces dual verification with an adversarial grill.",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-throw -g",
+        "cliCommand": "claude 'aswath-throw'",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-throw",
+        "trigger": "Use when the owner hands over a raw request, idea, or build-this and wants it executed end to end without hand-holding - the request is turned into a harness work item, gated by a leader-authored test, run by the agent pool, checked by two independent verifiers (one adversarial), projected for time, and reported back when it closes.",
+        "modelCard": {
+            "runtime": "Multi-agent harness (Command Code, AGY, AGY-WSL, MCode)",
+            "type": "Autonomous Multi-Agent Orchestrator",
+            "transport": "Work item queue & independent verification agents",
+            "contextTax": "High signal (<250 tokens per turn)",
+            "testCoverage": "7 execution stages, dual verifiers (standard + adversarial grill)",
+            "license": "MIT",
+            "dependencies": ["python >=3.10", "time-projector"]
+        },
+        "problem": "Delegating complex engineering tasks to agents fails when workers write and pass their own self-authored tests, declare victory on exit code 0, and consume uncapped hours without progress projections.",
+        "solution": "Executes a 7-stage autonomous loop: 1) Think, 2) Research, 3) Leader-authored gate (agent is forbidden from modifying its own evaluation), 4) Register work item, 5) Dispatch across agent pools, 6) Parallel dual verification (standard verifier + adversarial grill), and 7) Time-projector model estimating ETA.",
+        "evaluation": {
+            "headlineMetric": "2",
+            "headlineSub": "Independent Verifiers (1 Adversarial)",
+            "proofText": "Guarantees dual parallel verification on every delegated build: one standard verifier against the brief and one adversarial grill dedicated to breaking edge cases. Invoked via Claude Code.",
+            "verificationCmd": "claude 'aswath-throw'",
+            "comparisonTable": [
+                {
+                    "metric": "Verification Integrity",
+                    "traditional": "Agent writes its own test and asserts exit code 0",
+                    "proposed": "Leader-authored behavioral gate + independent adversarial grill",
+                    "delta": "Zero self-serving test passes"
+                },
+                {
+                    "metric": "ETA Projection",
+                    "traditional": "Uncertain unbounded wait times",
+                    "proposed": "Backtested time-projector model reporting estimated seconds to close",
+                    "delta": "Empirical timeline tracking"
+                }
+            ]
+        },
+        "codeExample": {
+            "title": "Throw Delegation Pipeline Execution",
+            "language": "bash",
+            "code": "# 1. Leader authors test gate\n$ cat tasks/payment-flow/gate.py\n# 2. Register work item to overnight harness\n$ python intake/build_item.py \"build payment flow\" --slug payment-flow\n# 3. Dual verifiers run in parallel\n[VERIFIER 1] Standard check: 5/5 requirements verified.\n[VERIFIER 2] Adversarial grill: Tested concurrency race conditions -> PASSED.\n[PROJECTOR] Completed in 284s (predicted: 310s).",
+            "output": "Dual verification passed. Delivered with zero hand-holding."
+        },
+        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">ASWATH-THROW: DUAL-VERIFIED PIPELINE</text><rect x="30" y="60" width="110" height="70" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="85" y="95" fill="#93c5fd" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">Leader Gate</text><rect x="155" y="60" width="110" height="70" rx="6" fill="#151d2f" stroke="#f59e0b"/><text x="210" y="95" fill="#fcd34d" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">Agent Pool</text><rect x="280" y="60" width="120" height="70" rx="6" fill="#151d2f" stroke="#ef4444"/><text x="340" y="95" fill="#f87171" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">Adversarial Grill</text><rect x="415" y="60" width="110" height="70" rx="6" fill="#151d2f" stroke="#10b981"/><text x="470" y="95" fill="#6ee7b7" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="700">Dual Passed</text></svg>'
+    },
+
+    # ── 26. minimax-compaction-handoff ─────────────────────────────────
+    {
+        "slug": "minimax-compaction-handoff",
+        "name": "minimax-compaction-handoff",
+        "title": "minimax-compaction-handoff: Deterministic Hook-Driven Context Compactor",
+        "category": "Token Economics & Context",
+        "categorySlug": "tokens",
+        "badge": "RUNTIME HOOK · 100K TRIGGER",
+        "eyebrow": "DETERMINISTIC SQLITE EXTRACTOR · ZERO MODEL CALLS · RE-INJECTED",
+        "tagline": "Automatic 100k token compaction hook for MiniMax Code: extracts HANDOFF.md from SQLite before compaction and re-injects it on resume without prompt tax.",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-minimax-compaction-handoff -g",
+        "cliCommand": "python scripts/install.py --dry-run",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-minimax-compaction-handoff",
+        "trigger": "Use when asked to set up, install, verify, or debug automatic context compaction for the MiniMax Code runtime, the 100k compaction trigger, HANDOFF.md generation before compaction using the context-compression structure (Session Intent, Files Modified, Decisions Made, Current State, Next Steps), or the PreCompact/PostCompact/SessionStart hook wiring in MiniMax Code.",
+        "modelCard": {
+            "runtime": "MiniMax Code Runtime (Python 3.8+ stdlib, Windows/POSIX)",
+            "type": "Runtime Lifecycle Hook",
+            "transport": "MiniMax Code Hooks (PreCompact, PostCompact, SessionStart)",
+            "contextTax": "Zero tokens (direct SQLite read, no LLM summarization call)",
+            "testCoverage": "3 hook lifecycle events (PreCompact, PostCompact, SessionStart)",
+            "license": "MIT",
+            "dependencies": ["python >=3.8"]
+        },
+        "problem": "When long coding conversations compact, context is compressed or discarded by the runtime; LLM-based summarization burns thousands of tokens while missing critical file paths and architectural decisions.",
+        "solution": "Hooks directly into the MiniMax Code runtime lifecycle via PreCompact and PostCompact events: deterministic Python scripts read the SQLite transcript directly, extract modified files and decisions into HANDOFF.md, and re-inject the state upon SessionStart without spending a single prompt token.",
+        "evaluation": {
+            "headlineMetric": "100,000",
+            "headlineSub": "Token Compaction Ceiling",
+            "proofText": "Caps conversations at a 100,000-token ceiling via compactionTriggerAt. Hooks extract facts verbatim from local SQLite without LLM calls.",
+            "verificationCmd": "python scripts/compaction-handoff.py",
+            "comparisonTable": [
+                {
+                    "metric": "Summarization Cost",
+                    "traditional": "Burns 3,000-8,000 tokens per compaction using model inference",
+                    "proposed": "Zero tokens spent (deterministic Python SQLite parser)",
+                    "delta": "100% token savings on summary"
+                },
+                {
+                    "metric": "Fact Retention",
+                    "traditional": "LLM hallucinations drop file edits and tool results",
+                    "proposed": "Verbatim extraction of modified files, decisions, and session intent",
+                    "delta": "Lossless handoff structure"
+                }
+            ]
+        },
+        "codeExample": {
+            "title": "Hook Execution & Verification",
+            "language": "bash",
+            "code": "# 1. Install hook idempotently\n$ python scripts/install.py\nPatched config.yaml: compactionTriggerAt = 100000\nRegistered hooks: PreCompact, PostCompact, SessionStart in hooks.json\n\n# 2. Test PreCompact event manually\n$ printf '{\"hook_event_name\":\"PreCompact\",\"session_id\":\"test_01\",\"cwd\":\".\",\"trigger\":\"auto\"}' \\\n    | python scripts/compaction-handoff.py\n[OK] Generated HANDOFF.md with 5 standard sections.",
+            "output": "Exit code 0. HANDOFF.md generated and persisted to records store."
+        },
+        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">MINIMAX CODE 100K COMPACTION HOOK</text><rect x="30" y="55" width="120" height="75" rx="6" fill="#151d2f" stroke="#ef4444"/><text x="90" y="85" fill="#f87171" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">100k Tokens</text><text x="90" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">PreCompact Hook</text><path d="M160 92 H215" stroke="#38bdf8" stroke-width="2"/><rect x="225" y="55" width="150" height="75" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="300" y="85" fill="#93c5fd" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">SQLite Parser</text><text x="300" y="105" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">0 LLM Tokens Spent</text><path d="M385 92 H440" stroke="#38bdf8" stroke-width="2"/><rect x="450" y="55" width="120" height="75" rx="6" fill="#151d2f" stroke="#10b981"/><text x="510" y="85" fill="#6ee7b7" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">HANDOFF.md</text><text x="510" y="105" fill="#6ee7b7" font-family="monospace" font-size="9" text-anchor="middle">Injected on Resume</text></svg>'
     }
 ]
 
