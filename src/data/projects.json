@@ -5,7 +5,7 @@
     "eyebrow": "Agent Systems · Code Modes · Skills · MCP · Routers",
     "work": "I build the <b>Code Modes, skills, routers & agents</b> that make AI actually work.",
     "github": "https://github.com/aswathas",
-    "skillsRepo": "https://github.com/aswathas/olx-car-search",
+    "skillsRepo": "https://github.com/aswathas/aswath-skills",
     "agent101": "https://aswathas.github.io/agent101/",
     "socials": [
       {
@@ -180,8 +180,8 @@
           "tag": "minted skill · audit trail",
           "meta": "atomic git commits · zero token tax",
           "desc": "Persistent audit trail of user prompts, agent choices, and git history written to disk rather than echoing into LLM context.",
-          "url": "https://github.com/aswathas/olx-car-search/tree/main/skills/catalog/aswath-chronicle",
-          "install": "npx skills add aswathas/agent-skills@aswath-chronicle -g",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-chronicle",
+          "install": "npx skills add aswathas/aswath-skills@aswath-chronicle -g",
           "tags": [
             "ai",
             "skills",
@@ -193,7 +193,7 @@
           "tag": "minted skill · router",
           "meta": "classify -> reuse -> mint",
           "desc": "The core skill router: routes tasks to minted catalog skills if matched, or to first-principles spec discovery before any code is written.",
-          "url": "https://github.com/aswathas/aswath-forge",
+          "url": "https://github.com/aswathas/skill-router",
           "tags": [
             "ai",
             "skills",
@@ -205,20 +205,21 @@
           "tag": "minted skill · hook",
           "meta": "ledger · read-once discipline",
           "desc": "Token control hook enforcing read-once discipline, quiet context ledgers, and automated compaction before context explosion.",
-          "url": "https://github.com/aswathas/agent-skills",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-guard",
           "tags": [
             "ai",
             "skills",
             "research"
-          ]
+          ],
+          "install": "npx skills add aswathas/aswath-skills@aswath-token-guard -g"
         },
         {
           "name": "aswath-thinking",
           "tag": "cognitive protocol",
           "meta": "deconstruct assumptions · inversion",
           "desc": "Cognitive reasoning framework deconstructing ungrounded assumptions via first principles, inversion, and adversarial verification before executing code.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "install": "npx skills add aswathas/agent-skills@aswath-thinking -g",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-thinking",
+          "install": "npx skills add aswathas/aswath-skills@aswath-thinking -g",
           "tags": [
             "ai",
             "skills",
@@ -230,8 +231,8 @@
           "tag": "hard gate · spec first",
           "meta": "10-point spec · zero code without approval",
           "desc": "Strict pre-implementation discipline: no code is written until an approved 10-section spec is reviewed by the user.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "install": "npx skills add aswathas/agent-skills@aswath-first-principles -g",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-first-principles",
+          "install": "npx skills add aswathas/aswath-skills@aswath-first-principles -g",
           "tags": [
             "ai",
             "skills",
@@ -243,8 +244,8 @@
           "tag": "context optimizer",
           "meta": "200k token threshold · window reset",
           "desc": "Distills long-running agent trajectories to high-signal milestones and releases the window when ledger exceeds 200k tokens.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "install": "npx skills add aswathas/agent-skills@aswath-compact -g",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-compact",
+          "install": "npx skills add aswathas/aswath-skills@aswath-compact -g",
           "tags": [
             "ai",
             "skills",
@@ -256,8 +257,8 @@
           "tag": "cli tool · rfc 4180",
           "meta": "preserves types & zeroes · stdout",
           "desc": "Strict CSV to JSON converter preserving cell types, dates, and leading zeros without naive comma-splitting bugs.",
-          "url": "https://github.com/aswathas/agent-skills",
-          "install": "npx skills add aswathas/agent-skills@aswath-csvjson -g",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/utilities/aswath-csvjson",
+          "install": "npx skills add aswathas/aswath-skills@aswath-csvjson -g",
           "tags": [
             "ai",
             "skills",
@@ -406,7 +407,7 @@
           "tag": "mcode plugin suite",
           "meta": "lifecycle hooks · learning-hook.py",
           "desc": "Lifecycle hook plugins running inside MiniMax Code (~/.minimax/plugins/) enforcing read-once file discipline, command folding, and learning routing weights from user corrections.",
-          "url": "https://github.com/aswathas/agent-skills",
+          "url": "https://github.com/aswathas/skill-router/tree/main/plugins/aswath-skill-router",
           "wide": true,
           "tags": [
             "ai",
@@ -451,7 +452,7 @@
           "tag": "prompt & style",
           "meta": "zero fluff · high-signal",
           "desc": "Compression style combining caveman brevity with ponytail minimalism. Eliminates polite filler, buzzwords, and ceremony in favor of plain words and small working solutions.",
-          "url": "https://github.com/aswathas/agent-skills",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/writing/aswath-talk",
           "tags": [
             "ai",
             "prompts"
@@ -462,7 +463,7 @@
           "tag": "agent hooks",
           "meta": "read-once · context tax audit",
           "desc": "Enforces read-once file discipline, intercepts long command outputs via rtk/context-mode, and audits context tax before task completion.",
-          "url": "https://github.com/aswathas/agent-skills",
+          "url": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-guard",
           "tags": [
             "ai",
             "tools",
@@ -545,5 +546,6 @@
         "p": "Native Code Mode for terminal agents (Claude Code, Antigravity) + stdio MCP server for locked chat apps (Claude Desktop)."
       }
     ]
-  }
+  },
+  "skillsRepo": "https://github.com/aswathas/aswath-skills"
 }
