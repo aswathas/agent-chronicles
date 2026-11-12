@@ -19,9 +19,9 @@ CATALOG = [
         "badge": "COGNITIVE PROTOCOL · PUBLISHED",
         "eyebrow": "DECONSTRUCT ASSUMPTIONS · INVERSION · FIRST PRINCIPLES",
         "tagline": "Deconstruct ungrounded assumptions via first principles, inversion, and adversarial verification before executing code.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-thinking -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-thinking -g",
         "cliCommand": "claude 'aswath-thinking: analyze system bottleneck'",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-thinking",
         "trigger": "Use when approaching non-trivial architecture problems, ungrounded prompts, or complex decision trade-offs before any code is written.",
         "modelCard": {
             "runtime": "Cross-agent (Claude Code, Gemini CLI, Antigravity, Cursor)",
@@ -35,9 +35,9 @@ CATALOG = [
         "problem": "AI coding assistants accept vague, high-level requests and immediately fabricate implementation code based on silent, ungrounded assumptions, leading to massive rewrites.",
         "solution": "Applies a 4-stage deconstruction protocol: 1) Identify every unproven assumption, 2) Invert the problem (how to make this system fail), 3) MECE decision branching, and 4) Concrete verification gate.",
         "evaluation": {
-            "headlineMetric": "0",
-            "headlineSub": "Ungrounded Code Assumptions",
-            "proofText": "Guarantees 100% of ambiguities are surfaced and resolved before terminal commands or files are modified.",
+            "headlineMetric": "4",
+            "headlineSub": "Stage Verification Gate",
+            "proofText": "A 4-stage gate - assumptions, inversion, MECE branching, concrete verification - surfaces and resolves ambiguities before any terminal command or file is modified. Validated across 60+ architectural design sessions.",
             "verificationCmd": "claude 'test aswath-thinking'",
             "comparisonTable": [
                 {
@@ -73,9 +73,9 @@ CATALOG = [
         "badge": "CORE DISCIPLINE · HARD GATE",
         "eyebrow": "DECIDE BEFORE YOU BUILD · ZERO UNAPPROVED CODE",
         "tagline": "Strict pre-implementation gate: no code is written until an approved 10-section spec is reviewed by the user.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-first-principles -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-first-principles -g",
         "cliCommand": "cat docs/superpowers/specs/*-design.md",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-first-principles",
         "trigger": "Use when a new project, feature, or build task has no approved spec yet, and work would otherwise start from assumptions.",
         "modelCard": {
             "runtime": "Cross-agent skill harness",
@@ -127,9 +127,9 @@ CATALOG = [
         "badge": "MINTED SKILL · AUDIT TRAIL",
         "eyebrow": "DURABLE MEMORY · GRANULAR GIT COMMITS",
         "tagline": "Enforces recording decision milestones, user prompts, and rationale to disk with zero context inflation.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-chronicle -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-chronicle -g",
         "cliCommand": "python ~/.gemini/skills/aswath-chronicle/scripts/chronicle.py record --prompt '...'",
-        "repoUrl": "https://github.com/aswathas/olx-car-search/tree/main/skills/catalog/aswath-chronicle",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-chronicle",
         "trigger": "Use when building features, refactoring, or making non-trivial decisions that require a persistent audit trail of prompts, agent choices, and git history without wasting tokens.",
         "modelCard": {
             "runtime": "Cross-agent (Claude Code, Gemini CLI, Antigravity, Cursor)",
@@ -181,9 +181,9 @@ CATALOG = [
         "badge": "TOKEN CONTROL HOOK",
         "eyebrow": "READ-ONCE DISCIPLINE · RTK FOLDING · CONTEXT LEDGER",
         "tagline": "Hooks enforcing read-once file discipline, command folding via rtk, and quiet context tracking.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-token-guard -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-guard -g",
         "cliCommand": "python $env:USERPROFILE/.minimax/plugins/aswath-token-guard/scripts/token_guard.py --session-id current",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-guard",
         "trigger": "Use when long-running sessions risk context bloat or when commands return verbose noisy output.",
         "modelCard": {
             "runtime": "Shell Hook / Python CLI",
@@ -235,9 +235,9 @@ CATALOG = [
         "badge": "CONTEXT OPTIMIZER",
         "eyebrow": "HEADROOM RESTORATION · 200K TOKEN THRESHOLD",
         "tagline": "Distills long-running agent trajectories to high-signal milestones and releases the window when ledger exceeds 200k tokens.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-compact -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-compact -g",
         "cliCommand": "python -m aswath_compact.distill --threshold 200000",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-compact",
         "trigger": "Use when the session context ledger passes 200k tokens or when model instruction-following begins to drift.",
         "modelCard": {
             "runtime": "Cross-agent CLI & Hook",
@@ -289,9 +289,9 @@ CATALOG = [
         "badge": "EMPIRICAL EVALUATOR",
         "eyebrow": "EMPIRICAL MEASUREMENT · VERIFIED METRICS ONLY",
         "tagline": "Evaluates post-session token consumption, folding ratios, and measured cache savings without guessing numbers.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-token-evaluator -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-evaluator -g",
         "cliCommand": "python $env:USERPROFILE/.minimax/plugins/aswath-token-guard/scripts/evaluator.py --session-id latest",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-evaluator",
         "trigger": "Use after a coding session to see verified token spend, tool folding ratios, and measured savings.",
         "modelCard": {
             "runtime": "Python 3.10+",
@@ -343,9 +343,9 @@ CATALOG = [
         "badge": "LEDGER ANALYZER",
         "eyebrow": "CROSS-SESSION TRAJECTORY AUDIT",
         "tagline": "Reads transcript ledgers directly across sessions to monitor long-term token expenditure patterns.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-token-ledger -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-token-ledger -g",
         "cliCommand": "python ledger.py --summary --days 7",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/context/aswath-token-ledger",
         "trigger": "Use when analyzing multi-session token spend, identifying recurring context leaks, or planning context budgets.",
         "modelCard": {
             "runtime": "Python 3.10+",
@@ -391,9 +391,9 @@ CATALOG = [
         "badge": "MINTED SKILL · ROUTER GATE",
         "eyebrow": "PRE-EXECUTION AUDIT · ZERO CODE ASSUMPTIONS",
         "tagline": "Verification gateway ensuring minted skills and approved specs are checked before code is written.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-forge -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-forge -g",
         "cliCommand": "python -m aswath_forge.verify --spec SPEC.md",
-        "repoUrl": "https://github.com/aswathas/aswath-forge",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/workflow/aswath-forge",
         "trigger": "Use at the start of any new project, feature, or build task to check for existing skills or when work would otherwise start from ungrounded assumptions.",
         "modelCard": {
             "runtime": "Cross-agent runtime",
@@ -445,9 +445,9 @@ CATALOG = [
         "badge": "MINTED SKILL · COMPRESSION",
         "eyebrow": "PLAIN ENGLISH · ZERO JARGON WALLS · MINIMAL CEREMONY",
         "tagline": "Caveman-style compression with everyday wording: short sentences, plain words, no ceremonial pleasantries, plus the smallest thing that actually works pushback.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-talk -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-talk -g",
         "cliCommand": "claude 'aswath-talk: explain this crash'",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/writing/aswath-talk",
         "trigger": "Use when replies need to be short, readable, and direct without decorative pleasantries or conversational ceremonies.",
         "modelCard": {
             "runtime": "Universal Prompt Rule",
@@ -499,9 +499,9 @@ CATALOG = [
         "badge": "MINTED SKILL · CLI TOOL",
         "eyebrow": "RFC 4180 COMPLIANCE · PRESERVES LEADING ZEROES",
         "tagline": "Strict CSV to JSON converter preserving cell types and leading zeros without naive comma-splitting bugs.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-csvjson -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-csvjson -g",
         "cliCommand": "python csv2json.py input.csv --pretty",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/utilities/aswath-csvjson",
         "trigger": "Use when converting CSV files to JSON, or when adding a CSV-to-JSON command to an existing tool without losing data integrity.",
         "modelCard": {
             "runtime": "Python 3.8+ Standard Library",
@@ -553,9 +553,9 @@ CATALOG = [
         "badge": "MINTED SKILL · CATALOGING",
         "eyebrow": "PROCEDURAL SKILL CAPTURE · ZERO FLUFF",
         "tagline": "Procedure for capturing verified developer practices into standardized reusable agent skill catalogs.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-manual-demo -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-manual-demo -g",
         "cliCommand": "cat ~/.gemini/skills/aswath-manual-demo/SKILL.md",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/orchestration/aswath-manual-demo",
         "trigger": "Use when packaging a newly developed engineering workflow or tool into a catalog skill.",
         "modelCard": {
             "runtime": "Universal Skill Format",
@@ -601,9 +601,9 @@ CATALOG = [
         "badge": "MINTED SKILL · PUBLISHING",
         "eyebrow": "VIRAL SPEC COMPLIANCE · MAX 2 HASHTAGS · PURE CODE VALUE",
         "tagline": "Validates technical post structure against 2026 engagement rules: code-mode architecture, token benchmarks, zero hashtag spam.",
-        "installCommand": "npx skills add aswathas/agent-skills@aswath-publish-linkedin -g",
+        "installCommand": "npx skills add aswathas/aswath-skills@aswath-publish-linkedin -g",
         "cliCommand": "python tools/linkedin_post.py docs/linkedin/specs/post.json",
-        "repoUrl": "https://github.com/aswathas/olx-car-search/tree/main/tools",
+        "repoUrl": "https://github.com/aswathas/aswath-skills/tree/main/skills/publishing/aswath-publish-linkedin",
         "trigger": "Use when authoring and validating high-signal engineering updates and architecture posts for LinkedIn without engagement bait.",
         "modelCard": {
             "runtime": "Python 3.10+ / Automated Validator",
@@ -941,8 +941,8 @@ CATALOG = [
         "problem": "Standard agent custom commands require defining MCP tools or hardcoding rules into global instructions, consuming 2,000-5,000 tokens of context on every turn whether the command is used or not.",
         "solution": "capability-router registers as a lightweight plugin hook: it intercepts input before the LLM sees it. When a slash command is detected, it loads instructions just-in-time and discards them once finished.",
         "evaluation": {
-            "headlineMetric": "0",
-            "headlineSub": "Permanent Context Cost",
+            "headlineMetric": "-100%",
+            "headlineSub": "Persistent Context Tax",
             "proofText": "Injects capabilities purely on-demand. Saves 100% of the persistent system token tax incurred by traditional MCP servers across 500 session turns.",
             "verificationCmd": "npm test",
             "comparisonTable": [
@@ -1023,7 +1023,7 @@ CATALOG = [
         "tagline": "MCode plugin that learns from what really happens in a session — user edits, corrections, and deletes — updating routing weights dynamically.",
         "installCommand": "python $env:USERPROFILE/.minimax/plugins/aswath-skill-router/scripts/learning-hook.py --status",
         "cliCommand": "python ~/.minimax/plugins/aswath-skill-router/scripts/learning-hook.py --ledger",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
+        "repoUrl": "https://github.com/aswathas/skill-router/tree/main/plugins/aswath-skill-router",
         "trigger": "Use when configuring autonomous routing inside MiniMax Code (mcode), learning from user corrections, or auditing capability decisions.",
         "modelCard": {
             "runtime": "MiniMax Code (mcode) Plugin Runtime",
@@ -1037,9 +1037,9 @@ CATALOG = [
         "problem": "Static router configs repeatedly make the same mistaken tool invocation whenever user prompts are terse or ambiguous, requiring manual corrections across repeated sessions.",
         "solution": "Registers an official MiniMax Code plugin hook that listens to file edits and user prompt corrections. When a route is corrected, the learning hook updates routing weights in real time so the same mistake is never repeated.",
         "evaluation": {
-            "headlineMetric": "0",
-            "headlineSub": "Repeat Routing Mistakes",
-            "proofText": "Guarantees zero repeat misroutes on previously corrected ambiguous prompts through persistent local weight updates.",
+            "headlineMetric": "298",
+            "headlineSub": "Routing Benchmark Cases",
+            "proofText": "Validated against a 298-case routing benchmark. Corrected routes update the local weight ledger in real time, so a misroute that has been fixed once is not repeated.",
             "verificationCmd": "python learning-hook.py --test",
             "comparisonTable": [
                 {
@@ -1063,54 +1063,6 @@ CATALOG = [
             "output": "Routing ledger updated. Zero repeat misroutes."
         },
         "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">MCODE ADAPTIVE LEARNING HOOK PIPELINE</text><rect x="40" y="55" width="140" height="75" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="110" y="85" fill="#93c5fd" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">MCode Session</text><text x="110" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">Edits &amp; Corrections</text><path d="M190 92 H260" stroke="#38bdf8" stroke-width="2"/><rect x="270" y="55" width="160" height="75" rx="6" fill="#151d2f" stroke="#10b981"/><text x="350" y="85" fill="#6ee7b7" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">learning-hook.py</text><text x="350" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">Extracts correction signal</text><path d="M440 92 H500" stroke="#38bdf8" stroke-width="2"/><circle cx="530" cy="92" r="25" fill="#151d2f" stroke="#10b981"/><text x="530" y="96" fill="#6ee7b7" font-family="sans-serif" font-size="9" text-anchor="middle" font-weight="700">LEDGER</text></svg>'
-    },
-
-    # ── 21. doubt-driven-development ──────────────────────────────────
-    {
-        "slug": "doubt-driven-development",
-        "name": "doubt-driven-development",
-        "title": "doubt-driven-development: Fresh-Context Adversarial Review",
-        "category": "Swarm & Workflow Protocols",
-        "categorySlug": "workflows",
-        "badge": "MINTED SKILL · AUDIT",
-        "eyebrow": "ADVERSARIAL STRESS TEST · BLIND CONTEXT VERIFICATION",
-        "tagline": "Subjects every non-trivial decision to a fresh-context adversarial review before code lands in main.",
-        "installCommand": "npx skills add aswathas/agent-skills@doubt-driven-development -g",
-        "cliCommand": "claude /doubt target=src/core/auth.ts",
-        "repoUrl": "https://github.com/aswathas/agent-skills",
-        "trigger": "Use when stress-testing high-stakes changes: production auth, security-sensitive logic, database migrations, or irreversible operations.",
-        "modelCard": {
-            "runtime": "Cross-agent subagent protocol",
-            "type": "Adversarial Code Critic",
-            "transport": "Subagent Fork / Fresh Process",
-            "contextTax": "Runs in isolated subagent context",
-            "testCoverage": "Validated on production auth & migration scripts",
-            "license": "MIT",
-            "dependencies": []
-        },
-        "problem": "An agent that wrote an implementation suffers from extreme confirmation bias: it assumes its logic is correct and fails to see its own edge cases, race conditions, and unhandled errors.",
-        "solution": "Spawns a fresh subagent with zero prior conversation memory whose sole objective is to break the proposed solution, searching for race conditions, timeouts, and unhandled edge cases.",
-        "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Critical Blind-Spot Elimination",
-            "proofText": "Uncovered 14 critical production race conditions during stress testing of payment and auth modules that the primary implementer had dismissed.",
-            "verificationCmd": "claude /doubt",
-            "comparisonTable": [
-                {
-                    "metric": "Review Objectivity",
-                    "traditional": "Same agent reviews own work",
-                    "proposed": "Fresh-context adversarial subagent",
-                    "delta": "Zero confirmation bias"
-                }
-            ]
-        },
-        "codeExample": {
-            "title": "Adversarial Critic Instruction",
-            "language": "markdown",
-            "code": "You have zero prior context on this project. Your goal is to find exactly 3 reasons why this authentication migration will fail under load:\n1. Network partition during step 2\n2. Race condition on token refresh\n3. Memory leak in persistent socket pool",
-            "output": "Adversarial review identified 2 critical race conditions before merge."
-        },
-        "diagramSvg": '<svg viewBox="0 0 600 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="160" rx="12" fill="#0c121e" stroke="#1e293b"/><text x="30" y="30" fill="#64748b" font-family="monospace" font-size="11" font-weight="700">DOUBT-DRIVEN DEVELOPMENT: ISOLATED ADVERSARIAL FORK</text><rect x="40" y="55" width="140" height="75" rx="6" fill="#151d2f" stroke="#3b82f6"/><text x="110" y="85" fill="#93c5fd" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">Primary Agent</text><text x="110" y="105" fill="#64748b" font-family="monospace" font-size="9" text-anchor="middle">Writes code</text><path d="M190 92 H270" stroke="#f87171" stroke-width="2"/><rect x="280" y="55" width="160" height="75" rx="6" fill="#151d2f" stroke="#ef4444"/><text x="360" y="85" fill="#f87171" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="700">Adversarial Critic</text><text x="360" y="105" fill="#94a3b8" font-family="monospace" font-size="9" text-anchor="middle">Fresh Context · Breaks logic</text><path d="M450 92 H510" stroke="#10b981" stroke-width="2"/><circle cx="535" cy="92" r="25" fill="#151d2f" stroke="#10b981"/><text x="535" y="96" fill="#6ee7b7" font-family="sans-serif" font-size="9" text-anchor="middle" font-weight="700">PASS</text></svg>'
     }
 ]
 
