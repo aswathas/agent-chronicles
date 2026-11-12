@@ -37,23 +37,31 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "4",
             "headlineSub": "Stage Verification Gate",
-            "proofText": "A 4-stage gate - assumptions, inversion, MECE branching, concrete verification - surfaces and resolves ambiguities before any terminal command or file is modified. Validated across 60+ architectural design sessions.",
-            "verificationCmd": "claude 'test aswath-thinking'",
+            "metricKind": "count",
+            "source": "skills/workflow/aswath-thinking/SKILL.md",
+            "proofText": "Four stages: identify every unproven assumption, invert the problem, branch on the decision, then verify. The gate stops before any file is written.",
+            "verificationCmd": "claude 'aswath-thinking'",
             "comparisonTable": [
                 {
-                    "metric": "Decision Grounding",
-                    "traditional": "Agent guesses requirements silently",
-                    "proposed": "Deconstructs assumptions into explicit choices",
-                    "delta": "Zero guess work"
+                    "metric": "Before code",
+                    "traditional": "The agent guesses the requirement and writes it",
+                    "proposed": "The assumption is named and inverted first",
+                    "delta": "No silent guess"
                 },
                 {
-                    "metric": "Architectural Rework",
-                    "traditional": "High (re-writing code after user corrections)",
-                    "proposed": "Zero (aligned before first commit)",
-                    "delta": "-90% rework"
+                    "metric": "Ambiguity",
+                    "traditional": "Found during review",
+                    "proposed": "Found in the first stage",
+                    "delta": "Earlier"
+                },
+                {
+                    "metric": "Writes before approval",
+                    "traditional": "Scaffolding, manifests and stubs",
+                    "proposed": "None",
+                    "delta": "Zero"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Thinking Deconstruction Protocol",
             "language": "markdown",
@@ -89,25 +97,33 @@ CATALOG = [
         "problem": "Deciding during or after coding leads to unmaintainable systems. A retroactive spec only documents whatever happened to be built, not what was actually intended.",
         "solution": "Enforces an unskippable 8-step lifecycle: 1. Context, 2. Research, 3. Question Loop (max 4 multiple-choice questions with recommendations), 4. Spec drafting, 5. Self-review (zero TBDs), 6. Explicit user approval gate, 7. Mint skill, 8. Execute.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Spec Compliance Before Code",
-            "proofText": "Zero code files created without user-approved specs across 24 projects. 100% elimination of ambiguous requirements before git commit.",
-            "verificationCmd": "git log --oneline docs/superpowers/specs/",
+            "headlineMetric": "8",
+            "headlineSub": "Step Discovery Loop",
+            "metricKind": "count",
+            "source": "skills/workflow/aswath-first-principles/SKILL.md",
+            "proofText": "Eight steps from context to execution, and seven of them end in a gate. Approval is a hard gate: nothing is scaffolded, no manifest is written, no stub lands, until the spec is approved.",
+            "verificationCmd": "claude 'aswath-first-principles'",
             "comparisonTable": [
                 {
-                    "metric": "Spec Timing",
-                    "traditional": "Written after coding (rationalization)",
-                    "proposed": "Approved before any code is created",
-                    "delta": "Decide before build"
+                    "metric": "Approval",
+                    "traditional": "A summary of what you asked for",
+                    "proposed": "A written spec you read and approve",
+                    "delta": "Explicit"
                 },
                 {
-                    "metric": "Questioning Style",
-                    "traditional": "Endless open-ended questions",
-                    "proposed": "Batched multiple-choice with recommendations",
-                    "delta": "High developer velocity"
+                    "metric": "Gates",
+                    "traditional": "One, at the end",
+                    "proposed": "Seven",
+                    "delta": "Earlier failures"
+                },
+                {
+                    "metric": "Questions",
+                    "traditional": "Asked after the code exists",
+                    "proposed": "Asked before the spec",
+                    "delta": "Cheaper to change"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "The 10-Section Spec Template",
             "language": "markdown",
@@ -143,25 +159,27 @@ CATALOG = [
         "problem": "AI agents frequently forget previous architectural decisions when conversation context is truncated or compacted. Re-explaining previous constraints wastes thousands of tokens, while non-documented decisions result in blind regressions.",
         "solution": "aswath-chronicle enforces a durable on-disk record: every user request, alternative considered, failure mode encountered, and technical decision is written directly to docs/interactions/session-ledger.md and committed atomically to git.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Audit Trail Durability",
-            "proofText": "Preserves 100% of architectural context across multi-day tasks even after complete conversation context compaction, with 0 permanent tokens consumed.",
-            "verificationCmd": "git log --oneline docs/interactions/",
+            "headlineMetric": "95%+",
+            "headlineSub": "Context Tokens Not Re-printed",
+            "metricKind": "design",
+            "source": "skills/writing/aswath-chronicle/SKILL.md",
+            "proofText": "Decisions and session records go to files under docs/ and never come back into the model context. The skill's own guidance puts the saving at 95%+, because a long architectural thread is read once and referenced by path after that.",
+            "verificationCmd": "claude 'aswath-chronicle'",
             "comparisonTable": [
                 {
-                    "metric": "Decision Retention",
-                    "traditional": "Lost upon context compaction",
-                    "proposed": "Permanent on-disk git record",
-                    "delta": "Infinite retention"
+                    "metric": "Where decisions live",
+                    "traditional": "In the conversation, then lost",
+                    "proposed": "In files, next to the code",
+                    "delta": "Survives compaction"
                 },
                 {
-                    "metric": "Token Overhead",
-                    "traditional": "5,000 - 15,000 tokens of chat history",
-                    "proposed": "0 tokens (read on demand only)",
-                    "delta": "100% context savings"
+                    "metric": "Re-reading cost",
+                    "traditional": "Re-print the whole thread",
+                    "proposed": "Read the file you need",
+                    "delta": "95%+ fewer tokens"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Automated Session Ledger Entry",
             "language": "markdown",
@@ -199,23 +217,25 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "68%",
             "headlineSub": "Average Token Savings",
-            "proofText": "Measured across 50 long-running coding sessions: command output folding reduces noisy tool output from an average of 4,200 tokens to 180 tokens per command turn.",
-            "verificationCmd": "python token_guard.py --stats",
+            "metricKind": "measured",
+            "source": "measured by the skill itself over 50 long-running coding sessions",
+            "proofText": "Measured across 50 long-running coding sessions: command output folding takes noisy tool output from an average of 4,200 tokens to 180 tokens per command turn. The guard also blocks re-reading a file region you have already read.",
+            "verificationCmd": "claude 'aswath-token-guard'",
             "comparisonTable": [
                 {
-                    "metric": "Terminal Tool Output",
-                    "traditional": "Raw stdout (1,000 - 8,000 tokens)",
-                    "proposed": "rtk folded summary (40 - 150 tokens)",
-                    "delta": "-85%"
+                    "metric": "Terminal output",
+                    "traditional": "Raw stdout, 1,000 to 8,000 tokens",
+                    "proposed": "Folded summary, 40 to 150 tokens",
+                    "delta": "About 85% less"
                 },
                 {
-                    "metric": "File Re-reads",
-                    "traditional": "Re-reads full file every turn",
-                    "proposed": "Read once & cite ledger line ranges",
-                    "delta": "-60%"
+                    "metric": "File re-reads",
+                    "traditional": "Same file read every turn",
+                    "proposed": "Read once, cite the line range",
+                    "delta": "About 60% fewer"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Token Guard Status Check",
             "language": "bash",
@@ -251,25 +271,27 @@ CATALOG = [
         "problem": "When conversation histories grow beyond 150k-200k tokens, LLM attention mechanisms degrade ('lost in the middle' effect). Automatic provider truncations drop critical architectural instructions arbitrarily.",
         "solution": "Performs deliberate, lossless distillation: extracts user constraints, verified facts, completed decisions, and active task state, discarding conversational chatter and verbose tool executions to restore full context headroom.",
         "evaluation": {
-            "headlineMetric": "78%",
-            "headlineSub": "Window Headroom Restored",
-            "proofText": "Reclaims an average of 145,000 tokens per compaction while preserving 100% of architectural constraints and active task continuity.",
-            "verificationCmd": "aswath-compact status",
+            "headlineMetric": "5",
+            "headlineSub": "Section Handoff File",
+            "metricKind": "count",
+            "source": "skills/context/aswath-compact/SKILL.md",
+            "proofText": "The handoff carries Session Intent, Files Modified, Decisions Made, Current State and Next Steps. Five sections, written to a file so the next session reads a page instead of replaying the window.",
+            "verificationCmd": "claude 'aswath-compact'",
             "comparisonTable": [
                 {
-                    "metric": "Compaction Type",
-                    "traditional": "Uncontrolled truncation by provider",
-                    "proposed": "Deliberate structured state distillation",
-                    "delta": "Zero lost constraints"
+                    "metric": "What the next session reads",
+                    "traditional": "The whole window",
+                    "proposed": "One five-section file",
+                    "delta": "A page"
                 },
                 {
-                    "metric": "Attention Retention",
-                    "traditional": "Severe degradation past 150k",
-                    "proposed": "Reset to crisp <20k working set",
-                    "delta": "Peak model precision"
+                    "metric": "Where it goes",
+                    "traditional": "Nowhere, it evaporates",
+                    "proposed": "A file you can diff",
+                    "delta": "Reviewable"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Distillation Command",
             "language": "bash",
@@ -306,24 +328,26 @@ CATALOG = [
         "solution": "Parses transcript.jsonl directly, calculating exact input/output tokens, folded tool command savings, cache read hit-rates, and cost impact down to the cent.",
         "evaluation": {
             "headlineMetric": "100%",
-            "headlineSub": "Empirical Accuracy",
-            "proofText": "Reads raw API-reported usage objects directly from conversation transcripts. Never estimates; calculates exact measured numbers.",
-            "verificationCmd": "python evaluator.py --verify",
+            "headlineSub": "Tokens Attributed To A Cause",
+            "metricKind": "measured",
+            "source": "raw API-reported usage objects read from the conversation transcript",
+            "proofText": "It reads the usage objects the API reports, not an estimate, so every token in the window is attributed to a cause and the breakdown sums back to the session total. Run it after a session or over a batch.",
+            "verificationCmd": "claude 'aswath-token-evaluator'",
             "comparisonTable": [
                 {
-                    "metric": "Measurement Source",
-                    "traditional": "LLM estimated token counts",
-                    "proposed": "Parsed API usage tokens from transcript",
-                    "delta": "Exact numbers"
+                    "metric": "Numbers",
+                    "traditional": "Estimated from token counts",
+                    "proposed": "Read from the API usage objects",
+                    "delta": "Exact"
                 },
                 {
-                    "metric": "Folding Ratio",
-                    "traditional": "Unknown",
-                    "proposed": "Measured rtk compression percentage",
-                    "delta": "Audited proof"
+                    "metric": "Attribution",
+                    "traditional": "One bucket for everything",
+                    "proposed": "One cause per token",
+                    "delta": "Actionable"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Evaluator Report",
             "language": "bash",
@@ -359,19 +383,27 @@ CATALOG = [
         "problem": "Single-session optimizations often hide macro context leaks: an agent might run cheaply in turn 1 but consume 500k tokens over a week of repeated tasks.",
         "solution": "Aggregates ledgers across all agent sessions in ~/.minimax, ~/.gemini, and ~/.claude, highlighting trends, tool cost distributions, and identifying commands that need rtk folding.",
         "evaluation": {
-            "headlineMetric": "500+",
-            "headlineSub": "Sessions Audited",
-            "proofText": "Surfaces long-term trends and pinpoints commands responsible for 80% of aggregate context window consumption.",
-            "verificationCmd": "python ledger.py --verify",
+            "headlineMetric": "230",
+            "headlineSub": "Sessions In The Store",
+            "metricKind": "count",
+            "source": "the session store: 159 Claude Code transcripts and 71 MiniMax Code sessions",
+            "proofText": "It audits every session in the store, Claude Code transcripts and MiniMax Code sessions alike, and works on sessions from another machine that has the store. 230 sessions were in the store when this page was written.",
+            "verificationCmd": "claude 'aswath-token-ledger'",
             "comparisonTable": [
                 {
                     "metric": "Scope",
-                    "traditional": "Single session only",
-                    "proposed": "Historical cross-session tracking",
-                    "delta": "Complete visibility"
+                    "traditional": "The current session only",
+                    "proposed": "Every session in the store",
+                    "delta": "230 and counting"
+                },
+                {
+                    "metric": "Output",
+                    "traditional": "A total",
+                    "proposed": "The costliest outputs, one row each",
+                    "delta": "Per-line"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Cross-Session Summary",
             "language": "bash",
@@ -407,25 +439,27 @@ CATALOG = [
         "problem": "AI agents frequently rush to write code immediately upon receiving a prompt, hallucinating schemas and reinventing tools that already exist in the user's skill catalog.",
         "solution": "aswath-forge introduces a strict pre-execution gateway: it halts execution until it inspects local skill repositories (~/.gemini/skills, ~/.claude/skills) and checks whether a formal spec exists.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Duplication Prevention",
-            "proofText": "Prevented accidental code re-implementation across 18 benchmark tasks by finding existing minted skills before any code was committed.",
-            "verificationCmd": "aswath-forge check",
+            "headlineMetric": "4",
+            "headlineSub": "Step Skill Pipeline",
+            "metricKind": "count",
+            "source": "aswath-forge/README.md and scripts/forge.ps1",
+            "proofText": "Four steps: classify the task, look it up in the catalog, reuse or discover, then mint the skill if there is no match. Every finished task leaves a reusable skill behind, registered in the catalog with its provenance.",
+            "verificationCmd": "powershell -ExecutionPolicy Bypass -File ./scripts/forge.ps1 doctor",
             "comparisonTable": [
                 {
-                    "metric": "Spec Integrity",
-                    "traditional": "Agent writes code from assumptions",
-                    "proposed": "Rigorous first-principles spec gate",
-                    "delta": "Zero rework"
+                    "metric": "Duplicate work",
+                    "traditional": "Rebuild what you already wrote",
+                    "proposed": "The catalog is checked first",
+                    "delta": "Fewer re-implementations"
                 },
                 {
-                    "metric": "Skill Reuse",
-                    "traditional": "Agent rewrites existing scripts",
-                    "proposed": "Checks catalog first",
-                    "delta": "100% reuse"
+                    "metric": "What survives a task",
+                    "traditional": "A diff",
+                    "proposed": "A diff and a reusable skill",
+                    "delta": "Both"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Forge Pre-Execution Check",
             "language": "bash",
@@ -461,25 +495,33 @@ CATALOG = [
         "problem": "Frontier models emit hundreds of tokens of polite greetings, restatements of the question, and speculative advice that the user never asked for, wasting tokens and user reading time.",
         "solution": "Enforces concise, caveman-style compression with everyday wording: short sentences, plain words, zero ceremonial pleasantries, and active pushback advocating for the smallest thing that actually works.",
         "evaluation": {
-            "headlineMetric": "65%",
-            "headlineSub": "Output Token Reduction",
-            "proofText": "Drops average agent response size from 540 tokens to 185 tokens while preserving 100% of the actionable technical content.",
-            "verificationCmd": "claude 'test aswath-talk'",
+            "headlineMetric": "35%",
+            "headlineSub": "Fewer Output Tokens",
+            "metricKind": "measured",
+            "source": "the ultracave README benchmark in the same family: 35% fewer output tokens at the median against plain prose",
+            "proofText": "The caveman family benchmark measures 35% fewer output tokens at the median against plain prose. aswath-talk adds the rule that the answer must also be the smallest one that works, so the compression does not cost you the substance.",
+            "verificationCmd": "claude 'aswath-talk'",
             "comparisonTable": [
                 {
-                    "metric": "Conversational Ceremony",
-                    "traditional": "Heavy greetings & apologies",
-                    "proposed": "Zero pleasantries; direct answer",
-                    "delta": "100% stripped"
+                    "metric": "Shape",
+                    "traditional": "A wall",
+                    "proposed": "Answer first, then the reason, then the next step",
+                    "delta": "Shorter"
                 },
                 {
-                    "metric": "Response Token Spend",
-                    "traditional": "540 tokens / turn average",
-                    "proposed": "185 tokens / turn average",
-                    "delta": "-65%"
+                    "metric": "Vocabulary",
+                    "traditional": "Jargon walls",
+                    "proposed": "Everyday words, real names for things you must paste",
+                    "delta": "Plain"
+                },
+                {
+                    "metric": "Length",
+                    "traditional": "Whatever came out",
+                    "proposed": "The smallest answer that still works",
+                    "delta": "35% fewer tokens"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Before and After aswath-talk",
             "language": "markdown",
@@ -515,25 +557,33 @@ CATALOG = [
         "problem": "Agents frequently hand-roll CSV splitters (`line.split(',')`), which corrupt data when fields contain commas or embedded newlines. Aggressive type coercion also converts identifier `007` to `7` and mutates date strings.",
         "solution": "Enforces strict RFC 4180 parsing using standard library readers, preserving quoted strings, newlines, and leading-zero identifiers. Emits to stdout by default for easy Unix pipe chaining.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Data Integrity on Complex CSVs",
-            "proofText": "Passes 100% of RFC 4180 edge cases: multiline cells, escaped quotes, leading zeros, and Unicode characters without data loss.",
-            "verificationCmd": "python test_csv2json.py",
+            "headlineMetric": "5",
+            "headlineSub": "Step Conversion Procedure",
+            "metricKind": "count",
+            "source": "skills/utilities/aswath-csvjson/SKILL.md",
+            "proofText": "Five steps, and the parser is the standard library's, which handles RFC 4180: multiline cells, escaped quotes, leading zeros and Unicode. Coercion happens only where the cell is unambiguous, so 007 stays 007.",
+            "verificationCmd": "claude 'aswath-csvjson'",
             "comparisonTable": [
                 {
-                    "metric": "Parser Robustness",
-                    "traditional": "Naive `split(',')` crashes on quotes",
-                    "proposed": "RFC 4180 standard library parser",
-                    "delta": "100% reliable"
+                    "metric": "Parsing",
+                    "traditional": "Splitting on commas by hand",
+                    "proposed": "The standard library's RFC 4180 parser",
+                    "delta": "Quoted fields survive"
                 },
                 {
-                    "metric": "Type Coercion",
-                    "traditional": "Drops leading zeros (`001` -> `1`)",
-                    "proposed": "Preserves string identifiers",
-                    "delta": "Zero corruption"
+                    "metric": "Coercion",
+                    "traditional": "Anything that looks like a number",
+                    "proposed": "Only unambiguous cells",
+                    "delta": "007 stays 007"
+                },
+                {
+                    "metric": "Flags",
+                    "traditional": "Whatever seems useful",
+                    "proposed": "The one that was asked for",
+                    "delta": "No scope creep"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Clean Conversion Execution",
             "language": "bash",
@@ -569,19 +619,27 @@ CATALOG = [
         "problem": "Engineers writing agent skills write pages of generic explanations that agents cannot parse, missing concrete trigger criteria and exact commands that work.",
         "solution": "Enforces a 4-part skill anatomy: 1. Strict frontmatter (name + description), 2. Concrete procedure, 3. Verifiable commands that work, and 4. Explicit mistakes to avoid.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Agent Parsing Reliability",
-            "proofText": "Guarantees that any agent encountering the skill understands precisely when to activate it and executes commands without syntactic errors.",
-            "verificationCmd": "skills lint",
+            "headlineMetric": "3",
+            "headlineSub": "Step Capture Flow",
+            "metricKind": "count",
+            "source": "skills/orchestration/aswath-manual-demo/SKILL.md",
+            "proofText": "Three steps: the skill is written by hand into the store, forge capture copies it into the catalog and registers it with its provenance, and the sync commits it so the next machine gets it too.",
+            "verificationCmd": "claude 'aswath-manual-demo'",
             "comparisonTable": [
                 {
-                    "metric": "Skill Format",
-                    "traditional": "Unstructured markdown prose",
-                    "proposed": "Strict procedure + commands + mistakes",
-                    "delta": "Machine parseable"
+                    "metric": "Provenance",
+                    "traditional": "Unknown",
+                    "proposed": "Recorded in the registry as manual",
+                    "delta": "Traceable"
+                },
+                {
+                    "metric": "Reach",
+                    "traditional": "One machine",
+                    "proposed": "Every machine that syncs",
+                    "delta": "Automatic"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Standard Skill Anatomy",
             "language": "markdown",
@@ -617,25 +675,27 @@ CATALOG = [
         "problem": "Technical engineering posts fail on social platforms when stuffed with 15 spam hashtags, generic AI buzzwords, and missing empirical benchmarks.",
         "solution": "Enforces strict post schema: exactly 0-2 hashtags, clear architecture diagrams, measured token benchmarks (e.g. 32k tokens vs 142 tokens), and a reproducible test command.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Algorithmic Gate Compliance",
-            "proofText": "Rejects posts with >2 hashtags or unmeasured performance claims automatically via pre-publish test scripts.",
-            "verificationCmd": "python tools/linkedin_post.py --verify",
+            "headlineMetric": "9",
+            "headlineSub": "Ready-Made Commands",
+            "metricKind": "count",
+            "source": "skills/publishing/aswath-publish-linkedin/SKILL.md",
+            "proofText": "Nine ready-made commands for auth check, text post, post from file, images, search, history, delete and health, on the postiee CLI with the MCP as a fallback. Publishing is gated: the first call returns a preview and a six-digit code, and a repeat inside ten minutes returns the original post instead of posting twice.",
+            "verificationCmd": "claude 'aswath-publish-linkedin'",
             "comparisonTable": [
                 {
-                    "metric": "Hashtag Policy",
-                    "traditional": "Spammy wall of 15 hashtags",
-                    "proposed": "Strict 0-2 targeted tags",
-                    "delta": "100% compliant"
+                    "metric": "Publish",
+                    "traditional": "The agent posts straight away",
+                    "proposed": "A preview and a code first",
+                    "delta": "You approve"
                 },
                 {
-                    "metric": "Content Substance",
-                    "traditional": "Generic AI fluff",
-                    "proposed": "Verified benchmarks & architecture",
-                    "delta": "High engineering value"
+                    "metric": "Repeat",
+                    "traditional": "A second post goes out",
+                    "proposed": "The first result comes back",
+                    "delta": "duplicate: true"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Post Validation Execution",
             "language": "bash",
@@ -673,29 +733,25 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "99.5%",
             "headlineSub": "Context Bill Reduction",
-            "proofText": "Verified over 60-car search in Chennai across 3 pagination hops. Context bill drops from 32,450 tokens (120 KB raw JSON) to 142 tokens (3 concise rows). Latency drops from 4.8s to 1.1s.",
+            "metricKind": "measured",
+            "source": "aswathas/olx-car-search, verified over a 60-car Chennai search across 3 pagination hops",
+            "proofText": "Over a 60-car search in Chennai across 3 pagination hops, the context bill drops from 32,450 tokens (120 KB of raw JSON) to 142 tokens (3 concise rows). Latency drops from 4.8s to 1.1s.",
             "verificationCmd": "python -m pytest tests/ -v",
             "comparisonTable": [
                 {
-                    "metric": "Context Token Bill",
-                    "traditional": "32,450 tokens",
-                    "proposed": "142 tokens",
-                    "delta": "-99.5%"
+                    "metric": "Context per search",
+                    "traditional": "120 KB of raw JSON",
+                    "proposed": "3 concise rows",
+                    "delta": "99.5% less"
                 },
                 {
-                    "metric": "Conversational Hops",
-                    "traditional": "3 turns (paginate -> parse -> filter)",
-                    "proposed": "1 turn (in-memory chain)",
-                    "delta": "3x fewer turns"
-                },
-                {
-                    "metric": "Network & Execution Latency",
-                    "traditional": "4.8s (3 HTTP + 3 LLM hops)",
-                    "proposed": "1.1s (concurrent in-memory)",
-                    "delta": "4.3x faster"
+                    "metric": "Latency",
+                    "traditional": "4.8s",
+                    "proposed": "1.1s",
+                    "delta": "4.4x faster"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "In-Memory Python Query (Code Mode)",
             "language": "python",
@@ -733,23 +789,25 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "57",
             "headlineSub": "Algorithmic Indicators",
-            "proofText": "Verified on NIFTY 50 and SENSEX constituents. Computes RSI, MACD, Stochastic, Bollinger Bands, and ATR in <80ms with 100% mathematical parity against TradingView feeds.",
+            "metricKind": "count",
+            "source": "aswathas/TradeMCP",
+            "proofText": "57 indicators, computed in under 80ms and verified on NIFTY 50 and SENSEX constituents, with mathematical parity against TradingView feeds.",
             "verificationCmd": "npm test",
             "comparisonTable": [
                 {
-                    "metric": "API Key Requirement",
-                    "traditional": "Required ($15-$50/month paid tier)",
-                    "proposed": "Zero API keys needed",
-                    "delta": "100% Free"
+                    "metric": "Indicators",
+                    "traditional": "One or two hand-rolled",
+                    "proposed": "57, verified against TradingView",
+                    "delta": "Parity"
                 },
                 {
-                    "metric": "Calculation Accuracy",
-                    "traditional": "LLM hallucinations on RSI/MACD",
-                    "proposed": "Deterministic Python math",
-                    "delta": "0% error"
+                    "metric": "Latency",
+                    "traditional": "A round trip to an API",
+                    "proposed": "Under 80ms in process",
+                    "delta": "Local"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Fetch Real-Time Quote & RSI via MCP",
             "language": "json",
@@ -785,19 +843,27 @@ CATALOG = [
         "problem": "Existing community Instagram MCP tools relied on raw username/password authentication handshakes. Instagram's anti-bot challenge triggers an immediate checkpoint crash, throwing unhandled Promise rejections and locking agent workflows.",
         "solution": "Re-engineered the authentication flow to ingest exported browser session cookies, bypassing challenges completely. Implemented resilient retry logic and granular error boundaries.",
         "evaluation": {
-            "headlineMetric": "100%",
-            "headlineSub": "Auth Success Rate",
-            "proofText": "Zero checkpoint challenges triggered across 150 automated publication queries using cookie session persistence vs 100% failure rate on raw password logins.",
-            "verificationCmd": "node test-session.js",
+            "headlineMetric": "150",
+            "headlineSub": "Publication Queries With No Challenge",
+            "metricKind": "measured",
+            "source": "aswathas/instagram-mcp-logs",
+            "proofText": "Cookie session persistence was tested across 150 automated publication queries. Zero checkpoint challenges were triggered, against a 100% failure rate for the raw password login the logs capture.",
+            "verificationCmd": "claude 'instagram-mcp'",
             "comparisonTable": [
                 {
-                    "metric": "Login Failure Rate",
-                    "traditional": "100% (Checkpoint crash)",
-                    "proposed": "0% (Cookie bypass)",
-                    "delta": "Complete fix"
+                    "metric": "Login",
+                    "traditional": "Raw password, fails every time",
+                    "proposed": "Cookie session, persisted",
+                    "delta": "0 challenges"
+                },
+                {
+                    "metric": "Evidence",
+                    "traditional": "A claim",
+                    "proposed": "The crash log is public",
+                    "delta": "Checkable"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Session Cookie Initialization",
             "language": "javascript",
@@ -833,25 +899,33 @@ CATALOG = [
         "problem": "Injecting thousands of skill definitions into an agent's context window exceeds context limits and causes extreme instruction following degradation. Furthermore, running routine loops on expensive frontier models drains tokens rapidly.",
         "solution": "Maintains an offline indexed vector and keyword registry of 3,114 skills. Resolves intents just-in-time, and provides dual-backend delegation: routes heavy reasoning tasks to frontier models while dispatching repetitive loops to fast low-cost agents (agy/cmdc).",
         "evaluation": {
-            "headlineMetric": "3,114",
-            "headlineSub": "Indexed Verified Skills",
-            "proofText": "Resolves user intent across a 3,114 skill taxonomy in <12ms with 96.8% accuracy. Saves 84% on compute costs by delegating routine loops to agy/cmdc backends.",
-            "verificationCmd": "python -m aswath_capability.test_dispatch",
+            "headlineMetric": "79",
+            "headlineSub": "Capabilities In The Taxonomy",
+            "metricKind": "count",
+            "source": "aswathas/aswath-capability, skill/aswath-capability/registry/capabilities.json",
+            "proofText": "79 capabilities, each with its triggers, provenance and the gaps it still has. The registry is rebuilt from the installed skill store, so it grows as you install. A need that matches nothing is a gap, and the skill writes the missing capability.",
+            "verificationCmd": "python ~/.agents/skills/aswath-capability/scripts/invoke.py \"your need here\" --json",
             "comparisonTable": [
                 {
-                    "metric": "Skill Index Capacity",
-                    "traditional": "Max 50-80 skills in prompt",
-                    "proposed": "3,114 skills indexed offline",
-                    "delta": "40x larger catalog"
+                    "metric": "Discovery",
+                    "traditional": "Read every skill description",
+                    "proposed": "Query the taxonomy",
+                    "delta": "One call"
                 },
                 {
-                    "metric": "System Context Cost",
-                    "traditional": "12,000+ permanent tokens",
-                    "proposed": "0 permanent tokens",
-                    "delta": "100% savings"
+                    "metric": "Missing skills",
+                    "traditional": "Discovered too late",
+                    "proposed": "Reported as a gap",
+                    "delta": "Before the build"
+                },
+                {
+                    "metric": "Registry",
+                    "traditional": "Hand-written",
+                    "proposed": "Rebuilt from the store",
+                    "delta": "Never stale"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Delegate Task to Fast Runtime",
             "language": "python",
@@ -887,25 +961,39 @@ CATALOG = [
         "problem": "Flat keyword matching fails when two skills share ambiguous overlap. Standard embeddings struggle with fine-grained agent intent discrimination.",
         "solution": "Implements a 2-tier hierarchical taxonomy: Domain Clustering (Tier 1) followed by Fine-Grained Capability Selection (Tier 2). Includes an outcome-driven learning loop that tunes classification weights whenever user corrections occur.",
         "evaluation": {
-            "headlineMetric": "99.2%",
-            "headlineSub": "Top-1 Routing Accuracy",
-            "proofText": "Evaluated against 298 adversarial test cases across security, devops, frontend, and data engineering. Achieves 99.2% Top-1 accuracy compared to 71.4% for standard flat semantic search.",
-            "verificationCmd": "python -m skill_router.eval --cases tests/cases.json",
+            "headlineMetric": "0.849",
+            "headlineSub": "Capability Top-1 Routing",
+            "metricKind": "measured",
+            "source": "https://github.com/aswathas/skill-router/blob/main/docs/EVALUATION.md",
+            "proofText": "298 cases, seven systems, split by a stable hash so no system sees a case it was tuned on. The shipped router reaches 0.849 capability top-1, against 0.473 for BM25 and 0.198 for name-only retrieval. On the strict subset, where a case has exactly one expected skill, it reaches 0.397, which BM25 also reaches. The win is coverage, not strict selection, and the evaluation says so.",
+            "verificationCmd": "git clone https://github.com/aswathas/skill-router && cd skill-router && python evals/run_eval.py",
             "comparisonTable": [
                 {
-                    "metric": "Top-1 Intent Accuracy",
-                    "traditional": "71.4% (Flat embeddings)",
-                    "proposed": "99.2% (Hierarchical Router)",
-                    "delta": "+27.8%"
+                    "metric": "Capability top-1",
+                    "traditional": "0.473 for BM25 retrieval",
+                    "proposed": "0.849",
+                    "delta": "+0.376"
                 },
                 {
-                    "metric": "Adversarial Edge Cases",
-                    "traditional": "Fails ambiguous synonym queries",
-                    "proposed": "298/298 test cases pass",
-                    "delta": "100% pass"
+                    "metric": "Skills visible to the agent",
+                    "traditional": "1,387",
+                    "proposed": "44",
+                    "delta": "-96.8%"
+                },
+                {
+                    "metric": "Catalog token cost",
+                    "traditional": "1,922,567",
+                    "proposed": "89,205",
+                    "delta": "-95.4%"
+                },
+                {
+                    "metric": "Skills no capability could reach",
+                    "traditional": "845",
+                    "proposed": "0",
+                    "delta": "Full coverage"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Run 298-Case Evaluation Suite",
             "language": "bash",
@@ -943,17 +1031,25 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "-100%",
             "headlineSub": "Persistent Context Tax",
-            "proofText": "Injects capabilities purely on-demand. Saves 100% of the persistent system token tax incurred by traditional MCP servers across 500 session turns.",
-            "verificationCmd": "npm test",
+            "metricKind": "design",
+            "source": "aswathas/capability-router",
+            "proofText": "It registers as a plugin hook, so it intercepts your input before the model sees it. A slash command loads its instructions just in time and they are discarded when the command finishes. The capability never sits in the prompt, so it never costs a token per turn.",
+            "verificationCmd": "python scripts/test_router.py",
             "comparisonTable": [
                 {
-                    "metric": "Persistent Context Tax",
-                    "traditional": "3,500 permanent tokens / turn",
-                    "proposed": "0 permanent tokens",
+                    "metric": "Permanent context",
+                    "traditional": "3,500 tokens per turn, every turn",
+                    "proposed": "0",
                     "delta": "-100%"
+                },
+                {
+                    "metric": "When it loads",
+                    "traditional": "At startup, forever",
+                    "proposed": "Just in time, then discarded",
+                    "delta": "On demand"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Slash Command Lifecycle Hook",
             "language": "typescript",
@@ -989,19 +1085,27 @@ CATALOG = [
         "problem": "Every AI assistant CLI (Claude Code, Gemini CLI, Cursor, MiniMax) expects skills installed into distinct proprietary directories. Keeping them in sync manually leads to drift and version conflicts.",
         "solution": "skillhub maintains a single canonical repository of minted skills. With a single command (`skillhub link`), it creates transparent directory junctions and symlinks into every installed agent harness.",
         "evaluation": {
-            "headlineMetric": "4x",
-            "headlineSub": "Harness Synchronization",
-            "proofText": "Simultaneously synchronizes 25 skills across Claude Code, Gemini CLI, MiniMax, and Cursor in <300ms using zero disk space duplication.",
-            "verificationCmd": "skillhub verify",
+            "headlineMetric": "21",
+            "headlineSub": "Harness Roots, One Store",
+            "metricKind": "count",
+            "source": "~/.skillhub/config.json",
+            "proofText": "One canonical store, 21 roots pointed at it: 14 on Windows and 7 in WSL, covering Claude Code, Codex, Cursor, Copilot, Gemini, Hermes, MiniMax Code, opencode and the rest. Nothing is copied, so a skill installed once is on every harness the moment it lands.",
+            "verificationCmd": "skillhub doctor",
             "comparisonTable": [
                 {
-                    "metric": "Storage Overhead",
-                    "traditional": "4x folder copies on disk",
-                    "proposed": "0 extra bytes (NTFS Junctions)",
-                    "delta": "100% deduplicated"
+                    "metric": "Copies per skill",
+                    "traditional": "One per harness",
+                    "proposed": "Zero, every root is a link",
+                    "delta": "No duplication"
+                },
+                {
+                    "metric": "Roots checked",
+                    "traditional": "None",
+                    "proposed": "21, by skillhub doctor",
+                    "delta": "Verified"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Synchronize Across All Runtimes",
             "language": "bash",
@@ -1039,23 +1143,25 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "298",
             "headlineSub": "Routing Benchmark Cases",
-            "proofText": "Validated against a 298-case routing benchmark. Corrected routes update the local weight ledger in real time, so a misroute that has been fixed once is not repeated.",
-            "verificationCmd": "python learning-hook.py --test",
+            "metricKind": "measured",
+            "source": "https://github.com/aswathas/skill-router/blob/main/docs/EVALUATION.md",
+            "proofText": "It is the same routing machinery as the public skill-router, packaged as a MiniMax Code plugin hook. When you correct a route, the hook updates the local weight ledger in real time, so a misroute you have already fixed does not come back.",
+            "verificationCmd": "git clone https://github.com/aswathas/skill-router && cd skill-router && python evals/run_eval.py",
             "comparisonTable": [
                 {
-                    "metric": "Learning Mechanism",
-                    "traditional": "Static keyword map (never learns)",
-                    "proposed": "Feedback-driven hook in MCode lifecycle",
-                    "delta": "Continuous adaptation"
+                    "metric": "Learning",
+                    "traditional": "A static keyword map",
+                    "proposed": "Weights updated on correction",
+                    "delta": "Continuous"
                 },
                 {
-                    "metric": "Correction Retention",
-                    "traditional": "Forgotten on next session",
-                    "proposed": "Persistent in routing ledger",
-                    "delta": "Permanent fix"
+                    "metric": "Corrections",
+                    "traditional": "Forgotten next session",
+                    "proposed": "Kept in the routing ledger",
+                    "delta": "Permanent"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "MCode Learning Hook Execution",
             "language": "bash",
@@ -1093,6 +1199,8 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "6",
             "headlineSub": "Procedural Commit Stages",
+            "metricKind": "count",
+            "source": "skills/workflow/aswath-commit/SKILL.md",
             "proofText": "Enforces 6 distinct stages (inventory, verify, decision log, change inventory, truth docs, commit) before any commit is finalized. The verification command invokes the skill directly in Claude Code.",
             "verificationCmd": "claude 'aswath-commit'",
             "comparisonTable": [
@@ -1109,7 +1217,7 @@ CATALOG = [
                     "delta": "100% file coverage"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Decision Log Format",
             "language": "markdown",
@@ -1147,6 +1255,8 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "4",
             "headlineSub": "Authenticated Scopes Verified",
+            "metricKind": "count",
+            "source": "skills/publishing/aswath-publish-github/SKILL.md",
             "proofText": "Verifies 4 authenticated scopes (repo, workflow, gist, read:org) and requires secret scanning across commit history before creating repos or pushing branches.",
             "verificationCmd": "gh auth status",
             "comparisonTable": [
@@ -1163,7 +1273,7 @@ CATALOG = [
                     "delta": "100% protected branch compliance"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Pre-Publish Secret Scan & PR Creation",
             "language": "bash",
@@ -1201,6 +1311,8 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "5",
             "headlineSub": "Supported Media Formats",
+            "metricKind": "count",
+            "source": "skills/publishing/aswath-publish-instagram/SKILL.md",
             "proofText": "Natively manages 5 media formats (single photo, video, reel, album with 2-10 slides, and story) with mandatory two-step screen verification. The verification command runs through the agent harness.",
             "verificationCmd": "claude 'aswath-publish-instagram'",
             "comparisonTable": [
@@ -1217,7 +1329,7 @@ CATALOG = [
                     "delta": "Clean session recovery"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Two-Step Instagram Confirmation Flow",
             "language": "python",
@@ -1255,6 +1367,8 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "5",
             "headlineSub": "Phase Conversational Arc",
+            "metricKind": "count",
+            "source": "skills/workflow/aswath-thevai/SKILL.md",
             "proofText": "Structures requirements elicitation into 5 phased stages with a 7-point blocker checklist and a hard approval gate before build. Invoked directly via Claude Code.",
             "verificationCmd": "claude 'aswath-thevai'",
             "comparisonTable": [
@@ -1271,7 +1385,7 @@ CATALOG = [
                     "delta": "100% verified brief"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "5-Phase Conversational Brief",
             "language": "markdown",
@@ -1309,6 +1423,8 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "2",
             "headlineSub": "Independent Verifiers (1 Adversarial)",
+            "metricKind": "count",
+            "source": "skills/workflow/aswath-throw/SKILL.md",
             "proofText": "Guarantees dual parallel verification on every delegated build: one standard verifier against the brief and one adversarial grill dedicated to breaking edge cases. Invoked via Claude Code.",
             "verificationCmd": "claude 'aswath-throw'",
             "comparisonTable": [
@@ -1325,7 +1441,7 @@ CATALOG = [
                     "delta": "Empirical timeline tracking"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Throw Delegation Pipeline Execution",
             "language": "bash",
@@ -1337,7 +1453,7 @@ CATALOG = [
 
     # ── 26. minimax-compaction-handoff ─────────────────────────────────
     {
-        "slug": "minimax-compaction-handoff",
+        "slug": "aswath-minimax-compaction-handoff",
         "name": "minimax-compaction-handoff",
         "title": "minimax-compaction-handoff: Deterministic Hook-Driven Context Compactor",
         "category": "Token Economics & Context",
@@ -1363,6 +1479,8 @@ CATALOG = [
         "evaluation": {
             "headlineMetric": "100,000",
             "headlineSub": "Token Compaction Ceiling",
+            "metricKind": "count",
+            "source": "skills/context/aswath-minimax-compaction-handoff/SKILL.md",
             "proofText": "Caps conversations at a 100,000-token ceiling via compactionTriggerAt. Hooks extract facts verbatim from local SQLite without LLM calls.",
             "verificationCmd": "python scripts/compaction-handoff.py",
             "comparisonTable": [
@@ -1379,7 +1497,7 @@ CATALOG = [
                     "delta": "Lossless handoff structure"
                 }
             ]
-        },
+},
         "codeExample": {
             "title": "Hook Execution & Verification",
             "language": "bash",

@@ -1,0 +1,32 @@
+name: Verify catalog
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Regenerate the catalog from its source
+        run: python src/data/generate_catalog.py
+
+      - name: The committed catalog must match the generator
+        # If this fails, someone edited catalog.json by hand. It is generated.
+        run: git diff --exit-code src/data/catalog.json
+
+      - name: Every entry must resolve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/verify_catalog.py
